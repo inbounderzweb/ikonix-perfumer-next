@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const S = "/ikonix/site";
+// Raster versions of the design-export SVGs (see scripts/ikonix/rasterize-site-svgs.ts): the SVGs embed
+// multi-megabyte photos that cannot be resized or lazy-loaded efficiently.
+const R = `${S}/raster`;
 
 // Legacy Um: scrolling offer strip. The text promises member-only offers; it is the legacy copy.
 const OFFER = "EXCLUSIVE OFFERS AVAILABLE ONLY TO LOGGED-IN USERS. LOG IN NOW TO UNLOCK!";
@@ -25,9 +28,9 @@ export function OfferMarquee() {
 
 // Legacy Vm: three collection tiles (custom fragrance → contact, women, men).
 const TILES = [
-  { src: `${S}/info.svg`, href: "/contact", label: "Create your custom fragrance" },
-  { src: `${S}/info1.svg`, href: "/shop?cat=womens", label: "Women’s collection" },
-  { src: `${S}/info2.svg`, href: "/shop?cat=mens", label: "Men’s collection" },
+  { src: `${R}/info.webp`, href: "/contact", label: "Create your custom fragrance" },
+  { src: `${R}/info1.webp`, href: "/shop?cat=womens", label: "Women’s collection" },
+  { src: `${R}/info2.webp`, href: "/shop?cat=mens", label: "Men’s collection" },
 ];
 export function CollectionTiles() {
   return (
@@ -35,8 +38,7 @@ export function CollectionTiles() {
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-5">
         {TILES.map((t) => (
           <Link key={t.src} href={t.href} aria-label={t.label} className="w-full overflow-hidden rounded-[6px] transition-all duration-300 hover:shadow-lg md:rounded-[8px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={t.src} alt={t.label} className="block h-auto w-full" />
+            <Image src={t.src} alt={t.label} width={1080} height={420} sizes="(min-width:1024px) 27vw, (min-width:768px) 30vw, 90vw" className="block h-auto w-full" />
           </Link>
         ))}
       </div>
@@ -47,10 +49,9 @@ export function CollectionTiles() {
 export function BrandBanner() {
   return (
     <section className="w-full">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`${S}/BrandShowcaseBanner.svg`} alt="Ikonix Perfumer brand banner" className="hidden w-full object-cover md:block" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`${S}/BrandShowcaseBanner_mobile.svg`} alt="Ikonix Perfumer brand banner" className="block w-full object-cover md:hidden" />
+      {/* Both stay lazy: a lazy image hidden by CSS is never fetched, so each device downloads only its own banner. */}
+      <Image src={`${R}/BrandShowcaseBanner.webp`} alt="Ikonix Perfumer brand banner" width={2880} height={720} sizes="100vw" className="hidden h-auto w-full object-cover md:block" />
+      <Image src={`${R}/BrandShowcaseBanner_mobile.webp`} alt="Ikonix Perfumer brand banner" width={1086} height={1448} sizes="100vw" className="block h-auto w-full object-cover md:hidden" />
     </section>
   );
 }
@@ -61,8 +62,7 @@ export function CustomFragrance() {
       <div className="mx-auto w-[90%] py-16 lg:w-[80%]">
         <div className="mx-auto flex max-w-[960px] flex-col items-center gap-8 md:flex-row md:gap-10">
           <div className="w-full shrink-0 overflow-hidden rounded-2xl md:w-[440px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${S}/makeperfume.svg`} alt="Perfumer crafting fragrance" className="w-full object-cover" />
+            <Image src={`${R}/makeperfume.webp`} alt="Perfumer crafting fragrance" width={1000} height={632} sizes="(min-width:768px) 440px, 90vw" className="h-auto w-full object-cover" />
           </div>
           <div className="flex flex-1 flex-col items-center justify-center gap-4 md:items-start">
             <h2 className="text-center font-heading text-3xl font-medium text-[#7c706c] md:text-left md:text-[34px]">Create Your Own <br />Signature Perfume</h2>

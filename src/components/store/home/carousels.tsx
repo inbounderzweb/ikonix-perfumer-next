@@ -13,6 +13,7 @@ import type { ProductCardDTO } from "@/lib/catalogue-types";
 import { HomeProductCard } from "../product-cards";
 
 const S = "/ikonix/site";
+const R = `${S}/raster`; // see scripts/ikonix/rasterize-site-svgs.ts
 
 // ── Desktop hero (legacy Gm): fading 4-slide slider with arrow images bottom-right ──
 const HERO_DESKTOP = [
@@ -30,7 +31,7 @@ export function HeroDesktop() {
         {HERO_DESKTOP.map((s, i) => (
           <SwiperSlide key={s.image}>
             <div className={`relative aspect-[1128/520] overflow-hidden rounded-[18px] ${s.variant === "stock-up" ? "[container-type:inline-size]" : ""}`}>
-              <Image src={s.image} alt={s.title.replace(/\s+/g, " ").trim()} fill preload={i === 0} sizes="80vw" className="object-cover object-center" />
+              <Image src={s.image} alt={s.title.replace(/\s+/g, " ").trim()} fill fetchPriority={i === 0 ? "high" : undefined} sizes="(min-width:1024px) 80vw, 90vw" className="object-cover object-center" />
               {s.variant === "stock-up" ? (
                 <div className="absolute top-[36.5%] left-[8.3%] flex flex-col items-start">
                   <h2 className="font-['Times_New_Roman',serif]">
@@ -74,7 +75,7 @@ export function HeroMobile() {
         {HERO_MOBILE.map((s, i) => (
           <SwiperSlide key={s.image}>
             <div className="relative h-[75svh] overflow-hidden rounded-[6px]">
-              <Image src={s.image} alt={`Slide ${i + 1}`} fill preload={i === 0} sizes="90vw" className="rounded-[6px] object-cover" />
+              <Image src={s.image} alt={`Slide ${i + 1}`} fill fetchPriority={i === 0 ? "high" : undefined} sizes="90vw" className="rounded-[6px] object-cover" />
               <div className="absolute inset-0 flex flex-col items-center justify-between px-4 pt-10 pb-6 text-center sm:pt-12 sm:pb-10">
                 <div className={s.light ? "invisible" : ""}>
                   <h2 className="mb-3 font-heading text-[22px] leading-tight font-semibold text-[#2F3A4A] sm:text-[28px]">{s.title}</h2>
@@ -171,8 +172,7 @@ export function InstagramStrip() {
     <section className="w-full bg-gradient-to-b from-[#c7a895] to-[#EDE2DD] pt-[20px] lg:bg-gradient-to-r lg:to-white">
       <div className="relative ml-4 flex w-[90%] flex-col gap-1 md:ml-auto md:flex-row md:items-end md:justify-between">
         <div className="relative mx-auto aspect-[365/372] w-full overflow-hidden md:mx-0 md:aspect-[365/352] md:w-[55%] lg:aspect-auto lg:w-[28%] lg:overflow-visible">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${S}/instapage.svg`} alt="Instagram page preview" className="h-full w-full object-cover object-top lg:h-auto lg:object-contain" />
+          <Image src={`${R}/instapage.webp`} alt="Instagram page preview" width={1080} height={1471} sizes="(min-width:1024px) 26vw, (min-width:768px) 50vw, 90vw" className="h-full w-full object-cover object-top lg:h-auto lg:object-contain" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#c7a895] via-[#c7a895]/70 to-transparent lg:hidden" />
         </div>
         <div className="ikx-insta relative z-20 mt-[-1.5rem] ml-auto w-full overflow-hidden pb-[40px] md:flex-1 md:pl-4 lg:mt-0 lg:pb-0">
@@ -200,9 +200,9 @@ export function InstagramStrip() {
 
 // ── Testimonials (legacy gh; copy and names are the legacy site's own content) ──
 const TESTIMONIALS = [
-  { img: `${S}/test1.svg`, name: "Arjun Menon", text: "I’ve tried many fragrances, but Ikonix perfumes truly stand out. The scent feels premium, lasts the entire day, and always gets compliments. It has now become my everyday signature fragrance." },
-  { img: `${S}/test2.svg`, name: "Rahul Nair", text: "The quality of Ikonix perfumes is exceptional. The fragrance is rich, long-lasting, and perfectly balanced. I especially loved the custom perfume experience — it feels truly personal and unique." },
-  { img: `${S}/test3.svg`, name: "Meera Thomas", text: "I absolutely love the elegance of Ikonix fragrances. The scent is sophisticated and stays for hours without fading. It’s now my go-to perfume for special occasions and daily wear." },
+  { img: `${R}/test1.webp`, name: "Arjun Menon", text: "I’ve tried many fragrances, but Ikonix perfumes truly stand out. The scent feels premium, lasts the entire day, and always gets compliments. It has now become my everyday signature fragrance." },
+  { img: `${R}/test2.webp`, name: "Rahul Nair", text: "The quality of Ikonix perfumes is exceptional. The fragrance is rich, long-lasting, and perfectly balanced. I especially loved the custom perfume experience — it feels truly personal and unique." },
+  { img: `${R}/test3.webp`, name: "Meera Thomas", text: "I absolutely love the elegance of Ikonix fragrances. The scent is sophisticated and stays for hours without fading. It’s now my go-to perfume for special occasions and daily wear." },
 ];
 
 export function Testimonials() {
@@ -221,8 +221,7 @@ export function Testimonials() {
               <div className="flex flex-col items-center p-4">
                 <div className="rounded-[24px] bg-[#EDE2DD]">
                   <div className="mx-auto flex h-[250px] w-[300px] flex-col items-center justify-center gap-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={t.img} alt="" className="h-16 w-16 rounded-full object-cover" />
+                    <Image src={t.img} alt="" width={200} height={200} sizes="64px" className="h-16 w-16 rounded-full object-cover" />
                     <div className="grid p-2 text-center">
                       <span className="font-fancy text-[21px] font-bold text-[#C5A291]">{t.name}</span>
                       <span className="font-fancy text-[14px] text-gray-600">{t.text}</span>
