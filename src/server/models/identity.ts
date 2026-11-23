@@ -70,7 +70,8 @@ export type RoleDoc = InferSchemaType<typeof roleSchema>;
 export const Role = defineModel("Role", roleSchema, "roles");
 
 // ── Session (one per device; absolute cap 90 days for customers) ───────────
-export const SESSION_MAX_MS = { CUSTOMER: 90 * 24 * 3600 * 1000, ADMIN: 12 * 3600 * 1000 } as const;
+// Hard ceilings enforced by the Session validator. The actual customer lifetime comes from .env (see customer-session.ts).
+export const SESSION_MAX_MS = { CUSTOMER: 365 * 24 * 3600 * 1000, ADMIN: 12 * 3600 * 1000 } as const;
 
 const sessionSchema = new Schema(
   {

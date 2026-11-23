@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-11-23T12:48:43.029Z",
+  "totals": {
+    "sourceProducts": 413,
+    "foundOnTarget": 413,
+    "missing": 0,
+    "sourceVariants": 1239,
+    "targetVariants": 1239,
+    "inventoryRows": 1239,
+    "sourceImages": 2845,
+    "imagesVerifiedByteIdentical": 2845,
+    "uniqueImageUrls": 460,
+    "mediaLibraryAssets": 456,
+    "urlsSharingContentWithAnotherProduct": 4,
+    "reachable": "skipped",
+    "unreachable": 0,
+    "duplicateSlugs": 0,
+    "duplicateSkus": 0,
+    "duplicateLegacyIds": 0,
+    "discrepancies": 0
+  },
+  "lastCreateRun": {
+    "processed": 413,
+    "created": 0,
+    "wouldCreate": 0,
+    "alreadyExisting": 413,
+    "failed": 0,
+    "createdAsDraft": 0,
+    "variantsCreated": 0,
+    "imagesLinked": 0,
+    "imagesNewlyUploaded": 0,
+    "imageFailures": 0
+  },
+  "problems": []
+}

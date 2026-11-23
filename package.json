@@ -10,8 +10,13 @@
     "ikonix:setup-db": "tsx scripts/ikonix/setup-db.ts",
     "ikonix:import": "tsx scripts/ikonix/import-catalogue.ts",
     "ikonix:verify": "tsx scripts/ikonix/verify-db.ts",
+    "ikonix:copy-catalogue": "tsx scripts/ikonix/copy-catalogue.ts",
     "ikonix:create-admin": "tsx scripts/ikonix/create-admin.ts",
-    "ikonix:migrate-images": "tsx scripts/ikonix/migrate-images.ts"
+    "ikonix:migrate-images": "tsx scripts/ikonix/migrate-images.ts",
+    "bulk:scan": "NODE_OPTIONS=--conditions=react-server tsx scripts/bulk-upload-products/scan-products.ts",
+    "bulk:upload-images": "NODE_OPTIONS=--conditions=react-server tsx scripts/bulk-upload-products/upload-cloudinary.ts",
+    "bulk:create": "NODE_OPTIONS=--conditions=react-server tsx scripts/bulk-upload-products/create-products.ts",
+    "bulk:verify": "NODE_OPTIONS=--conditions=react-server tsx scripts/bulk-upload-products/verify-products.ts"
   },
   "dependencies": {
     "@tiptap/extension-image": "^3.31.3",

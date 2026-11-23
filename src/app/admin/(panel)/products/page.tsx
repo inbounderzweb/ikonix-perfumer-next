@@ -18,7 +18,7 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
   const href = (p: number) => `/admin/products?${new URLSearchParams({ ...(q && { q }), ...(status && { status }), page: String(p) })}`;
   return (
     <>
-      <PageHeader title="Products" subtitle={`${total.toLocaleString("en-IN")} products`} actions={admin.permissions.has("products.write") && <Link href="/admin/products/new" className={button("primary")}>Add product</Link>} />
+      <PageHeader title="Products" subtitle={`${total.toLocaleString("en-IN")} products`} actions={admin.permissions.has("products.write") && <><Link href="/admin/products/bulk" className={button("secondary")}>Bulk upload</Link><Link href="/admin/products/new" className={button("primary")}>Add product</Link></>} />
       <form className="mb-4 flex flex-wrap gap-2" role="search">
         <input name="q" defaultValue={q} placeholder="Search name, SKU or inspired-by" aria-label="Search products" className={`${inputCls} max-w-sm`} />
         <select name="status" defaultValue={status} aria-label="Status" className={`${inputCls} !w-auto`}>

@@ -121,5 +121,6 @@ const ICONS = {
   trash: ["M4 7h16", "M10 11v6", "M14 11v6", "M6 7l1 13h10l1-13", "M9 7V4h6v3"],
   copy: ["M9 9h11v11H9z", "M5 15V4h11"],
   check: ["M5 12l5 5 9-10"],
+  tag: ["M3 12l9-9h8v8l-9 9z", "M16 8h.01"],
   log: ["M5 4h14v16H5z", "M9 9h6", "M9 13h6", "M9 17h3"],
 };

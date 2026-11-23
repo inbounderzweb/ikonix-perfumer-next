@@ -15,10 +15,14 @@ const scrub = (v: unknown, depth = 0): unknown => {
 };
 
 /** Append-only record of an admin action. Never throws (an audit failure must not undo the action). */
-export async function audit(actor: AdminUser, action: string, entityType: string, entityId: string, change?: { before?: unknown; after?: unknown }) {
+export type AuditActor = Pick<AdminUser, "id">;
+export type AuditMeta = { ip: string | null; userAgent: string | null };
+
+/** `meta` is for callers outside a request (CLI tooling); inside a request it is read from the headers. */
+export async function audit(actor: AuditActor, action: string, entityType: string, entityId: string, change?: { before?: unknown; after?: unknown }, meta?: AuditMeta) {
   try {
     await db();
-    const m = await clientMeta();
+    const m = meta ?? (await clientMeta());
     await AuditLog.create({
       actorUserId: actor.id, actorType: "ADMIN", action, entityType, entityId,
       before: scrub(change?.before), after: scrub(change?.after), ipAddress: m.ip, userAgent: m.userAgent,

@@ -1,0 +1,4702 @@
+{
+  "scannedAt": "2026-11-23T12:48:34.174Z",
+  "source": "public/ikonix/export/all-products.json",
+  "totals": {
+    "sourceProducts": 413,
+    "valid": 413,
+    "invalid": 0,
+    "wouldPublish": 395,
+    "wouldDraft": 18,
+    "variants": 1239,
+    "images": 2845,
+    "imageMegabytes": 226.3,
+    "missingImages": 0,
+    "imagesOver10MB": 0,
+    "duplicateSlugs": 0,
+    "duplicateSkus": 0,
+    "duplicateIds": 0,
+    "alreadyOnTarget": 413,
+    "toCreate": 0
+  },
+  "invalid": [],
+  "missingImages": [],
+  "duplicates": {
+    "slugs": [],
+    "skus": [],
+    "ids": []
+  },
+  "drafts": [
+    {
+      "legacyId": "94",
+      "slug": "inspired-by-eau-dorange-verte-1979",
+      "issues": [
+        "Variant 30 ml (vid 63): Legacy sale price ₹569 is higher than MRP ₹559."
+      ]
+    },
+    {
+      "legacyId": "98",
+      "slug": "inspired-by-marj",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "106",
+      "slug": "inspired-by-akoya",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "125",
+      "slug": "inspired-by-libere-intense",
+      "issues": [
+        "Variant 100 ml (vid 158): Legacy sale price ₹1146 is higher than MRP ₹899."
+      ]
+    },
+    {
+      "legacyId": "133",
+      "slug": "inspired-by-khamrah",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "141",
+      "slug": "inspired-by-oud-silk-mood",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "142",
+      "slug": "inspired-by-y-elixir",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "225",
+      "slug": "inspired-by-absolu-aventus-225",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "232",
+      "slug": "inspired-by-elysium",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "282",
+      "slug": "inspired-by-rodriguez-for-her",
+      "issues": [
+        "Variant 100 ml (vid 629): Legacy sale price ₹13156 is higher than MRP ₹1549."
+      ]
+    },
+    {
+      "legacyId": "290",
+      "slug": "inspired-by-anthology-limperatrice-3",
+      "issues": [
+        "Variant 40 ml (vid 652): Unusual size \"40\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "legacyId": "333",
+      "slug": "inspired-by-yara-tous",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "420",
+      "slug": "inspired-by-pomegranate-musk",
+      "issues": [
+        "Variant 10 ml (vid 1043): Unusual size \"10\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "legacyId": "430",
+      "slug": "inspired-by-oud-for-greatness",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "431",
+      "slug": "pistachio-cream",
+      "issues": [
+        "Description is empty in the legacy data."
+      ]
+    },
+    {
+      "legacyId": "434",
+      "slug": "inspired-by-madawi",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "legacyId": "452",
+      "slug": "inspired-by-1-million-elixir",
+      "issues": [
+        "Variant 101 ml (vid 1139): Unusual size \"101\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "legacyId": "498",
+      "slug": "inspired-by-miss-dior-edp",
+      "issues": [
+        "Description is empty in the legacy data."
+      ]
+    }
+  ],
+  "existing": [
+    {
+      "legacyId": "86",
+      "productId": "6b03e3f4e483ec675050f01c",
+      "slug": "inspired-by-stronger-with-you",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "87",
+      "productId": "6b03e3f4e483ec675050f031",
+      "slug": "inspired-by-oud-maracuja",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "88",
+      "productId": "6b03e3f4e483ec675050f046",
+      "slug": "inspired-by-sauvage",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "83",
+      "productId": "6b03e3f4e483ec675050f059",
+      "slug": "inspired-by-electric-cherry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "89",
+      "productId": "6b03e3f4e483ec675050f06e",
+      "slug": "inspired-by-pure-xs",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "90",
+      "productId": "6b03e3f4e483ec675050f083",
+      "slug": "inspired-by-khamrah-qahwa",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "91",
+      "productId": "6b03e3f5e483ec675050f098",
+      "slug": "inspired-by-212-sexy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "92",
+      "productId": "6b03e3f5e483ec675050f0ad",
+      "slug": "inspired-by-soleil-blanc",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "93",
+      "productId": "6b03e3f5e483ec675050f0c2",
+      "slug": "inspired-by-fabulous",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "94",
+      "productId": "6b03e3f5e483ec675050f0d7",
+      "slug": "inspired-by-eau-dorange-verte-1979",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "95",
+      "productId": "6b03e3f5e483ec675050f0ec",
+      "slug": "inspired-by-rose-prick",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "96",
+      "productId": "6b03e3f5e483ec675050f101",
+      "slug": "inspired-by-bal-dafrique",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "97",
+      "productId": "6b03e3f5e483ec675050f116",
+      "slug": "inspired-by-viking-cologne",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "98",
+      "productId": "6b03e3f5e483ec675050f12b",
+      "slug": "inspired-by-marj",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "99",
+      "productId": "6b03e3f5e483ec675050f140",
+      "slug": "inspired-by-baccarat-rouge-extrait",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "100",
+      "productId": "6b03e3f5e483ec675050f155",
+      "slug": "inspired-by-luna-blossom",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "101",
+      "productId": "6b03e3f6e483ec675050f16a",
+      "slug": "inspired-by-irresistible-edt-fraiche",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "102",
+      "productId": "6b03e3f6e483ec675050f17f",
+      "slug": "inspired-by-shay-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "103",
+      "productId": "6b03e3f6e483ec675050f194",
+      "slug": "inspired-by-stronger-with-you-intensely",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "104",
+      "productId": "6b03e3f6e483ec675050f1a9",
+      "slug": "inspired-by-stronger-with-you-tobacco",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "105",
+      "productId": "6b03e3f6e483ec675050f1be",
+      "slug": "inspired-by-bottled-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "106",
+      "productId": "6b03e3f6e483ec675050f1d3",
+      "slug": "inspired-by-akoya",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "107",
+      "productId": "6b03e3f6e483ec675050f1e2",
+      "slug": "inspired-by-tuxedo",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "108",
+      "productId": "6b03e3f6e483ec675050f1f1",
+      "slug": "inspired-by-le-beau-le-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "109",
+      "productId": "6b03e3f6e483ec675050f206",
+      "slug": "inspired-by-stronger-with-you-absolutely",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "110",
+      "productId": "6b03e3f7e483ec675050f21b",
+      "slug": "inspired-by-god-of-fire",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "111",
+      "productId": "6b03e3f7e483ec675050f230",
+      "slug": "inspired-by-omnia-pink-sapphire",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "112",
+      "productId": "6b03e3f7e483ec675050f245",
+      "slug": "inspired-by-omnia-paraiba",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "113",
+      "productId": "6b03e3f7e483ec675050f25a",
+      "slug": "inspired-by-omnia-crystalline",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "114",
+      "productId": "6b03e3f7e483ec675050f26f",
+      "slug": "inspired-by-envy-me",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "115",
+      "productId": "6b03e3f7e483ec675050f284",
+      "slug": "inspired-by-ganymede",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "116",
+      "productId": "6b03e3f7e483ec675050f299",
+      "slug": "inspired-by-omnia-amethyste",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "117",
+      "productId": "6b03e3f7e483ec675050f2ae",
+      "slug": "inspired-by-narciso-fleur-musc",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "118",
+      "productId": "6b03e3f7e483ec675050f2c3",
+      "slug": "inspired-by-terroni",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "119",
+      "productId": "6b03e3f8e483ec675050f2d8",
+      "slug": "inspired-by-baby-cat",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "120",
+      "productId": "6b03e3f8e483ec675050f2ed",
+      "slug": "inspired-by-blue-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "121",
+      "productId": "6b03e3f8e483ec675050f300",
+      "slug": "inspired-by-pacific-chill",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "122",
+      "productId": "6b03e3f8e483ec675050f315",
+      "slug": "inspired-by-phantom-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "123",
+      "productId": "6b03e3f8e483ec675050f32a",
+      "slug": "inspired-by-the-scent-elixir-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "124",
+      "productId": "6b03e3f8e483ec675050f33f",
+      "slug": "inspired-by-boss-the-scent-elixir-him",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "125",
+      "productId": "6b03e3f8e483ec675050f354",
+      "slug": "inspired-by-libere-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "126",
+      "productId": "6b03e3f8e483ec675050f369",
+      "slug": "inspired-by-delina-exclusif",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "127",
+      "productId": "6b03e3f9e483ec675050f37e",
+      "slug": "inspired-by-supreme-bouquet",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "128",
+      "productId": "6b03e3f9e483ec675050f393",
+      "slug": "inspired-by-voyage",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "129",
+      "productId": "6b03e3f9e483ec675050f3a8",
+      "slug": "inspired-by-vanilla-28",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "130",
+      "productId": "6b03e3f9e483ec675050f3bd",
+      "slug": "inspired-by-gentleman-society",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "131",
+      "productId": "6b03e3f9e483ec675050f3d2",
+      "slug": "inspired-by-le-beau-paradise-garden",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "132",
+      "productId": "6b03e3f9e483ec675050f3e7",
+      "slug": "inspired-by-good-girl-blush",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "133",
+      "productId": "6b03e3f9e483ec675050f3fc",
+      "slug": "inspired-by-khamrah",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "134",
+      "productId": "6b03e3f9e483ec675050f40b",
+      "slug": "inspired-by-imperial-valley",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "135",
+      "productId": "6b03e3fae483ec675050f41a",
+      "slug": "inspired-by-boss-the-scent",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "136",
+      "productId": "6b03e3fae483ec675050f42f",
+      "slug": "inspired-by-utopia-vanilla-coco-21",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "137",
+      "productId": "6b03e3fae483ec675050f444",
+      "slug": "inspired-by-tobacco-honey",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "138",
+      "productId": "6b03e3fae483ec675050f459",
+      "slug": "inspired-by-kalan",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "139",
+      "productId": "6b03e3fae483ec675050f46e",
+      "slug": "inspired-by-goddess",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "140",
+      "productId": "6b03e3fae483ec675050f483",
+      "slug": "inspired-by-erba-pura-gold",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "141",
+      "productId": "6b03e3fae483ec675050f498",
+      "slug": "inspired-by-oud-silk-mood",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "142",
+      "productId": "6b03e3fae483ec675050f4ad",
+      "slug": "inspired-by-y-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "143",
+      "productId": "6b03e3fae483ec675050f4c2",
+      "slug": "inspired-by-noir-extreme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "144",
+      "productId": "6b03e3fbe483ec675050f4d7",
+      "slug": "inspired-by-love-dont-be-shy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "145",
+      "productId": "6b03e3fbe483ec675050f4ec",
+      "slug": "inspired-by-icon",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "146",
+      "productId": "6b03e3fbe483ec675050f501",
+      "slug": "inspired-by-ck-be",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "147",
+      "productId": "6b03e3fbe483ec675050f516",
+      "slug": "inspired-by-oudgasm-smoky-oud-07",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "148",
+      "productId": "6b03e3fbe483ec675050f52b",
+      "slug": "inspired-by-madawi-gold",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "149",
+      "productId": "6b03e3fbe483ec675050f540",
+      "slug": "inspired-by-invictus-onyx-collector",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "150",
+      "productId": "6b03e3fbe483ec675050f555",
+      "slug": "inspired-by-very-sexy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "151",
+      "productId": "6b03e3fbe483ec675050f566",
+      "slug": "inspired-by-lucky-candy-151",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "152",
+      "productId": "6b03e3fce483ec675050f57b",
+      "slug": "inspired-by-boss-bottled-unlimited",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "153",
+      "productId": "6b03e3fce483ec675050f590",
+      "slug": "inspired-by-rose-nroses",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "154",
+      "productId": "6b03e3fce483ec675050f5a5",
+      "slug": "inspired-by-hawas",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "155",
+      "productId": "6b03e3fce483ec675050f5ba",
+      "slug": "inspired-by-stronger-with-you-leather",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "156",
+      "productId": "6b03e3fce483ec675050f5cf",
+      "slug": "inspired-by-absolu-aventus-156",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "157",
+      "productId": "6b03e3fce483ec675050f5e4",
+      "slug": "inspired-by-herod",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "158",
+      "productId": "6b03e3fce483ec675050f5f9",
+      "slug": "inspired-by-toy-boy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "159",
+      "productId": "6b03e3fce483ec675050f60e",
+      "slug": "inspired-by-code-profumo",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "160",
+      "productId": "6b03e3fde483ec675050f623",
+      "slug": "inspired-by-libre-flowers-and-flames",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "161",
+      "productId": "6b03e3fde483ec675050f638",
+      "slug": "inspired-by-le-male-le-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "162",
+      "productId": "6b03e3fde483ec675050f64d",
+      "slug": "inspired-by-imagination",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "163",
+      "productId": "6b03e3fde483ec675050f662",
+      "slug": "inspired-by-red-desire",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "164",
+      "productId": "6b03e3fde483ec675050f677",
+      "slug": "inspired-by-boss-bottled-night",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "165",
+      "productId": "6b03e3fde483ec675050f68c",
+      "slug": "inspired-by-scandal-absolu",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "166",
+      "productId": "6b03e3fde483ec675050f6a1",
+      "slug": "inspired-by-viva-la-juicy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "167",
+      "productId": "6b03e3fde483ec675050f6b6",
+      "slug": "inspired-by-delina",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "168",
+      "productId": "6b03e3fee483ec675050f6cb",
+      "slug": "inspired-by-oud-blue",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "169",
+      "productId": "6b03e3fee483ec675050f6e0",
+      "slug": "inspired-by-x-for-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "170",
+      "productId": "6b03e3fee483ec675050f6f5",
+      "slug": "inspired-by-cool-water-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "171",
+      "productId": "6b03e3fee483ec675050f70a",
+      "slug": "inspired-by-bad-boy-extreme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "172",
+      "productId": "6b03e3fee483ec675050f71f",
+      "slug": "inspired-by-nuit-dissey-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "173",
+      "productId": "6b03e3fee483ec675050f734",
+      "slug": "inspired-by-oud-satin-mood",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "174",
+      "productId": "6b03e3fee483ec675050f749",
+      "slug": "inspired-by-boss-orange",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "175",
+      "productId": "6b03e3fee483ec675050f75e",
+      "slug": "inspired-by-gucci-guilty-absolu",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "176",
+      "productId": "6b03e3ffe483ec675050f773",
+      "slug": "inspired-by-paradoxe",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "177",
+      "productId": "6b03e3ffe483ec675050f788",
+      "slug": "inspired-by-mb-starwalker",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "178",
+      "productId": "6b03e3ffe483ec675050f79d",
+      "slug": "inspired-by-myself",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "179",
+      "productId": "6b03e3ffe483ec675050f7b2",
+      "slug": "inspired-by-good-girl-gone-bad",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "180",
+      "productId": "6b03e3ffe483ec675050f7c7",
+      "slug": "inspired-by-cd-homme-sport",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "181",
+      "productId": "6b03e3ffe483ec675050f7dc",
+      "slug": "inspired-by-oud-saffron",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "182",
+      "productId": "6b03e3ffe483ec675050f7f1",
+      "slug": "inspired-by-flora-gorgeous-orchid-182",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "183",
+      "productId": "6b03e3ffe483ec675050f806",
+      "slug": "inspired-by-gentleman-reserve-privee",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "184",
+      "productId": "6b03e400e483ec675050f81b",
+      "slug": "inspired-by-stellar-times",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "185",
+      "productId": "6b03e400e483ec675050f830",
+      "slug": "inspired-by-sweet-like-candy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "186",
+      "productId": "6b03e400e483ec675050f845",
+      "slug": "inspired-by-1-million",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "187",
+      "productId": "6b03e400e483ec675050f85a",
+      "slug": "inspired-by-outlands",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "188",
+      "productId": "6b03e400e483ec675050f86f",
+      "slug": "inspired-by-vetiver",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "189",
+      "productId": "6b03e400e483ec675050f884",
+      "slug": "inspired-by-bubble-bath",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "190",
+      "productId": "6b03e400e483ec675050f899",
+      "slug": "inspired-by-acqua-di-gio-profondo",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "191",
+      "productId": "6b03e400e483ec675050f8ae",
+      "slug": "inspired-by-oudgasm-chocolate-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "192",
+      "productId": "6b03e401e483ec675050f8c3",
+      "slug": "inspired-by-la-nuit-de-lhomme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "193",
+      "productId": "6b03e401e483ec675050f8d8",
+      "slug": "inspired-by-because-its-you",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "194",
+      "productId": "6b03e401e483ec675050f8ed",
+      "slug": "inspired-by-erba-pura",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "195",
+      "productId": "6b03e401e483ec675050f902",
+      "slug": "inspired-by-stronger-with-you-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "196",
+      "productId": "6b03e401e483ec675050f917",
+      "slug": "inspired-by-oudgasm-vanilla-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "197",
+      "productId": "6b03e401e483ec675050f92c",
+      "slug": "inspired-by-yara-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "198",
+      "productId": "6b03e401e483ec675050f941",
+      "slug": "inspired-by-orange-blossom-198",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "199",
+      "productId": "6b03e401e483ec675050f956",
+      "slug": "inspired-by-1-million-lucky-199",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "200",
+      "productId": "6b03e402e483ec675050f96b",
+      "slug": "inspired-by-guidance",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "201",
+      "productId": "6b03e402e483ec675050f980",
+      "slug": "inspired-by-jadore-201",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "202",
+      "productId": "6b03e402e483ec675050f995",
+      "slug": "inspired-by-cedrat-boise",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "203",
+      "productId": "6b03e402e483ec675050f9aa",
+      "slug": "inspired-by-angel-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "204",
+      "productId": "6b03e402e483ec675050f9bf",
+      "slug": "inspired-by-reflection",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "205",
+      "productId": "6b03e402e483ec675050f9d4",
+      "slug": "inspired-by-arabians-tonka",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "206",
+      "productId": "6b03e402e483ec675050f9e9",
+      "slug": "inspired-by-1-million-golden-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "207",
+      "productId": "6b03e402e483ec675050f9fe",
+      "slug": "inspired-by-acqua-di-gio-giorgio",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "208",
+      "productId": "6b03e402e483ec675050fa13",
+      "slug": "inspired-by-devotion-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "209",
+      "productId": "6b03e403e483ec675050fa28",
+      "slug": "inspired-by-hersh-lahab",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "210",
+      "productId": "6b03e403e483ec675050fa3d",
+      "slug": "inspired-by-bergamask-210",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "211",
+      "productId": "6b03e403e483ec675050fa52",
+      "slug": "inspired-by-by-the-fireplace-211",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "212",
+      "productId": "6b03e403e483ec675050fa67",
+      "slug": "inspired-by-aqua-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "213",
+      "productId": "6b03e403e483ec675050fa7c",
+      "slug": "inspired-by-eden-juicy-apple",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "214",
+      "productId": "6b03e403e483ec675050fa91",
+      "slug": "inspired-by-intense-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "215",
+      "productId": "6b03e403e483ec675050faa6",
+      "slug": "inspired-by-lyric-man",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "216",
+      "productId": "6b03e403e483ec675050fabb",
+      "slug": "inspired-by-tam-dao",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "217",
+      "productId": "6b03e404e483ec675050fad0",
+      "slug": "inspired-by-marfa-spices-memo-paris",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "218",
+      "productId": "6b03e404e483ec675050fae5",
+      "slug": "inspired-by-tygar",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "219",
+      "productId": "6b03e404e483ec675050fafa",
+      "slug": "inspired-by-psychedelic-love",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "220",
+      "productId": "6b03e404e483ec675050fb0f",
+      "slug": "inspired-by-terre-d",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "221",
+      "productId": "6b03e404e483ec675050fb24",
+      "slug": "inspired-by-bad-boy-carolina-herrera",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "222",
+      "productId": "6b03e404e483ec675050fb39",
+      "slug": "inspired-by-angels-share",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "223",
+      "productId": "6b03e404e483ec675050fb4e",
+      "slug": "inspired-by-layton",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "224",
+      "productId": "6b03e404e483ec675050fb63",
+      "slug": "inspired-by-212-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "225",
+      "productId": "6b03e405e483ec675050fb78",
+      "slug": "inspired-by-absolu-aventus-225",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "226",
+      "productId": "6b03e405e483ec675050fb8d",
+      "slug": "inspired-by-rose-of-no-mans-land",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "227",
+      "productId": "6b03e405e483ec675050fba2",
+      "slug": "inspired-by-invictus-aqua",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "228",
+      "productId": "6b03e405e483ec675050fbb7",
+      "slug": "inspired-by-allure-homme-sport",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "229",
+      "productId": "6b03e405e483ec675050fbcc",
+      "slug": "inspired-by-wanted",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "230",
+      "productId": "6b03e405e483ec675050fbe1",
+      "slug": "inspired-by-ultra-male",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "231",
+      "productId": "6b03e405e483ec675050fbf6",
+      "slug": "inspired-by-philosykos-231",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "232",
+      "productId": "6b03e405e483ec675050fc0b",
+      "slug": "inspired-by-elysium",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "233",
+      "productId": "6b03e406e483ec675050fc20",
+      "slug": "inspired-by-royal-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "234",
+      "productId": "6b03e406e483ec675050fc35",
+      "slug": "inspired-by-jazz-club",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "235",
+      "productId": "6b03e406e483ec675050fc4a",
+      "slug": "inspired-by-pour-homme-235",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "236",
+      "productId": "6b03e406e483ec675050fc5f",
+      "slug": "inspired-by-fahrenheit",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "237",
+      "productId": "6b03e406e483ec675050fc74",
+      "slug": "inspired-by-bleu-de",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "238",
+      "productId": "6b03e406e483ec675050fc89",
+      "slug": "inspired-by-black-phantom",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "239",
+      "productId": "6b03e406e483ec675050fc9e",
+      "slug": "inspired-by-egoiste-platinum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "240",
+      "productId": "6b03e407e483ec675050fcb3",
+      "slug": "inspired-by-y-eau-de-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "241",
+      "productId": "6b03e407e483ec675050fcc8",
+      "slug": "inspired-by-phantom",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "242",
+      "productId": "6b03e407e483ec675050fcdd",
+      "slug": "inspired-by-silver-mountain-water",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "243",
+      "productId": "6b03e407e483ec675050fcf2",
+      "slug": "inspired-by-sauvage-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "244",
+      "productId": "6b03e407e483ec675050fd07",
+      "slug": "inspired-by-epic-man",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "245",
+      "productId": "6b03e407e483ec675050fd1c",
+      "slug": "inspired-by-red-tobacco",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "246",
+      "productId": "6b03e407e483ec675050fd31",
+      "slug": "inspired-by-kouros",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "247",
+      "productId": "6b03e407e483ec675050fd46",
+      "slug": "inspired-by-green-irish-tweed",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "248",
+      "productId": "6b03e407e483ec675050fd5b",
+      "slug": "inspired-by-emblem-montblanc",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "249",
+      "productId": "6b03e408e483ec675050fd70",
+      "slug": "inspired-by-halfeti",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "250",
+      "productId": "6b03e408e483ec675050fd85",
+      "slug": "inspired-by-spice-bomb",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "251",
+      "productId": "6b03e408e483ec675050fd9a",
+      "slug": "inspired-by-explorer",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "252",
+      "productId": "6b03e408e483ec675050fdaf",
+      "slug": "inspired-by-y-eau-de-parfum-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "253",
+      "productId": "6b03e408e483ec675050fdc4",
+      "slug": "inspired-by-hawas-ice",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "254",
+      "productId": "6b03e408e483ec675050fdd9",
+      "slug": "inspired-by-hero-burberry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "255",
+      "productId": "6b03e408e483ec675050fdee",
+      "slug": "inspired-by-212-vip-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "256",
+      "productId": "6b03e408e483ec675050fe03",
+      "slug": "inspired-by-acqua-di-gio-absolu",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "257",
+      "productId": "6b03e409e483ec675050fe18",
+      "slug": "inspired-by-code-sport",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "258",
+      "productId": "6b03e409e483ec675050fe2d",
+      "slug": "inspired-by-megamare",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "259",
+      "productId": "6b03e409e483ec675050fe42",
+      "slug": "inspired-by-acqua-di-gio-profumo-259",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "260",
+      "productId": "6b03e409e483ec675050fe57",
+      "slug": "inspired-by-light-blue",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "261",
+      "productId": "6b03e409e483ec675050fe6c",
+      "slug": "inspired-by-noir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "262",
+      "productId": "6b03e409e483ec675050fe81",
+      "slug": "inspired-by-legend-red",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "263",
+      "productId": "6b03e409e483ec675050fe96",
+      "slug": "inspired-by-aqva-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "264",
+      "productId": "6b03e409e483ec675050feab",
+      "slug": "inspired-by-eros-flame",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "265",
+      "productId": "6b03e40ae483ec675050fec0",
+      "slug": "inspired-by-king",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "266",
+      "productId": "6b03e40ae483ec675050fed5",
+      "slug": "inspired-by-leau-dissey-pour-homme-issey",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "267",
+      "productId": "6b03e40ae483ec675050feea",
+      "slug": "inspired-by-uomo-born-in-roma-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "268",
+      "productId": "6b03e40ae483ec675050feff",
+      "slug": "inspired-by-hugo-man",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "269",
+      "productId": "6b03e40ae483ec675050ff14",
+      "slug": "inspired-by-light-blue-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "270",
+      "productId": "6b03e40ae483ec675050ff29",
+      "slug": "inspired-by-eclaire",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "271",
+      "productId": "6b03e40ae483ec675050ff3e",
+      "slug": "inspired-by-english-pear-and-freesia",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "272",
+      "productId": "6b03e40be483ec675050ff53",
+      "slug": "inspired-by-candy-love",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "273",
+      "productId": "6b03e40be483ec675050ff68",
+      "slug": "inspired-by-black-vanilla",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "274",
+      "productId": "6b03e40be483ec675050ff7b",
+      "slug": "inspired-by-body-tender",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "275",
+      "productId": "6b03e40be483ec675050ff90",
+      "slug": "inspired-by-flora-gorgeous-jasmine",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "276",
+      "productId": "6b03e40be483ec675050ffa5",
+      "slug": "inspired-by-coco-mademoiselle",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "277",
+      "productId": "6b03e40be483ec675050ffb8",
+      "slug": "inspired-by-si-passione",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "278",
+      "productId": "6b03e40be483ec675050ffcd",
+      "slug": "inspired-by-valentino-donna-born-in-roma",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "279",
+      "productId": "6b03e40be483ec675050ffe2",
+      "slug": "inspired-by-donna-born-in-roma-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "280",
+      "productId": "6b03e40ce483ec675050fff7",
+      "slug": "inspired-by-flora-gorgeous-gardenia",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "281",
+      "productId": "6b03e40ce483ec675051000c",
+      "slug": "inspired-by-212-vip-rose",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "282",
+      "productId": "6b03e40ce483ec6750510021",
+      "slug": "inspired-by-rodriguez-for-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "283",
+      "productId": "6b03e40ce483ec6750510036",
+      "slug": "inspired-by-moonlight-in-heaven",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "284",
+      "productId": "6b03e40ce483ec675051004b",
+      "slug": "inspired-by-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "285",
+      "productId": "6b03e40ce483ec6750510060",
+      "slug": "inspired-by-black-opium",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "286",
+      "productId": "6b03e40ce483ec6750510075",
+      "slug": "inspired-by-hip-hop-red-apple",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "287",
+      "productId": "6b03e40ce483ec675051008a",
+      "slug": "inspired-by-miss-dior-blooming-bouquet",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "288",
+      "productId": "6b03e40ce483ec675051009f",
+      "slug": "inspired-by-blush",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "289",
+      "productId": "6b03e40de483ec67505100b4",
+      "slug": "inspired-by-crystal-noir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "290",
+      "productId": "6b03e40de483ec67505100c9",
+      "slug": "inspired-by-anthology-limperatrice-3",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "291",
+      "productId": "6b03e40de483ec67505100de",
+      "slug": "inspired-by-black-opium-over-red",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "292",
+      "productId": "6b03e40de483ec67505100f1",
+      "slug": "inspired-by-poison",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "293",
+      "productId": "6b03e40de483ec6750510106",
+      "slug": "inspired-by-lavande-31-293",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "294",
+      "productId": "6b03e40de483ec675051011b",
+      "slug": "inspired-by-mango-skin",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "295",
+      "productId": "6b03e40de483ec6750510130",
+      "slug": "inspired-by-libre",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "296",
+      "productId": "6b03e40de483ec6750510145",
+      "slug": "inspired-by-olympea",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "297",
+      "productId": "6b03e40ee483ec675051015a",
+      "slug": "inspired-by-cool-water-sea-rose",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "298",
+      "productId": "6b03e40ee483ec675051016f",
+      "slug": "inspired-by-no-5-eau-de-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "299",
+      "productId": "6b03e40ee483ec6750510184",
+      "slug": "inspired-by-leau-dissey-issey",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "300",
+      "productId": "6b03e40ee483ec6750510199",
+      "slug": "inspired-by-invictus",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "301",
+      "productId": "6b03e40ee483ec67505101ae",
+      "slug": "inspired-by-one-million",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "302",
+      "productId": "6b03e40ee483ec67505101c3",
+      "slug": "inspired-by-pour-homme-302",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "303",
+      "productId": "6b03e40ee483ec67505101d8",
+      "slug": "inspired-by-acqua-di-gio",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "305",
+      "productId": "6b03e40ee483ec67505101ed",
+      "slug": "inspired-by-grey-vetiver",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "306",
+      "productId": "6b03e40fe483ec6750510202",
+      "slug": "inspired-by-touch-for-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "307",
+      "productId": "6b03e40fe483ec6750510217",
+      "slug": "inspired-by-althair",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "308",
+      "productId": "6b03e40fe483ec675051022c",
+      "slug": "inspired-by-eternity-for-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "309",
+      "productId": "6b03e40fe483ec6750510241",
+      "slug": "inspired-by-ombre-leather",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "310",
+      "productId": "6b03e40fe483ec6750510256",
+      "slug": "inspired-by-neroli-portofino",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "311",
+      "productId": "6b03e40fe483ec675051026b",
+      "slug": "inspired-by-rain-essence",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "312",
+      "productId": "6b03e40fe483ec6750510280",
+      "slug": "inspired-by-bottled-night",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "313",
+      "productId": "6b03e40fe483ec6750510295",
+      "slug": "inspired-by-wood-neroli",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "314",
+      "productId": "6b03e410e483ec67505102aa",
+      "slug": "inspired-by-chrome",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "315",
+      "productId": "6b03e410e483ec67505102bf",
+      "slug": "inspired-by-cool-water",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "316",
+      "productId": "6b03e410e483ec67505102d2",
+      "slug": "inspired-by-bottled-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "317",
+      "productId": "6b03e410e483ec67505102e7",
+      "slug": "inspired-by-the-one-for-men",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "318",
+      "productId": "6b03e410e483ec67505102fc",
+      "slug": "inspired-by-wood-essence",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "319",
+      "productId": "6b03e410e483ec6750510311",
+      "slug": "inspired-by-accento",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "320",
+      "productId": "6b03e410e483ec6750510326",
+      "slug": "inspired-by-man-eau-fraiche",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "321",
+      "productId": "6b03e410e483ec675051033b",
+      "slug": "inspired-by-limmensite",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "322",
+      "productId": "6b03e411e483ec6750510350",
+      "slug": "inspired-by-prive-bleu-turquoise",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "323",
+      "productId": "6b03e411e483ec6750510365",
+      "slug": "inspired-by-one",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "324",
+      "productId": "6b03e411e483ec675051037a",
+      "slug": "inspired-by-tuscan-leather",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "325",
+      "productId": "6b03e411e483ec675051038f",
+      "slug": "inspired-by-bombshell",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "326",
+      "productId": "6b03e411e483ec67505103a4",
+      "slug": "inspired-by-marshmallows",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "327",
+      "productId": "6b03e411e483ec67505103b9",
+      "slug": "inspired-by-chance-eau-tendre",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "328",
+      "productId": "6b03e411e483ec67505103ce",
+      "slug": "inspired-by-cherry-smoke",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "329",
+      "productId": "6b03e411e483ec67505103e1",
+      "slug": "inspired-by-poison-girl",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "330",
+      "productId": "6b03e411e483ec67505103f6",
+      "slug": "inspired-by-irresistibile",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "331",
+      "productId": "6b03e412e483ec675051040b",
+      "slug": "inspired-by-flora-331",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "332",
+      "productId": "6b03e412e483ec6750510420",
+      "slug": "inspired-by-bombshell-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "333",
+      "productId": "6b03e412e483ec6750510435",
+      "slug": "inspired-by-yara-tous",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "334",
+      "productId": "6b03e412e483ec675051044a",
+      "slug": "inspired-by-chance",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "335",
+      "productId": "6b03e412e483ec675051045f",
+      "slug": "inspired-by-alien",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "336",
+      "productId": "6b03e412e483ec6750510474",
+      "slug": "inspired-by-bloom",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "337",
+      "productId": "6b03e412e483ec6750510489",
+      "slug": "inspired-by-bright-crystal",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "338",
+      "productId": "6b03e412e483ec675051049e",
+      "slug": "inspired-by-mon-paris",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "339",
+      "productId": "6b03e413e483ec67505104b3",
+      "slug": "inspired-by-modern-muse",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "340",
+      "productId": "6b03e413e483ec67505104c8",
+      "slug": "inspired-by-lost-cherry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "341",
+      "productId": "6b03e413e483ec67505104dd",
+      "slug": "inspired-by-coromandel",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "342",
+      "productId": "6b03e413e483ec67505104f2",
+      "slug": "inspired-by-yellow-diamond",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "343",
+      "productId": "6b03e413e483ec6750510507",
+      "slug": "inspired-by-joy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "344",
+      "productId": "6b03e413e483ec675051051c",
+      "slug": "inspired-by-scandal",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "345",
+      "productId": "6b03e413e483ec6750510531",
+      "slug": "inspired-by-la-panthere",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "346",
+      "productId": "6b03e413e483ec6750510546",
+      "slug": "inspired-by-si",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "347",
+      "productId": "6b03e414e483ec675051055b",
+      "slug": "inspired-by-idole",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "348",
+      "productId": "6b03e414e483ec6750510570",
+      "slug": "inspired-by-amarige",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "349",
+      "productId": "6b03e414e483ec6750510585",
+      "slug": "inspired-by-lady-million",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "350",
+      "productId": "6b03e414e483ec675051059a",
+      "slug": "inspired-by-bamboo-harmony",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "351",
+      "productId": "6b03e414e483ec67505105af",
+      "slug": "inspired-by-cool-water-woman",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "352",
+      "productId": "6b03e414e483ec67505105c4",
+      "slug": "inspired-by-lucky-candy-352",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "353",
+      "productId": "6b03e414e483ec67505105d9",
+      "slug": "inspired-by-bitter-peach",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "354",
+      "productId": "6b03e414e483ec67505105ee",
+      "slug": "inspired-by-la-vie-est-belle",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "355",
+      "productId": "6b03e415e483ec6750510603",
+      "slug": "inspired-by-prada-candy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "356",
+      "productId": "6b03e415e483ec6750510618",
+      "slug": "inspired-by-rose-vanilla",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "357",
+      "productId": "6b03e415e483ec675051062d",
+      "slug": "inspired-by-my-way",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "358",
+      "productId": "6b03e415e483ec6750510642",
+      "slug": "inspired-by-chloe",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "359",
+      "productId": "6b03e415e483ec6750510657",
+      "slug": "inspired-by-kirke",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "360",
+      "productId": "6b03e415e483ec675051066c",
+      "slug": "inspired-by-dylan-blue",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "361",
+      "productId": "6b03e415e483ec6750510681",
+      "slug": "inspired-by-hypnotic-poison",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "362",
+      "productId": "6b03e415e483ec6750510696",
+      "slug": "inspired-by-jadore-362",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "363",
+      "productId": "6b03e416e483ec67505106ab",
+      "slug": "inspired-by-lovefest-burning-cherry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "364",
+      "productId": "6b03e416e483ec67505106c0",
+      "slug": "inspired-by-linterdit",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "365",
+      "productId": "6b03e416e483ec67505106d5",
+      "slug": "inspired-by-silk-musk",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "366",
+      "productId": "6b03e416e483ec67505106ea",
+      "slug": "inspired-by-good-girl",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "367",
+      "productId": "6b03e416e483ec67505106ff",
+      "slug": "inspired-by-body",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "368",
+      "productId": "6b03e416e483ec6750510714",
+      "slug": "inspired-by-oud-malaki",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "369",
+      "productId": "6b03e416e483ec6750510729",
+      "slug": "inspired-by-oud-cadenza",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "370",
+      "productId": "6b03e416e483ec675051073e",
+      "slug": "inspired-by-tobacco-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "371",
+      "productId": "6b03e417e483ec6750510753",
+      "slug": "inspired-by-irish-leather",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "372",
+      "productId": "6b03e417e483ec6750510768",
+      "slug": "inspired-by-man-in-black-372",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "373",
+      "productId": "6b03e417e483ec675051077d",
+      "slug": "inspired-by-hot-water",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "374",
+      "productId": "6b03e417e483ec6750510792",
+      "slug": "inspired-by-invictus-victory-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "375",
+      "productId": "6b03e417e483ec67505107a7",
+      "slug": "inspired-by-homme-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "376",
+      "productId": "6b03e417e483ec67505107bc",
+      "slug": "inspired-by-tobacco-vanilla",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "377",
+      "productId": "6b03e417e483ec67505107d1",
+      "slug": "inspired-by-luna-rossa-ocean",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "378",
+      "productId": "6b03e417e483ec67505107e6",
+      "slug": "inspired-by-black-saffron",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "379",
+      "productId": "6b03e417e483ec67505107fb",
+      "slug": "inspired-by-scandal-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "380",
+      "productId": "6b03e418e483ec6750510810",
+      "slug": "inspired-by-alexandria-ii",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "381",
+      "productId": "6b03e418e483ec6750510825",
+      "slug": "inspired-by-black-orchid",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "382",
+      "productId": "6b03e418e483ec675051083a",
+      "slug": "inspired-by-interlude",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "383",
+      "productId": "6b03e418e483ec675051084f",
+      "slug": "inspired-by-code",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "384",
+      "productId": "6b03e418e483ec6750510864",
+      "slug": "inspired-by-khamrah-waha",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "385",
+      "productId": "6b03e418e483ec6750510879",
+      "slug": "inspired-by-purpose-50",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "386",
+      "productId": "6b03e418e483ec675051088e",
+      "slug": "inspired-by-hacivat",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "387",
+      "productId": "6b03e419e483ec67505108a3",
+      "slug": "inspired-by-club-de-nuit-bling",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "388",
+      "productId": "6b03e419e483ec67505108b8",
+      "slug": "inspired-by-blue-talisman",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "389",
+      "productId": "6b03e419e483ec67505108cd",
+      "slug": "inspired-by-la-bomba",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "390",
+      "productId": "6b03e419e483ec67505108e2",
+      "slug": "inspired-by-billie-eilish",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "391",
+      "productId": "6b03e419e483ec67505108f1",
+      "slug": "inspired-by-dylan-blue-for-women",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "392",
+      "productId": "6b03e419e483ec6750510906",
+      "slug": "inspired-by-jadore-392",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "393",
+      "productId": "6b03e419e483ec675051091b",
+      "slug": "lovefest-burning-cherry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "394",
+      "productId": "6b03e419e483ec6750510930",
+      "slug": "inspired-by-gucci-guilty-women",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "395",
+      "productId": "6b03e41ae483ec6750510945",
+      "slug": "inspired-by-choco-musk",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "397",
+      "productId": "6b03e41ae483ec675051095a",
+      "slug": "inspired-by-saffron-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "398",
+      "productId": "6b03e41ae483ec675051096f",
+      "slug": "inspired-by-guerlain-vetiver",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "399",
+      "productId": "6b03e41ae483ec6750510984",
+      "slug": "inspired-by-drakkar-noir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "400",
+      "productId": "6b03e41ae483ec6750510999",
+      "slug": "inspired-by-le-beau",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "401",
+      "productId": "6b03e41ae483ec67505109ae",
+      "slug": "inspired-by-milky-marshmallow",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "402",
+      "productId": "6b03e41ae483ec67505109c3",
+      "slug": "inspired-by-million-gold-for-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "403",
+      "productId": "6b03e41ae483ec67505109d8",
+      "slug": "inspired-by-forbidden-rose",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "404",
+      "productId": "6b03e41be483ec67505109ed",
+      "slug": "inspired-by-the-most-wanted",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "405",
+      "productId": "6b03e41be483ec6750510a02",
+      "slug": "inspired-by-baccarat-rouge-540",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "406",
+      "productId": "6b03e41be483ec6750510a17",
+      "slug": "inspired-by-fleur-musc",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "407",
+      "productId": "6b03e41be483ec6750510a2c",
+      "slug": "inspired-by-lazy-sunday",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "408",
+      "productId": "6b03e41be483ec6750510a41",
+      "slug": "inspired-by-flora-gorgeous-orchid-408",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "409",
+      "productId": "6b03e41be483ec6750510a56",
+      "slug": "inspired-by-x-superman",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "410",
+      "productId": "6b03e41be483ec6750510a69",
+      "slug": "inspired-by-aventus",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "411",
+      "productId": "6b03e41be483ec6750510a7e",
+      "slug": "inspired-by-haltane",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "412",
+      "productId": "6b03e41ce483ec6750510a93",
+      "slug": "inspired-by-forever-wanted-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "413",
+      "productId": "6b03e41ce483ec6750510aa8",
+      "slug": "inspired-by-yara-candy",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "414",
+      "productId": "6b03e41ce483ec6750510abd",
+      "slug": "inspired-by-1-million-lucky-414",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "415",
+      "productId": "6b03e41ce483ec6750510ad2",
+      "slug": "inspired-by-guilty",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "416",
+      "productId": "6b03e41ce483ec6750510ae7",
+      "slug": "inspired-by-le-male-elixir-jpg",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "417",
+      "productId": "6b03e41ce483ec6750510afc",
+      "slug": "inspired-by-i-want-choo",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "418",
+      "productId": "6b03e41ce483ec6750510b11",
+      "slug": "inspired-by-brbry-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "419",
+      "productId": "6b03e41ce483ec6750510b26",
+      "slug": "inspired-by-orange-blossom-419",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "420",
+      "productId": "6b03e41de483ec6750510b3b",
+      "slug": "inspired-by-pomegranate-musk",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "421",
+      "productId": "6b03e41de483ec6750510b50",
+      "slug": "inspired-by-bergamask-421",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "422",
+      "productId": "6b03e41de483ec6750510b5f",
+      "slug": "inspired-by-by-the-fireplace-422",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "423",
+      "productId": "6b03e41de483ec6750510b6e",
+      "slug": "inspired-by-lavande-31-423",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "424",
+      "productId": "6b03e41de483ec6750510b83",
+      "slug": "inspired-by-black-xs",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "425",
+      "productId": "6b03e41de483ec6750510b98",
+      "slug": "inspired-by-yum-pistachio-gelato-33",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "426",
+      "productId": "6b03e41de483ec6750510bad",
+      "slug": "inspired-by-valaya",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "427",
+      "productId": "6b03e41de483ec6750510bc2",
+      "slug": "inspired-by-cafe-rose",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "428",
+      "productId": "6b03e41ee483ec6750510bd7",
+      "slug": "inspired-by-vanilla-royale-sugared-patchouli-64",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "429",
+      "productId": "6b03e41ee483ec6750510bec",
+      "slug": "inspired-by-black-afgano",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "430",
+      "productId": "6b03e41ee483ec6750510c01",
+      "slug": "inspired-by-oud-for-greatness",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "431",
+      "productId": "6b03e41ee483ec6750510c16",
+      "slug": "pistachio-cream",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "432",
+      "productId": "6b03e41ee483ec6750510c2b",
+      "slug": "inspired-by-y-iced-cologne",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "433",
+      "productId": "6b03e41ee483ec6750510c40",
+      "slug": "inspired-by-turquoise-summer",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "434",
+      "productId": "6b03e41ee483ec6750510c55",
+      "slug": "inspired-by-madawi",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "435",
+      "productId": "6b03e41ee483ec6750510c6a",
+      "slug": "inspired-by-invictus-victory-absolu",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "436",
+      "productId": "6b03e41fe483ec6750510c7f",
+      "slug": "inspired-by-legend",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "437",
+      "productId": "6b03e41fe483ec6750510c94",
+      "slug": "inspired-by-fierce",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "438",
+      "productId": "6b03e41fe483ec6750510ca9",
+      "slug": "inspired-by-pour-homme-438",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "439",
+      "productId": "6b03e41fe483ec6750510cbe",
+      "slug": "inspired-by-viking",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "440",
+      "productId": "6b03e41fe483ec6750510cd3",
+      "slug": "inspired-by-acqua-di-gio-profumo-440",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "441",
+      "productId": "6b03e41fe483ec6750510ce8",
+      "slug": "inspired-by-lhomme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "442",
+      "productId": "6b03e41fe483ec6750510cfd",
+      "slug": "inspired-by-ck-one",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "443",
+      "productId": "6b03e41fe483ec6750510d12",
+      "slug": "inspired-by-la-nuit-de-lhomme-bleu-electrique",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "444",
+      "productId": "6b03e420e483ec6750510d27",
+      "slug": "inspired-by-lhomme-ideal",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "445",
+      "productId": "6b03e420e483ec6750510d38",
+      "slug": "inspired-by-azz-pour-homme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "446",
+      "productId": "6b03e420e483ec6750510d4d",
+      "slug": "inspired-by-polo-blue",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "447",
+      "productId": "6b03e420e483ec6750510d62",
+      "slug": "inspired-by-philosykos-447",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "448",
+      "productId": "6b03e420e483ec6750510d77",
+      "slug": "inspired-by-afternoon-swim",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "449",
+      "productId": "6b03e420e483ec6750510d8c",
+      "slug": "inspired-by-ultra-zest",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "450",
+      "productId": "6b03e420e483ec6750510da1",
+      "slug": "inspired-by-lhomme-a-la-rose",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "451",
+      "productId": "6b03e420e483ec6750510db6",
+      "slug": "inspired-by-wood-sage-and-sea-salt",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "452",
+      "productId": "6b03e421e483ec6750510dcb",
+      "slug": "inspired-by-1-million-elixir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "453",
+      "productId": "6b03e421e483ec6750510de0",
+      "slug": "inspired-by-pegasus",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "454",
+      "productId": "6b03e421e483ec6750510df5",
+      "slug": "inspired-by-gentleman",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "455",
+      "productId": "6b03e421e483ec6750510e0a",
+      "slug": "inspired-by-mumbai-noise",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "456",
+      "productId": "6b03e421e483ec6750510e1f",
+      "slug": "inspired-by-stronger-with-you-amber",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "457",
+      "productId": "6b03e421e483ec6750510e34",
+      "slug": "inspired-by-gris",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "458",
+      "productId": "6b03e421e483ec6750510e49",
+      "slug": "inspired-by-gris-charnel",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "459",
+      "productId": "6b03e421e483ec6750510e5e",
+      "slug": "inspired-by-amber-musk",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "460",
+      "productId": "6b03e422e483ec6750510e73",
+      "slug": "inspired-by-oligarch",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "461",
+      "productId": "6b03e422e483ec6750510e88",
+      "slug": "inspired-by-intoxicated",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "462",
+      "productId": "6b03e422e483ec6750510e9d",
+      "slug": "inspired-by-spicebomb-extreme",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "463",
+      "productId": "6b03e422e483ec6750510eb2",
+      "slug": "inspired-by-pasha",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "464",
+      "productId": "6b03e422e483ec6750510ec7",
+      "slug": "inspired-by-grand-soir",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "465",
+      "productId": "6b03e422e483ec6750510edc",
+      "slug": "inspired-by-santal-33",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "466",
+      "productId": "6b03e422e483ec6750510ef1",
+      "slug": "inspired-by-arabic-coffee",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "467",
+      "productId": "6b03e422e483ec6750510f06",
+      "slug": "inspired-by-asad",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "468",
+      "productId": "6b03e423e483ec6750510f1b",
+      "slug": "inspired-by-01-black-tea",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "469",
+      "productId": "6b03e423e483ec6750510f30",
+      "slug": "inspired-by-velvet-orchid",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "470",
+      "productId": "6b03e423e483ec6750510f45",
+      "slug": "inspired-by-oajan",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "471",
+      "productId": "6b03e424e483ec6750510f5a",
+      "slug": "inspired-by-cuir-intense",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "472",
+      "productId": "6b03e424e483ec6750510f6b",
+      "slug": "inspired-by-ameer-al-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "473",
+      "productId": "6b03e424e483ec6750510f80",
+      "slug": "inspired-by-black-aoud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "474",
+      "productId": "6b03e425e483ec6750510f95",
+      "slug": "inspired-by-the-voice-of-the-snake",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "475",
+      "productId": "6b03e425e483ec6750510faa",
+      "slug": "inspired-by-oud-bouquet",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "476",
+      "productId": "6b03e425e483ec6750510fbf",
+      "slug": "inspired-by-bin-shaikh",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "477",
+      "productId": "6b03e425e483ec6750510fd4",
+      "slug": "inspired-by-white-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "478",
+      "productId": "6b03e425e483ec6750510fe9",
+      "slug": "inspired-by-oud-ispahan",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "479",
+      "productId": "6b03e425e483ec6750510ffe",
+      "slug": "inspired-by-pur-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "480",
+      "productId": "6b03e425e483ec6750511013",
+      "slug": "inspired-by-oud-and-bergamot",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "481",
+      "productId": "6b03e425e483ec6750511028",
+      "slug": "inspired-by-majestic",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "482",
+      "productId": "6b03e426e483ec675051103d",
+      "slug": "inspired-by-oud-wood",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "483",
+      "productId": "6b03e426e483ec6750511052",
+      "slug": "inspired-by-gardenia-and-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "484",
+      "productId": "6b03e426e483ec6750511061",
+      "slug": "cr7",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "485",
+      "productId": "6b03e426e483ec6750511076",
+      "slug": "inspired-by-ombre-nomade",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "486",
+      "productId": "6b03e426e483ec675051108b",
+      "slug": "inspired-by-purple-oud",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "487",
+      "productId": "6b03e426e483ec67505110a0",
+      "slug": "oud-crystal",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "488",
+      "productId": "6b03e426e483ec67505110b1",
+      "slug": "inspired-by-magic",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "489",
+      "productId": "6b03e427e483ec67505110c6",
+      "slug": "inspired-by-man-in-black-489",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "490",
+      "productId": "6b03e427e483ec67505110db",
+      "slug": "inspired-by-h24",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "491",
+      "productId": "6b03e427e483ec67505110f0",
+      "slug": "inspired-by-side-effect",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "492",
+      "productId": "6b03e427e483ec6750511105",
+      "slug": "inspired-by-london-brbry",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "493",
+      "productId": "6b03e427e483ec675051111a",
+      "slug": "inspired-by-black-xs-for-her",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "494",
+      "productId": "6b03e427e483ec675051112f",
+      "slug": "inspired-by-la-panthere-eau-de-parfum",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "495",
+      "productId": "6b03e427e483ec6750511144",
+      "slug": "inspired-by-her-confession",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "496",
+      "productId": "6b03e428e483ec6750511159",
+      "slug": "inspired-by-eternity-flame-for-women",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "497",
+      "productId": "6b03e428e483ec675051116e",
+      "slug": "inspired-by-golden-dust",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "498",
+      "productId": "6b03e428e483ec6750511183",
+      "slug": "inspired-by-miss-dior-edp",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    },
+    {
+      "legacyId": "499",
+      "productId": "6b03e428e483ec6750511194",
+      "slug": "inspired-by-flora-499",
+      "matchedBy": [
+        "legacyId",
+        "slug",
+        "sku",
+        "variantLegacyId"
+      ]
+    }
+  ],
+  "toCreate": []
+}

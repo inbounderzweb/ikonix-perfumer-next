@@ -19,8 +19,8 @@ export function WishlistGrid({ items }: { items: WishItem[] }) {
         const buyable = i.available && i.inStock && i.variantId;
         return (
           <li key={i.productId} className="flex flex-col rounded-2xl border border-[#e7dbd3] bg-white p-3">
-            <Link href={`/product-details/${i.slug}`} className="relative block aspect-square overflow-hidden rounded-xl bg-[#f4ece6]">{i.image && <StoreImage src={i.image} alt={i.name} fill sizes="(max-width:640px) 45vw, 240px" className="object-cover" />}</Link>
-            <Link href={`/product-details/${i.slug}`} className="mt-2 line-clamp-2 font-fancy font-semibold text-[#3f342c]">{i.name}</Link>
+            <Link href={`/products/${i.slug}`} className="relative block aspect-square overflow-hidden rounded-xl bg-[#f4ece6]">{i.image && <StoreImage src={i.image} alt={i.name} fill sizes="(max-width:640px) 45vw, 240px" className="object-cover" />}</Link>
+            <Link href={`/products/${i.slug}`} className="mt-2 line-clamp-2 font-fancy font-semibold text-[#3f342c]">{i.name}</Link>
             {i.available && i.salePrice != null ? <p className="font-fancy text-sm text-[#3f342c]">{inr(i.salePrice)} {i.regularPrice != null && i.regularPrice > i.salePrice && <span className="text-xs text-gray-400 line-through">{inr(i.regularPrice)}</span>}<span className="ml-1 text-xs text-[#6b5446]">{i.variantLabel}</span></p> : <p className="font-fancy text-sm text-[#6b5446]">No longer sold</p>}
             <p className={`font-fancy text-xs ${buyable ? "text-green-700" : "text-red-700"}`}>{buyable ? "In stock" : i.available ? "Out of stock" : "Unavailable"}</p>
             <div className="mt-3 flex gap-2">

@@ -32,7 +32,13 @@ export type ValidationFailure = { ok: false; error: string };
 export async function validateImage(file: File): Promise<({ ok: true } & ValidatedImage) | ValidationFailure> {
   if (file.size === 0) return { ok: false, error: "The file is empty." };
   if (file.size > MAX_UPLOAD_BYTES) return { ok: false, error: `Larger than ${MAX_UPLOAD_BYTES / 1024 / 1024} MB.` };
-  const buffer = Buffer.from(await file.arrayBuffer());
+  return validateImageBuffer(Buffer.from(await file.arrayBuffer()));
+}
+
+/** Same checks as validateImage, for bytes read on the server (bulk import from disk). */
+export async function validateImageBuffer(buffer: Buffer): Promise<({ ok: true } & ValidatedImage) | ValidationFailure> {
+  if (buffer.length === 0) return { ok: false, error: "The file is empty." };
+  if (buffer.length > MAX_UPLOAD_BYTES) return { ok: false, error: `Larger than ${MAX_UPLOAD_BYTES / 1024 / 1024} MB.` };
   const kind = await fileTypeFromBuffer(buffer);
   if (!kind || !ALLOWED.has(kind.ext)) return { ok: false, error: "Only JPG, PNG, WEBP, AVIF or GIF images are allowed." };
   let dims: { width?: number; height?: number };

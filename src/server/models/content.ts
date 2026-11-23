@@ -21,7 +21,7 @@ export const ProductReview = defineModel("ProductReview", reviewSchema, "product
 
 const bannerSchema = new Schema(
   {
-    placement: { type: String, enum: ["HOME_HERO", "HOME_PROMO", "SHOP_TOP", "BRAND_SHOWCASE"], required: true },
+    placement: { type: String, enum: ["HOME_HERO", "HOME_PROMO", "SHOP_TOP", "BRAND_SHOWCASE", "POPUP"], required: true },
     title: String,
     subtitle: String,
     ctaLabel: String,
@@ -29,6 +29,8 @@ const bannerSchema = new Schema(
     desktopImageUrl: { type: String, required: true },
     mobileImageUrl: { type: String, required: true },
     alt: { type: String, required: true },
+    popupDelaySeconds: { ...int(0), default: 3 }, // POPUP only: seconds after page load
+    popupFrequency: { type: String, enum: ["ALWAYS", "SESSION", "DAILY", "WEEKLY"], default: "SESSION" }, // POPUP only: how often one visitor sees it
     sortOrder: { ...int(0), default: 0 },
     status: { type: String, enum: ACTIVE_STATUS, default: "ACTIVE" },
     startsAt: Date,

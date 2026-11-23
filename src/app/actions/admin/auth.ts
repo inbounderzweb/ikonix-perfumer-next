@@ -1,41 +1,21 @@
 "use server";
 
-import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/server/db";
 import { User } from "@/server/models";
 import { rateLimit } from "@/server/auth/rate-limit";
-import { randomToken, safeEqual } from "@/server/auth/crypto";
 import { clientMeta } from "@/server/auth/request";
 import { createAdminSession, destroyAdminSession } from "@/server/auth/session";
+import { checkAdminPassword as checkPassword, ensureOwnerRow } from "@/server/auth/admin-credentials";
 import { audit } from "@/server/admin/audit";
 
 export type LoginState = { error?: string } | undefined;
 
 const schema = z.object({ email: z.email().max(200).transform((s) => s.trim().toLowerCase()), password: z.string().min(1).max(200) });
-// Compared when the account doesn't exist so response time doesn't reveal which emails are valid.
-const DUMMY_HASH = bcrypt.hashSync(randomToken(), 12);
 const MAX_FAILS = 8;
 const LOCK_MS = 15 * 60 * 1000;
 const GENERIC = "Incorrect email or password.";
-
-/**
- * The owner account lives in .env (ADMIN_EMAIL + ADMIN_PASSWORD_HASH or ADMIN_PASSWORD) and is the only way in
- * for that email: changing .env changes the login, and a database password can never override it.
- * Other staff (created later with other roles) sign in with their stored bcrypt hash.
- */
-async function checkPassword(email: string, password: string, stored?: string): Promise<{ ok: boolean; viaEnv: boolean }> {
-  const envEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
-  if (envEmail && email === envEmail) {
-    const hash = process.env.ADMIN_PASSWORD_HASH;
-    const plain = process.env.ADMIN_PASSWORD;
-    if (hash) return { ok: await bcrypt.compare(password, hash), viaEnv: true };
-    if (plain) { await bcrypt.compare(password, DUMMY_HASH); return { ok: safeEqual(password, plain), viaEnv: true }; }
-    return { ok: false, viaEnv: true }; // email reserved for the owner but no password configured: nobody gets in
-  }
-  return { ok: await bcrypt.compare(password, stored ?? DUMMY_HASH), viaEnv: false };
-}
 
 export async function loginAction(_prev: LoginState, form: FormData): Promise<LoginState> {
   const parsed = schema.safeParse({ email: form.get("email"), password: form.get("password") });
@@ -56,13 +36,7 @@ export async function loginAction(_prev: LoginState, form: FormData): Promise<Lo
   let userId: string | null = null;
   if (ok && !locked) {
     if (viaEnv) {
-      // Owner: keep a User row (sessions and audit entries reference it) and always grant SUPER_ADMIN.
-      const row = (await User.findOneAndUpdate(
-        { email },
-        { $set: { status: "ACTIVE", emailVerifiedAt: new Date(), lastLoginAt: new Date(), failedLoginCount: 0, lockedUntil: null, deletedAt: null }, $addToSet: { roleKeys: "SUPER_ADMIN" }, $setOnInsert: { name: "Owner" } },
-        { upsert: true, returnDocument: "after" },
-      ).lean()) as unknown as { _id: { toString(): string } } | null;
-      userId = row ? row._id.toString() : null;
+      userId = await ensureOwnerRow(email);
     } else if (user && user.status === "ACTIVE" && user.roleKeys.length > 0) {
       await User.updateOne({ _id: user._id }, { failedLoginCount: 0, lockedUntil: null, lastLoginAt: new Date() });
       userId = String(user._id);
@@ -78,7 +52,7 @@ export async function loginAction(_prev: LoginState, form: FormData): Promise<Lo
   }
 
   await createAdminSession(userId);
-  await audit({ id: userId, name: email, email, roleKeys: [], permissions: new Set(), sessionId: "" }, "auth.login", "User", userId);
+  await audit({ id: userId }, "auth.login", "User", userId);
   redirect("/admin");
 }
 
