@@ -1,0 +1,41 @@
+2026-11-20T12:39:35.318Z [info] run 2026-11-20T12-39-35-316Z start (concurrency 4)
+2026-11-20T12:39:35.950Z [info] product list: fetched 413 products
+2026-11-20T12:39:52.873Z [info] details: 50 fetched this run
+2026-11-20T12:40:19.068Z [info] details: 100 fetched this run
+2026-11-20T12:40:37.316Z [info] details: 150 fetched this run
+2026-11-20T12:40:54.854Z [info] details: 200 fetched this run
+2026-11-20T12:41:12.808Z [info] details: 250 fetched this run
+2026-11-20T12:41:30.444Z [info] details: 300 fetched this run
+2026-11-20T12:41:48.015Z [info] details: 350 fetched this run
+2026-11-20T12:42:05.770Z [info] details: 400 fetched this run
+2026-11-20T12:42:10.605Z [info] details: 413/413 available, 0 failed
+2026-11-20T12:42:10.622Z [info] images: 2849 unique source files (0 already done)
+2026-11-20T12:42:23.345Z [info] images: 100/2849
+2026-11-20T12:42:35.043Z [info] images: 200/2849
+2026-11-20T12:42:48.122Z [info] images: 300/2849
+2026-11-20T12:43:01.235Z [info] images: 400/2849
+2026-11-20T12:43:14.215Z [info] images: 500/2849
+2026-11-20T12:43:27.523Z [info] images: 600/2849
+2026-11-20T12:43:41.032Z [info] images: 700/2849
+2026-11-20T12:43:55.498Z [info] images: 800/2849
+2026-11-20T12:44:10.091Z [info] images: 900/2849
+2026-11-20T12:44:23.787Z [info] images: 1000/2849
+2026-11-20T12:44:37.392Z [info] images: 1100/2849
+2026-11-20T12:44:50.705Z [info] images: 1200/2849
+2026-11-20T12:45:11.176Z [info] images: 1300/2849
+2026-11-20T12:45:26.790Z [info] images: 1400/2849
+2026-11-20T12:45:42.786Z [info] images: 1500/2849
+2026-11-20T12:45:56.566Z [info] images: 1600/2849
+2026-11-20T12:46:09.725Z [info] images: 1700/2849
+2026-11-20T12:46:25.887Z [info] images: 1800/2849
+2026-11-20T12:46:42.779Z [info] images: 1900/2849
+2026-11-20T12:46:56.463Z [info] images: 2000/2849
+2026-11-20T12:47:09.591Z [info] images: 2100/2849
+2026-11-20T12:47:21.757Z [info] images: 2200/2849
+2026-11-20T12:47:34.896Z [info] images: 2300/2849
+2026-11-20T12:47:48.906Z [info] images: 2400/2849
+2026-11-20T12:48:05.891Z [info] images: 2500/2849
+2026-11-20T12:48:24.659Z [info] images: 2600/2849
+2026-11-20T12:48:43.090Z [info] images: 2700/2849
+2026-11-20T12:49:01.264Z [info] images: 2800/2849
+2026-11-20T12:49:17.865Z [info] done: 413/413 products, 2849/2849 images, 0 image failures

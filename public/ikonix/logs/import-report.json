@@ -1,0 +1,160 @@
+{
+  "importedAt": "2026-11-23T07:40:57.404Z",
+  "products": 413,
+  "created": 0,
+  "updated": 413,
+  "draft": [
+    {
+      "id": "94",
+      "slug": "inspired-by-eau-dorange-verte-1979",
+      "issues": [
+        "Variant 30 ml (vid 63): Legacy sale price ₹569 is higher than MRP ₹559."
+      ]
+    },
+    {
+      "id": "98",
+      "slug": "inspired-by-marj",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "106",
+      "slug": "inspired-by-akoya",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "125",
+      "slug": "inspired-by-libere-intense",
+      "issues": [
+        "Variant 100 ml (vid 158): Legacy sale price ₹1146 is higher than MRP ₹899."
+      ]
+    },
+    {
+      "id": "133",
+      "slug": "inspired-by-khamrah",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "141",
+      "slug": "inspired-by-oud-silk-mood",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "142",
+      "slug": "inspired-by-y-elixir",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "225",
+      "slug": "inspired-by-absolu-aventus-225",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "232",
+      "slug": "inspired-by-elysium",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "282",
+      "slug": "inspired-by-rodriguez-for-her",
+      "issues": [
+        "Variant 100 ml (vid 629): Legacy sale price ₹13156 is higher than MRP ₹1549."
+      ]
+    },
+    {
+      "id": "290",
+      "slug": "inspired-by-anthology-limperatrice-3",
+      "issues": [
+        "Variant 40 ml (vid 652): Unusual size \"40\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "id": "333",
+      "slug": "inspired-by-yara-tous",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "420",
+      "slug": "inspired-by-pomegranate-musk",
+      "issues": [
+        "Variant 10 ml (vid 1043): Unusual size \"10\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "id": "430",
+      "slug": "inspired-by-oud-for-greatness",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "431",
+      "slug": "pistachio-cream",
+      "issues": [
+        "Description is empty in the legacy data."
+      ]
+    },
+    {
+      "id": "434",
+      "slug": "inspired-by-madawi",
+      "issues": [
+        "No category: legacy category was \"best sellers\" and the description states no gender."
+      ]
+    },
+    {
+      "id": "452",
+      "slug": "inspired-by-1-million-elixir",
+      "issues": [
+        "Variant 101 ml (vid 1139): Unusual size \"101\" (all other variants use 30/50/100 ml); confirm the bottle size."
+      ]
+    },
+    {
+      "id": "498",
+      "slug": "inspired-by-miss-dior-edp",
+      "issues": [
+        "Description is empty in the legacy data."
+      ]
+    }
+  ],
+  "variants": 1239,
+  "inactiveVariants": 3,
+  "images": 2845,
+  "inventoryCreated": 0,
+  "genderConflicts": [
+    "83: legacy category women's, description says UNISEX",
+    "95: legacy category women's, description says UNISEX",
+    "129: legacy category women's, description says UNISEX",
+    "136: legacy category women's, description says UNISEX",
+    "146: legacy category mens, description says UNISEX",
+    "165: legacy category unisex, description says WOMEN",
+    "168: legacy category mens, description says UNISEX",
+    "174: legacy category mens, description says WOMEN",
+    "210: legacy category mens, description says UNISEX",
+    "213: legacy category women's, description says UNISEX",
+    "242: legacy category mens, description says UNISEX",
+    "260: legacy category mens, description says WOMEN",
+    "356: legacy category women's, description says MEN",
+    "381: legacy category unisex, description says WOMEN",
+    "419: legacy category women's, description says UNISEX",
+    "442: legacy category mens, description says UNISEX",
+    "450: legacy category women's, description says MEN",
+    "459: legacy category mens, description says UNISEX",
+    "473: legacy category unisex, description says MEN",
+    "481: legacy category unisex, description says WOMEN"
+  ]
+}

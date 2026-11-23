@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules
+.next
+.gstack
+.ikonix-cache
+
+# Product photos (~237 MB). They live in Cloudinary; the local copies are only the migration source.
+# Basic site images (public/ikonix/site, categories) stay tracked.
+public/ikonix/products/*
+!public/ikonix/products/.gitkeep

@@ -1,0 +1,1586 @@
+{
+  "note": "The source API has no brand field (product.brand is null). These are the inspiration brands parsed from product descriptions (\"<fragrance> by <brand> is a ...\"). Products whose description lacks that sentence are listed under productsWithoutParsedBrand.",
+  "source": "derivedFromDescription.inspiredByBrand",
+  "count": 102,
+  "brands": [
+    {
+      "slug": "abercrombie-and-fitch",
+      "name": "Abercrombie & Fitch",
+      "nameVariants": [
+        "Abercrombie & Fitch"
+      ],
+      "productIds": [
+        "437"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "ahmed-al-maghribi",
+      "name": "Ahmed Al Maghribi",
+      "nameVariants": [
+        "Ahmed Al Maghribi"
+      ],
+      "productIds": [
+        "476"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "alezz-oud",
+      "name": "Alezz Oud",
+      "nameVariants": [
+        "Alezz Oud"
+      ],
+      "productIds": [
+        "209"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "alfred-dunhill",
+      "name": "Alfred Dunhill",
+      "nameVariants": [
+        "Alfred Dunhill"
+      ],
+      "productIds": [
+        "145"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "alrehab-perfumes",
+      "name": "ALREHAB PERFUMES",
+      "nameVariants": [
+        "ALREHAB PERFUMES"
+      ],
+      "productIds": [
+        "395"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "amouage",
+      "name": "Amouage",
+      "nameVariants": [
+        "Amouage"
+      ],
+      "productIds": [
+        "187",
+        "200",
+        "204",
+        "215",
+        "244",
+        "382",
+        "385"
+      ],
+      "productCount": 7
+    },
+    {
+      "slug": "anfasic",
+      "name": "Anfasic",
+      "nameVariants": [
+        "Anfasic"
+      ],
+      "productIds": [
+        "102"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "aqua-arabia",
+      "name": "Aqua Arabia",
+      "nameVariants": [
+        "Aqua Arabia"
+      ],
+      "productIds": [
+        "383"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "arabian-oud",
+      "name": "Arabian Oud",
+      "nameVariants": [
+        "Arabian Oud"
+      ],
+      "productIds": [
+        "148",
+        "481"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "ariadne-athens",
+      "name": "Ariadne Athens",
+      "nameVariants": [
+        "Ariadne Athens"
+      ],
+      "productIds": [
+        "301"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "ariana-grande",
+      "name": "Ariana Grande",
+      "nameVariants": [
+        "Ariana Grande"
+      ],
+      "productIds": [
+        "185"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "armaf",
+      "name": "Armaf",
+      "nameVariants": [
+        "Armaf"
+      ],
+      "productIds": [
+        "387"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "azzaro",
+      "name": "Azzaro",
+      "nameVariants": [
+        "Azzaro"
+      ],
+      "productIds": [
+        "314",
+        "404",
+        "412",
+        "445"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "bath-and-body-works",
+      "name": "Bath & Body Works",
+      "nameVariants": [
+        "Bath & Body Works"
+      ],
+      "productIds": [
+        "356"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "bdk-parfums",
+      "name": "BDK Parfums",
+      "nameVariants": [
+        "BDK Parfums"
+      ],
+      "productIds": [
+        "458"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "billie-eilish",
+      "name": "Billie Eilish",
+      "nameVariants": [
+        "Billie Eilish"
+      ],
+      "productIds": [
+        "390"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "burberry",
+      "name": "Burberry",
+      "nameVariants": [
+        "Burberry"
+      ],
+      "productIds": [
+        "139",
+        "254",
+        "274",
+        "288",
+        "306",
+        "367",
+        "418",
+        "492"
+      ],
+      "productCount": 8
+    },
+    {
+      "slug": "bvlgari",
+      "name": "Bvlgari",
+      "nameVariants": [
+        "Bvlgari"
+      ],
+      "productIds": [
+        "111",
+        "112",
+        "113",
+        "116",
+        "212",
+        "218",
+        "235",
+        "263",
+        "311",
+        "313",
+        "318",
+        "489"
+      ],
+      "productCount": 12
+    },
+    {
+      "slug": "by-kilian",
+      "name": "By Kilian",
+      "nameVariants": [
+        "By Kilian"
+      ],
+      "productIds": [
+        "144",
+        "179",
+        "222",
+        "238",
+        "283",
+        "350",
+        "461"
+      ],
+      "productCount": 7
+    },
+    {
+      "slug": "byredo",
+      "name": "Byredo",
+      "nameVariants": [
+        "Byredo"
+      ],
+      "productIds": [
+        "96",
+        "226",
+        "378",
+        "455"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "calvin-klein",
+      "name": "Calvin Klein",
+      "nameVariants": [
+        "Calvin Klein"
+      ],
+      "productIds": [
+        "146",
+        "308",
+        "442",
+        "496"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "camille-rochelle",
+      "name": "Camille Rochelle",
+      "nameVariants": [
+        "Camille Rochelle"
+      ],
+      "productIds": [
+        "163"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "carolina-herrera",
+      "name": "Carolina Herrera",
+      "nameVariants": [
+        "Carolina Herrera"
+      ],
+      "productIds": [
+        "91",
+        "132",
+        "171",
+        "221",
+        "224",
+        "255",
+        "281",
+        "366",
+        "389"
+      ],
+      "productCount": 9
+    },
+    {
+      "slug": "cartier",
+      "name": "Cartier",
+      "nameVariants": [
+        "Cartier"
+      ],
+      "productIds": [
+        "345",
+        "463",
+        "494"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "chanel",
+      "name": "Chanel",
+      "nameVariants": [
+        "Chanel"
+      ],
+      "productIds": [
+        "228",
+        "237",
+        "239",
+        "276",
+        "298",
+        "327",
+        "334",
+        "341"
+      ],
+      "productCount": 8
+    },
+    {
+      "slug": "chloe",
+      "name": "Chloé",
+      "nameVariants": [
+        "Chloé"
+      ],
+      "productIds": [
+        "358"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "chopard",
+      "name": "Chopard",
+      "nameVariants": [
+        "Chopard"
+      ],
+      "productIds": [
+        "368"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "clive-christian",
+      "name": "Clive Christian",
+      "nameVariants": [
+        "Clive Christian"
+      ],
+      "productIds": [
+        "169"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "creed",
+      "name": "Creed",
+      "nameVariants": [
+        "Creed"
+      ],
+      "productIds": [
+        "97",
+        "233",
+        "242",
+        "247",
+        "410",
+        "439"
+      ],
+      "productCount": 6
+    },
+    {
+      "slug": "davidoff",
+      "name": "Davidoff",
+      "nameVariants": [
+        "Davidoff"
+      ],
+      "productIds": [
+        "297",
+        "315",
+        "351",
+        "373"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "dior",
+      "name": "Dior",
+      "nameVariants": [
+        "Dior"
+      ],
+      "productIds": [
+        "88",
+        "153",
+        "180",
+        "201",
+        "236",
+        "243",
+        "287",
+        "292",
+        "329",
+        "361",
+        "362",
+        "375",
+        "392",
+        "457",
+        "478",
+        "486"
+      ],
+      "productCount": 16
+    },
+    {
+      "slug": "diptyque",
+      "name": "Diptyque",
+      "nameVariants": [
+        "Diptyque"
+      ],
+      "productIds": [
+        "216",
+        "231",
+        "447"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "dolce-and-gabbana-by-dolce-and-gabbana",
+      "name": "Dolce & Gabbana by Dolce&Gabbana",
+      "nameVariants": [
+        "Dolce & Gabbana by Dolce&Gabbana"
+      ],
+      "productIds": [
+        "265"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "dolce-and-gabbana",
+      "name": "Dolce&Gabbana",
+      "nameVariants": [
+        "Dolce&Gabbana"
+      ],
+      "productIds": [
+        "208",
+        "260",
+        "269",
+        "290",
+        "317"
+      ],
+      "productCount": 5
+    },
+    {
+      "slug": "ellis-brooklyn",
+      "name": "Ellis Brooklyn",
+      "nameVariants": [
+        "Ellis Brooklyn"
+      ],
+      "productIds": [
+        "326"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "escada",
+      "name": "Escada",
+      "nameVariants": [
+        "Escada"
+      ],
+      "productIds": [
+        "272",
+        "433"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "escentric-molecules",
+      "name": "Escentric Molecules",
+      "nameVariants": [
+        "Escentric Molecules"
+      ],
+      "productIds": [
+        "468"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "estee-lauder",
+      "name": "Estée Lauder",
+      "nameVariants": [
+        "Estée Lauder"
+      ],
+      "productIds": [
+        "339"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "french-connection-uk",
+      "name": "French Connection UK",
+      "nameVariants": [
+        "French Connection UK"
+      ],
+      "productIds": [
+        "284"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "furla",
+      "name": "Furla",
+      "nameVariants": [
+        "Furla"
+      ],
+      "productIds": [
+        "330"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "giorgio-armani",
+      "name": "Giorgio Armani",
+      "nameVariants": [
+        "Giorgio Armani"
+      ],
+      "productIds": [
+        "86",
+        "103",
+        "104",
+        "109",
+        "155",
+        "159",
+        "190",
+        "193",
+        "195",
+        "207",
+        "256",
+        "257",
+        "259",
+        "277",
+        "303",
+        "322",
+        "346",
+        "357",
+        "440",
+        "456"
+      ],
+      "productCount": 20
+    },
+    {
+      "slug": "gissah",
+      "name": "Gissah",
+      "nameVariants": [
+        "Gissah"
+      ],
+      "productIds": [
+        "134"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "givenchy",
+      "name": "Givenchy",
+      "nameVariants": [
+        "Givenchy"
+      ],
+      "productIds": [
+        "101",
+        "130",
+        "183",
+        "348",
+        "364",
+        "454"
+      ],
+      "productCount": 6
+    },
+    {
+      "slug": "gucci",
+      "name": "Gucci",
+      "nameVariants": [
+        "Gucci"
+      ],
+      "productIds": [
+        "114",
+        "175",
+        "182",
+        "214",
+        "275",
+        "280",
+        "394",
+        "408",
+        "415",
+        "474"
+      ],
+      "productCount": 10
+    },
+    {
+      "slug": "gucci-eau-de-parfum-by-gucci",
+      "name": "Gucci Eau de Parfum by Gucci",
+      "nameVariants": [
+        "Gucci Eau de Parfum by Gucci"
+      ],
+      "productIds": [
+        "499"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "guerlain",
+      "name": "Guerlain",
+      "nameVariants": [
+        "Guerlain"
+      ],
+      "productIds": [
+        "137",
+        "188",
+        "398",
+        "444",
+        "471"
+      ],
+      "productCount": 5
+    },
+    {
+      "slug": "guy-laroche",
+      "name": "Guy Laroche",
+      "nameVariants": [
+        "Guy Laroche"
+      ],
+      "productIds": [
+        "399"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "hermes",
+      "name": "Hermès",
+      "nameVariants": [
+        "Hermès"
+      ],
+      "productIds": [
+        "94",
+        "220",
+        "490"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "hugo-boss",
+      "name": "Hugo Boss",
+      "nameVariants": [
+        "Hugo Boss"
+      ],
+      "productIds": [
+        "105",
+        "123",
+        "135",
+        "152",
+        "164",
+        "174",
+        "268",
+        "312",
+        "316",
+        "409"
+      ],
+      "productCount": 10
+    },
+    {
+      "slug": "initio-parfums-prives",
+      "name": "Initio Parfums Prives",
+      "nameVariants": [
+        "Initio Parfums Prives"
+      ],
+      "productIds": [
+        "219",
+        "491"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "issey-miyake",
+      "name": "Issey Miyake",
+      "nameVariants": [
+        "Issey Miyake"
+      ],
+      "productIds": [
+        "172",
+        "266",
+        "299"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "jean-patou",
+      "name": "Jean Patou",
+      "nameVariants": [
+        "Jean Patou"
+      ],
+      "productIds": [
+        "343"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "jean-paul-gaultier",
+      "name": "Jean Paul Gaultier",
+      "nameVariants": [
+        "Jean Paul Gaultier"
+      ],
+      "productIds": [
+        "108",
+        "161",
+        "165",
+        "230",
+        "344",
+        "379",
+        "400",
+        "416"
+      ],
+      "productCount": 8
+    },
+    {
+      "slug": "jimmy-choo",
+      "name": "Jimmy Choo",
+      "nameVariants": [
+        "Jimmy Choo"
+      ],
+      "productIds": [
+        "417"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "jo-malone-london",
+      "name": "Jo Malone London",
+      "nameVariants": [
+        "Jo Malone London"
+      ],
+      "productIds": [
+        "198",
+        "271",
+        "419",
+        "451",
+        "480",
+        "483"
+      ],
+      "productCount": 6
+    },
+    {
+      "slug": "juicy-couture",
+      "name": "Juicy Couture",
+      "nameVariants": [
+        "Juicy Couture"
+      ],
+      "productIds": [
+        "166"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "kayali-fragrances",
+      "name": "Kayali Fragrances",
+      "nameVariants": [
+        "Kayali Fragrances"
+      ],
+      "productIds": [
+        "129",
+        "136",
+        "147",
+        "191",
+        "213",
+        "363",
+        "393",
+        "425",
+        "428"
+      ],
+      "productCount": 9
+    },
+    {
+      "slug": "lancome",
+      "name": "Lancôme",
+      "nameVariants": [
+        "Lancôme"
+      ],
+      "productIds": [
+        "347",
+        "354",
+        "403",
+        "475"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "lattafa-perfumes",
+      "name": "Lattafa Perfumes",
+      "nameVariants": [
+        "Lattafa Perfumes"
+      ],
+      "productIds": [
+        "90",
+        "168",
+        "197",
+        "270",
+        "384",
+        "413",
+        "467"
+      ],
+      "productCount": 7
+    },
+    {
+      "slug": "le-labo",
+      "name": "Le Labo",
+      "nameVariants": [
+        "Le Labo"
+      ],
+      "productIds": [
+        "293",
+        "423",
+        "465"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "lorinna-paris",
+      "name": "Lorinna Paris",
+      "nameVariants": [
+        "Lorinna Paris"
+      ],
+      "productIds": [
+        "250"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "louis-vuitton",
+      "name": "Louis Vuitton",
+      "nameVariants": [
+        "Louis Vuitton"
+      ],
+      "productIds": [
+        "121",
+        "162",
+        "184",
+        "321",
+        "448",
+        "479",
+        "485"
+      ],
+      "productCount": 7
+    },
+    {
+      "slug": "maison-crivelli",
+      "name": "Maison Crivelli",
+      "nameVariants": [
+        "Maison Crivelli"
+      ],
+      "productIds": [
+        "87",
+        "369"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "maison-francis-kurkdjian",
+      "name": "Maison Francis Kurkdjian",
+      "nameVariants": [
+        "Maison Francis Kurkdjian"
+      ],
+      "productIds": [
+        "99",
+        "173",
+        "405",
+        "450",
+        "464"
+      ],
+      "productCount": 5
+    },
+    {
+      "slug": "maison-martin-margiela",
+      "name": "Maison Martin Margiela",
+      "nameVariants": [
+        "Maison Martin Margiela"
+      ],
+      "productIds": [
+        "189",
+        "211",
+        "234",
+        "407",
+        "422"
+      ],
+      "productCount": 5
+    },
+    {
+      "slug": "mancera",
+      "name": "Mancera",
+      "nameVariants": [
+        "Mancera"
+      ],
+      "productIds": [
+        "202",
+        "245",
+        "273"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "marc-antoine-barrois",
+      "name": "Marc-Antoine Barrois",
+      "nameVariants": [
+        "Marc-Antoine Barrois"
+      ],
+      "productIds": [
+        "115"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "memo-paris",
+      "name": "Memo Paris",
+      "nameVariants": [
+        "Memo Paris"
+      ],
+      "productIds": [
+        "217",
+        "371"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "montale",
+      "name": "Montale",
+      "nameVariants": [
+        "Montale"
+      ],
+      "productIds": [
+        "205",
+        "459",
+        "473",
+        "477"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "montblanc",
+      "name": "Montblanc",
+      "nameVariants": [
+        "Montblanc"
+      ],
+      "productIds": [
+        "177",
+        "248",
+        "251",
+        "436"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "moschino",
+      "name": "Moschino",
+      "nameVariants": [
+        "Moschino"
+      ],
+      "productIds": [
+        "158"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "mugler",
+      "name": "Mugler",
+      "nameVariants": [
+        "Mugler"
+      ],
+      "productIds": [
+        "203",
+        "335",
+        "449"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "narciso-rodriguez",
+      "name": "Narciso Rodriguez",
+      "nameVariants": [
+        "Narciso Rodriguez"
+      ],
+      "productIds": [
+        "117",
+        "282",
+        "406"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "nasomatto",
+      "name": "Nasomatto",
+      "nameVariants": [
+        "Nasomatto"
+      ],
+      "productIds": [
+        "429"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "nautica",
+      "name": "Nautica",
+      "nameVariants": [
+        "Nautica"
+      ],
+      "productIds": [
+        "128"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "night-by-azzaro",
+      "name": "Night by Azzaro",
+      "nameVariants": [
+        "Night by Azzaro"
+      ],
+      "productIds": [
+        "229"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "nina-ricci",
+      "name": "Nina Ricci",
+      "nameVariants": [
+        "Nina Ricci"
+      ],
+      "productIds": [
+        "100"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "nishane",
+      "name": "Nishane",
+      "nameVariants": [
+        "Nishane"
+      ],
+      "productIds": [
+        "386"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "nodus-perfume-house",
+      "name": "Nodus Perfume House",
+      "nameVariants": [
+        "Nodus Perfume House"
+      ],
+      "productIds": [
+        "331"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "orientica-premium",
+      "name": "Orientica Premium",
+      "nameVariants": [
+        "Orientica Premium"
+      ],
+      "productIds": [
+        "181",
+        "397"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "orto-parisi",
+      "name": "Orto Parisi",
+      "nameVariants": [
+        "Orto Parisi"
+      ],
+      "productIds": [
+        "118",
+        "210",
+        "258",
+        "421"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "parfums-de-marly",
+      "name": "Parfums de Marly",
+      "nameVariants": [
+        "Parfums de Marly"
+      ],
+      "productIds": [
+        "126",
+        "138",
+        "157",
+        "167",
+        "223",
+        "307",
+        "411",
+        "426",
+        "453",
+        "470"
+      ],
+      "productCount": 10
+    },
+    {
+      "slug": "penhaligons",
+      "name": "Penhaligon's",
+      "nameVariants": [
+        "Penhaligon's"
+      ],
+      "productIds": [
+        "249"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "prada",
+      "name": "Prada",
+      "nameVariants": [
+        "Prada"
+      ],
+      "productIds": [
+        "176",
+        "355",
+        "377",
+        "441"
+      ],
+      "productCount": 4
+    },
+    {
+      "slug": "rabanne",
+      "name": "Rabanne",
+      "nameVariants": [
+        "Rabanne"
+      ],
+      "productIds": [
+        "89",
+        "122",
+        "186",
+        "199",
+        "206",
+        "227",
+        "241",
+        "296",
+        "300",
+        "349",
+        "374",
+        "402",
+        "414",
+        "424",
+        "435",
+        "452",
+        "493"
+      ],
+      "productCount": 17
+    },
+    {
+      "slug": "ralph-lauren",
+      "name": "Ralph Lauren",
+      "nameVariants": [
+        "Ralph Lauren"
+      ],
+      "productIds": [
+        "443",
+        "446"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "rasasi",
+      "name": "Rasasi",
+      "nameVariants": [
+        "Rasasi"
+      ],
+      "productIds": [
+        "154",
+        "253"
+      ],
+      "productCount": 2
+    },
+    {
+      "slug": "roja-dove",
+      "name": "Roja Dove",
+      "nameVariants": [
+        "Roja Dove"
+      ],
+      "productIds": [
+        "460"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "stephane-humbert-lucas-777",
+      "name": "Stéphane Humbert Lucas 777",
+      "nameVariants": [
+        "Stéphane Humbert Lucas 777"
+      ],
+      "productIds": [
+        "110"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "ted-lapidus",
+      "name": "Ted Lapidus",
+      "nameVariants": [
+        "Ted Lapidus"
+      ],
+      "productIds": [
+        "302"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "tiziana-terenzi",
+      "name": "Tiziana Terenzi",
+      "nameVariants": [
+        "Tiziana Terenzi"
+      ],
+      "productIds": [
+        "359"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "tom-ford",
+      "name": "Tom Ford",
+      "nameVariants": [
+        "Tom Ford"
+      ],
+      "productIds": [
+        "83",
+        "92",
+        "93",
+        "95",
+        "143",
+        "261",
+        "305",
+        "309",
+        "310",
+        "324",
+        "328",
+        "340",
+        "353",
+        "370",
+        "376",
+        "381",
+        "427",
+        "469",
+        "482"
+      ],
+      "productCount": 19
+    },
+    {
+      "slug": "valentino",
+      "name": "Valentino",
+      "nameVariants": [
+        "Valentino"
+      ],
+      "productIds": [
+        "267",
+        "278",
+        "279"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "versace",
+      "name": "Versace",
+      "nameVariants": [
+        "Versace"
+      ],
+      "productIds": [
+        "264",
+        "289",
+        "320",
+        "337",
+        "342",
+        "360",
+        "391",
+        "438"
+      ],
+      "productCount": 8
+    },
+    {
+      "slug": "victorias-secret",
+      "name": "Victoria's Secret",
+      "nameVariants": [
+        "Victoria's Secret"
+      ],
+      "productIds": [
+        "150",
+        "325",
+        "332"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "viktor-and-rolf",
+      "name": "Viktor&Rolf",
+      "nameVariants": [
+        "Viktor&Rolf"
+      ],
+      "productIds": [
+        "462"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "vilhelm-parfumerie",
+      "name": "Vilhelm Parfumerie",
+      "nameVariants": [
+        "Vilhelm Parfumerie"
+      ],
+      "productIds": [
+        "294"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "votre-parfum",
+      "name": "Votre Parfum",
+      "nameVariants": [
+        "Votre Parfum"
+      ],
+      "productIds": [
+        "372"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "wadi-al-khaleej",
+      "name": "Wadi Al Khaleej",
+      "nameVariants": [
+        "Wadi Al Khaleej"
+      ],
+      "productIds": [
+        "365"
+      ],
+      "productCount": 1
+    },
+    {
+      "slug": "xerjoff",
+      "name": "Xerjoff",
+      "nameVariants": [
+        "Xerjoff"
+      ],
+      "productIds": [
+        "194",
+        "319",
+        "380"
+      ],
+      "productCount": 3
+    },
+    {
+      "slug": "yves-saint-laurent",
+      "name": "Yves Saint Laurent",
+      "nameVariants": [
+        "Yves Saint Laurent"
+      ],
+      "productIds": [
+        "107",
+        "119",
+        "125",
+        "127",
+        "160",
+        "192",
+        "240",
+        "246",
+        "252",
+        "285",
+        "291",
+        "295",
+        "338",
+        "432"
+      ],
+      "productCount": 14
+    },
+    {
+      "slug": "zara",
+      "name": "Zara",
+      "nameVariants": [
+        "Zara"
+      ],
+      "productIds": [
+        "286"
+      ],
+      "productCount": 1
+    }
+  ],
+  "productsWithoutParsedBrand": [
+    {
+      "id": "98",
+      "name": "Inspired By Marj",
+      "subtitle": "Marj Ahmed Al Maghribi"
+    },
+    {
+      "id": "106",
+      "name": "Inspired By Akoya",
+      "subtitle": "Akoya Gissah"
+    },
+    {
+      "id": "120",
+      "name": "Inspired By Blue Oud",
+      "subtitle": "Blue Oud Ibraheem AlQurashi"
+    },
+    {
+      "id": "124",
+      "name": "Inspired By Boss the scent elixir him",
+      "subtitle": "Boss The Scent Elixir For Him Hugo Boss"
+    },
+    {
+      "id": "131",
+      "name": "Inspired By Le Beau Paradise Garden",
+      "subtitle": "Le Beau Paradise Garden Jean Paul Gaultier"
+    },
+    {
+      "id": "133",
+      "name": "Inspired By Khamrah ",
+      "subtitle": "Khamrah Lattafa Perfumes"
+    },
+    {
+      "id": "140",
+      "name": "Inspired By Erba Pura Gold",
+      "subtitle": "Erba Pura Gold Xerjoff"
+    },
+    {
+      "id": "141",
+      "name": "Inspired By Oud Silk Mood",
+      "subtitle": "Oud Silk Mood Maison Francis Kurkdjian"
+    },
+    {
+      "id": "142",
+      "name": "Inspired By Y Elixir",
+      "subtitle": "Y Elixir YSL"
+    },
+    {
+      "id": "149",
+      "name": "Inspired By Invictus Onyx Collector",
+      "subtitle": "Invictus Onyx Collector Edition Rabanne"
+    },
+    {
+      "id": "151",
+      "name": "Inspired By Lucky Candy",
+      "subtitle": "Lucky Candy Montale"
+    },
+    {
+      "id": "156",
+      "name": "Inspired By Absolu Aventus",
+      "subtitle": "Absolu Aventus Creed"
+    },
+    {
+      "id": "170",
+      "name": "Inspired By Cool Water Intense ",
+      "subtitle": "Davidoff "
+    },
+    {
+      "id": "178",
+      "name": "Inspired By Myself",
+      "subtitle": "Invisible Poesie "
+    },
+    {
+      "id": "196",
+      "name": "Inspired By Oudgasm Vanilla Oud",
+      "subtitle": "Kayali Fragrances "
+    },
+    {
+      "id": "225",
+      "name": "Inspired By Absolu Aventus",
+      "subtitle": "Creed "
+    },
+    {
+      "id": "232",
+      "name": "Inspired By Elysium",
+      "subtitle": " Roja Dove"
+    },
+    {
+      "id": "262",
+      "name": "Inspired By Legend Red ",
+      "subtitle": " Montblanc"
+    },
+    {
+      "id": "323",
+      "name": "Inspired By One ",
+      "subtitle": "Jennifer Lopez"
+    },
+    {
+      "id": "333",
+      "name": "Inspired By Yara Tous ",
+      "subtitle": "Lattafa Perfumes"
+    },
+    {
+      "id": "336",
+      "name": "Inspired By Bloom",
+      "subtitle": " The Woods Collection"
+    },
+    {
+      "id": "352",
+      "name": "Inspired By Lucky Candy ",
+      "subtitle": "Montale"
+    },
+    {
+      "id": "388",
+      "name": "Inspired By Blue Talisman",
+      "subtitle": "Blue Talisman Extrait de Parfum "
+    },
+    {
+      "id": "401",
+      "name": "Inspired By Milky Marshmallow",
+      "subtitle": "Marshmallow Milk Sugar Milk Co."
+    },
+    {
+      "id": "420",
+      "name": "Inspired By Pomegranate Musk",
+      "subtitle": "Pomegranate Musk"
+    },
+    {
+      "id": "430",
+      "name": "Inspired By  Oud for Greatness",
+      "subtitle": "Oud for Greatness Initio Parfums Prives"
+    },
+    {
+      "id": "431",
+      "name": "Pistachio Cream",
+      "subtitle": ""
+    },
+    {
+      "id": "434",
+      "name": "Inspired By Madawi",
+      "subtitle": "Madawi Arabian Oud"
+    },
+    {
+      "id": "466",
+      "name": "Inspired By Arabic Coffee",
+      "subtitle": "Arabic Coffee"
+    },
+    {
+      "id": "472",
+      "name": "Inspired By Ameer Al Oud",
+      "subtitle": "Ameer Al Oud"
+    },
+    {
+      "id": "484",
+      "name": "CR7",
+      "subtitle": "Cristiano Ronaldo"
+    },
+    {
+      "id": "487",
+      "name": " Oud Crystal",
+      "subtitle": "Crystal Oud "
+    },
+    {
+      "id": "488",
+      "name": "Inspired By Magic",
+      "subtitle": "Magic"
+    },
+    {
+      "id": "495",
+      "name": "Inspired By Her Confession",
+      "subtitle": "Her Confession Lattafa"
+    },
+    {
+      "id": "497",
+      "name": "Inspired By Golden Dust",
+      "subtitle": "Golden Dust"
+    },
+    {
+      "id": "498",
+      "name": "Inspired By Miss Dior EDP",
+      "subtitle": "MISS DIOR EDP"
+    }
+  ]
+}
