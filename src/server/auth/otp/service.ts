@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { OtpVerification } from "@/server/models";
 import { hmacSha256Hex, safeEqual } from "../crypto";
 import { rateLimit } from "../rate-limit";
-import { getSmsProvider } from "./sms-provider";
+import { getSmsProvider, testMobiles } from "./sms-provider";
 
 export type OtpPurpose = "LOGIN" | "CHANGE_MOBILE";
 
@@ -50,7 +50,15 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
     return { ok: false, error: "Please wait before requesting another code.", retryAfterSec: Math.ceil((live.resendAvailableAt.getTime() - Date.now()) / 1000) };
   }
 
-  const provider = getSmsProvider();
+  let provider;
+  try { provider = getSmsProvider(); } catch (e) {
+    // Misconfiguration (e.g. mock provider in production): fail with a readable message instead of a 500 page.
+    console.error("[otp] SMS provider unavailable:", e instanceof Error ? e.message : e);
+    return { ok: false, error: "Mobile sign-in is temporarily unavailable. Please try again later or continue as a guest." };
+  }
+  if (provider.isMock && process.env.NODE_ENV === "production" && !testMobiles().includes(destination)) {
+    return { ok: false, error: "Mobile sign-in is temporarily unavailable. Please try again later or continue as a guest." };
+  }
   const code = generateCode(provider.isMock);
   await OtpVerification.updateMany({ destination, purpose, active: true }, { active: false }); // a resend replaces the old code
   let doc;

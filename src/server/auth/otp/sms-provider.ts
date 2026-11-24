@@ -27,11 +27,15 @@ class MockSmsProvider implements SmsProvider {
   }
 }
 
+/** Comma-separated normalized numbers (e.g. +919746997154) allowed to use the mock OTP in production. */
+export const testMobiles = () => (process.env.OTP_TEST_MOBILES ?? "").split(",").map((x) => x.trim()).filter(Boolean);
+
 export function getSmsProvider(): SmsProvider {
   const name = (process.env.OTP_PROVIDER || "mock").toLowerCase();
   switch (name) {
     case "mock":
-      if (process.env.NODE_ENV === "production") throw new Error("OTP_PROVIDER=mock is not allowed in production. Integrate an SMS provider (see sms-provider.ts).");
+      // In production the mock is only usable for an explicit allowlist of test numbers (OTP_TEST_MOBILES); see requestOtp.
+      if (process.env.NODE_ENV === "production" && testMobiles().length === 0) throw new Error("OTP_PROVIDER=mock is not allowed in production without OTP_TEST_MOBILES. Integrate an SMS provider (see sms-provider.ts).");
       return new MockSmsProvider();
     default:
       throw new Error(`Unknown OTP_PROVIDER "${name}". Implement it in src/server/auth/otp and register it in getSmsProvider().`);
