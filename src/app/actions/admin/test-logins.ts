@@ -49,6 +49,22 @@ export async function setTestLoginActive(id: string, active: boolean): Promise<T
   } catch (e) { return fail(e); }
 }
 
+/** Changes the fixed OTP. Any pending code is discarded so the new one works immediately. */
+export async function resetTestLoginCode(id: string, code: string): Promise<TestLoginResult> {
+  try {
+    const admin = await requireAdmin("customers.write");
+    if (!/^[a-f0-9]{24}$/.test(id)) return { ok: false, error: "Invalid request." };
+    if (!/^\d{6}$/.test(code)) return { ok: false, error: "The code must be 6 digits." };
+    await db();
+    const t = (await TestLogin.findByIdAndUpdate(id, { code }).lean()) as unknown as { mobile: string } | null;
+    if (!t) return { ok: false, error: "Test login not found." };
+    await OtpVerification.deleteMany({ destination: t.mobile, active: true });
+    await audit(admin, "testlogin.reset-otp", "TestLogin", id);
+    revalidatePath("/admin/customers/test-logins");
+    return { ok: true, message: `OTP changed to ${code}. Request a new code on the login page.` };
+  } catch (e) { return fail(e); }
+}
+
 /** Permanently removes a test user and everything they created: orders, payments, addresses, cart, sessions, OTP logs. */
 export async function deleteTestLogin(id: string): Promise<TestLoginResult> {
   try {

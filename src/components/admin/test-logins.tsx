@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { createTestLogin, deleteTestLogin, setTestLoginActive, type TestLoginResult } from "@/app/actions/admin/test-logins";
+import { createTestLogin, deleteTestLogin, resetTestLoginCode, setTestLoginActive, type TestLoginResult } from "@/app/actions/admin/test-logins";
 import { Badge, Card, Field, Notice, Table, button, inputCls } from "./ui";
 
 export type TestLoginRow = { id: string; name: string; mobile: string; code: string; active: boolean };
@@ -32,6 +32,7 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
             <td className="font-medium">{r.name}</td><td>{r.mobile}</td><td><code className="font-mono text-xs">{r.code}</code></td>
             <td><Badge tone={r.active ? "ok" : "neutral"}>{r.active ? "active" : "disabled"}</Badge></td>
             <td className="space-x-2 whitespace-nowrap">{canWrite && <>
+              <button className={button("secondary", "!py-1")} disabled={pending} onClick={() => { const c = prompt(`New 6-digit OTP for ${r.mobile}`, r.code); if (c !== null) run(() => resetTestLoginCode(r.id, c.trim())); }}>Change OTP</button>
               <button className={button("secondary", "!py-1")} disabled={pending} onClick={() => run(() => setTestLoginActive(r.id, !r.active))}>{r.active ? "Disable" : "Enable"}</button>
               <button className={button("danger", "!py-1")} disabled={pending} onClick={() => { if (confirm("Permanently delete this test user and ALL their data (orders, payments, addresses, cart, sessions)? This cannot be undone.")) run(() => deleteTestLogin(r.id)); }}>Delete</button>
             </>}</td>
