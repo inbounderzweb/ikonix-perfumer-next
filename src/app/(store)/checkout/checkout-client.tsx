@@ -15,8 +15,8 @@ declare global {
   interface Window { Razorpay?: new (o: Record<string, unknown>) => { open(): void; on(ev: string, cb: (r: { error?: { description?: string } }) => void): void } }
 }
 const inr = (paise: number) => `₹${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: paise % 100 ? 2 : 0 })}`;
-const field = "w-full rounded-md border border-[#d8c9c1] bg-white px-3 py-2.5 font-fancy text-[15px] text-[#2f3647] focus:border-[#8C7367] focus:outline-none focus:ring-2 focus:ring-[#b49d91]/40";
-const label = "mb-1 block font-fancy text-sm font-bold text-[#53443D]";
+const field = "w-full rounded-md border border-[#d8c9c1] bg-white px-3 py-2.5 font-fancy text-[15px] text-ink focus:border-taupe-600 focus:outline-none focus:ring-2 focus:ring-taupe-400/40";
+const label = "mb-1 block font-fancy text-sm font-bold text-taupe-900";
 
 function loadRazorpay(): Promise<boolean> {
   if (window.Razorpay) return Promise.resolve(true);
@@ -100,25 +100,25 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
   if (empty) {
     return (
       <section className="mx-auto flex w-[90%] flex-col items-center py-24 text-center">
-        <h1 className="font-heading text-[32px] text-[#8C7367]">Your cart is empty</h1>
-        <Link href="/shop" className="mt-8 rounded-full bg-[#b49d91] px-10 py-3 font-fancy text-[#3f342c]">Continue shopping</Link>
+        <h1 className="font-heading text-[32px] text-taupe-600">Your cart is empty</h1>
+        <Link href="/shop" className="mt-8 rounded-full bg-taupe-400 px-10 py-3 font-fancy text-[#3f342c]">Continue shopping</Link>
       </section>
     );
   }
   if (!customer && !guest) {
     return (
       <div className="mx-auto w-[92%] max-w-3xl py-10 md:py-16">
-        <h1 className="mb-6 text-center font-heading text-[30px] text-[#8C7367] md:text-[38px]">Checkout</h1>
+        <h1 className="mb-6 text-center font-heading text-[30px] text-taupe-600 md:text-[38px]">Checkout</h1>
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="font-heading text-xl text-[#53443D]">Sign in</h2>
-            <p className="mt-1 font-fancy text-sm text-[#53443D]">Use saved addresses, track every order and keep a wishlist.</p>
-            <Link href="/login?next=/checkout" className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-[#b49d91] px-6 py-3 font-fancy text-[#3f342c]">Sign in / Sign up</Link>
+            <h2 className="font-heading text-xl text-taupe-900">Sign in</h2>
+            <p className="mt-1 font-fancy text-sm text-taupe-900">Use saved addresses, track every order and keep a wishlist.</p>
+            <Link href="/login?next=/checkout" className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-taupe-400 px-6 py-3 font-fancy text-[#3f342c]">Sign in / Sign up</Link>
           </div>
           <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="font-heading text-xl text-[#53443D]">Continue as guest</h2>
-            <p className="mt-1 font-fancy text-sm text-[#53443D]">No account needed. We&apos;ll give you a private link to track this order.</p>
-            <button type="button" onClick={() => setGuest(true)} className="mt-5 inline-flex w-full items-center justify-center rounded-full border border-[#b49d91] px-6 py-3 font-fancy text-[#3f342c] hover:bg-[#f4ece6]">Checkout as guest</button>
+            <h2 className="font-heading text-xl text-taupe-900">Continue as guest</h2>
+            <p className="mt-1 font-fancy text-sm text-taupe-900">No account needed. We&apos;ll give you a private link to track this order.</p>
+            <button type="button" onClick={() => setGuest(true)} className="mt-5 inline-flex w-full items-center justify-center rounded-full border border-taupe-400 px-6 py-3 font-fancy text-[#3f342c] hover:bg-[#f4ece6]">Checkout as guest</button>
           </div>
         </div>
       </div>
@@ -128,43 +128,43 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
 
   return (
     <div className="mx-auto w-[92%] max-w-6xl py-8 md:py-12">
-      <h1 className="mb-6 text-center font-heading text-[30px] text-[#8C7367] md:text-[38px]">Checkout</h1>
+      <h1 className="mb-6 text-center font-heading text-[30px] text-taupe-600 md:text-[38px]">Checkout</h1>
       <form onSubmit={pay} className="grid gap-8 lg:grid-cols-[1fr_380px]" noValidate>
         <div className="space-y-8">
           <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 [&>legend+*]:clear-both" disabled={busy}>
-            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-[#53443D]">Contact</legend>
-            {!customer && <p className="font-fancy text-sm text-[#53443D]">Checking out as a guest. <Link href="/login?next=/checkout" className="underline">Sign in instead</Link></p>}
+            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-taupe-900">Contact</legend>
+            {!customer && <p className="font-fancy text-sm text-taupe-900">Checking out as a guest. <Link href="/login?next=/checkout" className="underline">Sign in instead</Link></p>}
             <div className="grid gap-4 sm:grid-cols-2">
               <div><label className={label} htmlFor="name">Full name</label><input id="name" autoComplete="name" required className={field} value={f.name} onChange={(e) => set("name", e.target.value)} />{fe("contact.name")}</div>
               <div><label className={label} htmlFor="phone">Mobile number</label><input id="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="10-digit number" required className={field} value={f.phone} onChange={(e) => set("phone", e.target.value)} />{fe("contact.phone")}</div>
-              <div className="sm:col-span-2"><label className={label} htmlFor="email">Email <span className="font-normal text-[#8C7367]">(for your receipt, optional)</span></label><input id="email" type="email" autoComplete="email" className={field} value={f.email} onChange={(e) => set("email", e.target.value)} />{fe("contact.email")}</div>
+              <div className="sm:col-span-2"><label className={label} htmlFor="email">Email <span className="font-normal text-taupe-600">(for your receipt, optional)</span></label><input id="email" type="email" autoComplete="email" className={field} value={f.email} onChange={(e) => set("email", e.target.value)} />{fe("contact.email")}</div>
             </div>
           </fieldset>
 
           <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 [&>legend+*]:clear-both" disabled={busy}>
-            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-[#53443D]">Delivery address</legend>
+            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-taupe-900">Delivery address</legend>
             {addresses.length > 0 && (
               <div className="space-y-2" role="radiogroup" aria-label="Saved addresses">
                 {addresses.map((a) => (
-                  <label key={a.id} className={`flex cursor-pointer gap-3 rounded-lg border p-3 font-fancy text-sm ${picked === a.id ? "border-[#8C7367] bg-[#f8f1ec]" : "border-[#e7dbd3]"}`}>
+                  <label key={a.id} className={`flex cursor-pointer gap-3 rounded-lg border p-3 font-fancy text-sm ${picked === a.id ? "border-taupe-600 bg-[#f8f1ec]" : "border-[#e7dbd3]"}`}>
                     <input type="radio" name="saved" checked={picked === a.id} onChange={() => pick(a)} />
                     <span><b>{a.fullName}</b>{a.isDefault && <span className="ml-2 rounded-full bg-[#ecdfd6] px-2 py-0.5 text-xs">Default</span>}<br />{a.line1}, {a.city}, {a.state} {a.postalCode}</span>
                   </label>
                 ))}
-                <label className={`flex cursor-pointer gap-3 rounded-lg border p-3 font-fancy text-sm ${picked === "" ? "border-[#8C7367] bg-[#f8f1ec]" : "border-[#e7dbd3]"}`}><input type="radio" name="saved" checked={picked === ""} onChange={() => pick(null)} /> Use a new address</label>
+                <label className={`flex cursor-pointer gap-3 rounded-lg border p-3 font-fancy text-sm ${picked === "" ? "border-taupe-600 bg-[#f8f1ec]" : "border-[#e7dbd3]"}`}><input type="radio" name="saved" checked={picked === ""} onChange={() => pick(null)} /> Use a new address</label>
               </div>
             )}
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2"><label className={label} htmlFor="line1">Address</label><input id="line1" autoComplete="address-line1" placeholder="House no., building, street" required className={field} value={f.line1} onChange={(e) => set("line1", e.target.value)} />{fe("address.line1")}</div>
-              <div><label className={label} htmlFor="line2">Area / locality <span className="font-normal text-[#8C7367]">(optional)</span></label><input id="line2" autoComplete="address-line2" className={field} value={f.line2} onChange={(e) => set("line2", e.target.value)} /></div>
-              <div><label className={label} htmlFor="landmark">Landmark <span className="font-normal text-[#8C7367]">(optional)</span></label><input id="landmark" className={field} value={f.landmark} onChange={(e) => set("landmark", e.target.value)} /></div>
+              <div><label className={label} htmlFor="line2">Area / locality <span className="font-normal text-taupe-600">(optional)</span></label><input id="line2" autoComplete="address-line2" className={field} value={f.line2} onChange={(e) => set("line2", e.target.value)} /></div>
+              <div><label className={label} htmlFor="landmark">Landmark <span className="font-normal text-taupe-600">(optional)</span></label><input id="landmark" className={field} value={f.landmark} onChange={(e) => set("landmark", e.target.value)} /></div>
               <div><label className={label} htmlFor="city">City</label><input id="city" autoComplete="address-level2" required className={field} value={f.city} onChange={(e) => set("city", e.target.value)} />{fe("address.city")}</div>
               <div><label className={label} htmlFor="state">State</label><select id="state" autoComplete="address-level1" required className={field} value={f.state} onChange={(e) => set("state", e.target.value)}><option value="">Select state</option>{INDIAN_STATES.map((s) => <option key={s}>{s}</option>)}</select>{fe("address.state")}</div>
               <div><label className={label} htmlFor="pin">PIN code</label><input id="pin" inputMode="numeric" autoComplete="postal-code" maxLength={6} required className={field} value={f.postalCode} onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))} />{fe("address.postalCode")}</div>
-              {customer && !picked && <label className="flex items-center gap-2 font-fancy text-sm text-[#53443D] sm:col-span-2"><input type="checkbox" checked={saveIt} onChange={(e) => setSaveIt(e.target.checked)} /> Save this address to my account</label>}
-              <div><label className={label} htmlFor="note">Delivery note <span className="font-normal text-[#8C7367]">(optional)</span></label><input id="note" maxLength={300} className={field} value={f.note} onChange={(e) => set("note", e.target.value)} /></div>
+              {customer && !picked && <label className="flex items-center gap-2 font-fancy text-sm text-taupe-900 sm:col-span-2"><input type="checkbox" checked={saveIt} onChange={(e) => setSaveIt(e.target.checked)} /> Save this address to my account</label>}
+              <div><label className={label} htmlFor="note">Delivery note <span className="font-normal text-taupe-600">(optional)</span></label><input id="note" maxLength={300} className={field} value={f.note} onChange={(e) => set("note", e.target.value)} /></div>
             </div>
-            {inArea ? <p className="font-fancy text-xs text-[#8C7367]">{areaSummary(area)}</p> : <p role="alert" className="rounded-md bg-amber-50 p-3 font-fancy text-sm text-amber-900">{notServiceableMessage(area)}</p>}
+            {inArea ? <p className="font-fancy text-xs text-taupe-600">{areaSummary(area)}</p> : <p role="alert" className="rounded-md bg-amber-50 p-3 font-fancy text-sm text-amber-900">{notServiceableMessage(area)}</p>}
           </fieldset>
 
           {/* Delivery method picker removed: the first active method is applied automatically (see methodId). */}
@@ -173,11 +173,11 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
         </div>
 
         <aside className="h-fit space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 lg:sticky lg:top-28">
-          <h2 className="font-heading text-xl text-[#53443D]">Order summary</h2>
-          {loading ? <p className="font-fancy text-sm text-[#8C7367]">Loading…</p> : (
+          <h2 className="font-heading text-xl text-taupe-900">Order summary</h2>
+          {loading ? <p className="font-fancy text-sm text-taupe-600">Loading…</p> : (
             <ul className="divide-y divide-[#eee3dd]">
               {view.map((l) => (
-                <li key={l.variantId} className="flex justify-between gap-3 py-2.5 font-fancy text-sm"><span>{l.name} <span className="text-[#8C7367]">· {l.label} × {l.paidQty}{l.freeQty > 0 && ` + ${l.freeQty} free`}</span>{l.freeQty > 0 && <span className="block text-xs text-[#2e7d32]">{l.offerLabel} – you saved {inr(l.saved)}</span>}{!l.inStock && <span className="ml-1 text-red-700">(out of stock)</span>}</span><span className="font-bold">{inr(l.lineTotal)}</span></li>
+                <li key={l.variantId} className="flex justify-between gap-3 py-2.5 font-fancy text-sm"><span>{l.name} <span className="text-taupe-600">· {l.label} × {l.paidQty}{l.freeQty > 0 && ` + ${l.freeQty} free`}</span>{l.freeQty > 0 && <span className="block text-xs text-[#2e7d32]">{l.offerLabel} – you saved {inr(l.saved)}</span>}{!l.inStock && <span className="ml-1 text-red-700">(out of stock)</span>}</span><span className="font-bold">{inr(l.lineTotal)}</span></li>
               ))}
             </ul>
           )}
@@ -186,14 +186,14 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
             <dl className="space-y-1.5 border-t border-[#eee3dd] pt-3 font-fancy text-sm">
               <div className="flex justify-between"><dt>Subtotal</dt><dd>{inr(quote.subtotal)}</dd></div>
               <div className="flex justify-between"><dt>Delivery</dt><dd>{quote.shipping === 0 ? "Free" : inr(quote.shipping)}</dd></div>
-              <div className="flex justify-between border-t border-[#eee3dd] pt-2 text-base font-bold text-[#2f3647]"><dt>Total</dt><dd>{inr(quote.total)}</dd></div>
+              <div className="flex justify-between border-t border-[#eee3dd] pt-2 text-base font-bold text-ink"><dt>Total</dt><dd>{inr(quote.total)}</dd></div>
             </dl>
           )}
           {msg && <p role="alert" className="rounded-md bg-red-50 p-3 font-fancy text-sm text-red-800">{msg}</p>}
-          <button type="submit" disabled={busy || !ready || loading} className="w-full rounded-md bg-[#53443D] py-3 font-fancy text-lg text-white transition hover:bg-[#44322b] disabled:cursor-not-allowed disabled:bg-gray-300">
+          <button type="submit" disabled={busy || !ready || loading} className="w-full rounded-md bg-taupe-900 py-3 font-fancy text-lg text-white transition hover:bg-[#44322b] disabled:cursor-not-allowed disabled:bg-gray-300">
             {busy ? "Processing…" : quote?.ok ? `Pay ${inr(quote.total)}` : "Pay"}
           </button>
-          <p className="text-center font-fancy text-xs text-[#8C7367]">Secure payment by Razorpay (UPI, cards, netbanking, wallets).</p>
+          <p className="text-center font-fancy text-xs text-taupe-600">Secure payment by Razorpay (UPI, cards, netbanking, wallets).</p>
         </aside>
       </form>
     </div>
