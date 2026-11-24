@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge, PageHeader, Pagination, Table, button, formatDate, formatINR, inputCls } from "@/components/admin/ui";
 import { requireAdminPage } from "@/server/auth/guard";
 import { db } from "@/server/db";
-import { Order } from "@/server/models";
+import { Order, TestLogin } from "@/server/models";
 import { ORDER_STATUS } from "@/server/models/commerce";
 import { escapeRe } from "@/server/admin/products";
 import { one, pageParam } from "@/server/admin/util";
@@ -26,6 +26,7 @@ export default async function OrdersPage({ searchParams }: PageProps<"/admin/ord
   if (q) { const re = new RegExp(escapeRe(q), "i"); filter.$or = [{ orderNumber: re }, { "contact.phone": re }, { "contact.name": re }, { "contact.email": re }]; }
   type O = { orderNumber: string; status: string; paymentStatus: string; grandTotal: number; placedAt: Date; contact: { name: string; phone: string }; items: unknown[] };
   const [total, rows] = await Promise.all([Order.countDocuments(filter), Order.find(filter, "orderNumber status paymentStatus grandTotal placedAt contact items").sort({ placedAt: -1 }).skip((page - 1) * SIZE).limit(SIZE).lean() as unknown as Promise<O[]>]);
+  const testPhones = new Set(((await TestLogin.find({}, "mobile").lean()) as unknown as { mobile: string }[]).map((t) => t.mobile));
   return (
     <>
       <PageHeader title="Orders" subtitle={`${total.toLocaleString("en-IN")} orders`} />
@@ -38,7 +39,7 @@ export default async function OrdersPage({ searchParams }: PageProps<"/admin/ord
         {rows.map((o) => (
           <tr key={o.orderNumber} className="hover:bg-a-raised/60">
             <td><Link href={`/admin/orders/${o.orderNumber}`} className="font-medium text-a-accent underline">{o.orderNumber}</Link></td>
-            <td>{o.contact.name}<br /><span className="text-xs text-a-muted">{o.contact.phone}</span></td><td>{o.items.length}</td>
+            <td>{o.contact.name} {testPhones.has(o.contact.phone) && <Badge tone="warn">test</Badge>}<br /><span className="text-xs text-a-muted">{o.contact.phone}</span></td><td>{o.items.length}</td>
             <td><Badge tone={tone(o.status)}>{o.status.toLowerCase().replace(/_/g, " ")}</Badge></td>
             <td><Badge tone={o.paymentStatus === "CAPTURED" ? "ok" : o.paymentStatus.includes("REFUND") ? "danger" : "warn"}>{o.paymentStatus.toLowerCase().replace(/_/g, " ")}</Badge></td>
             <td>{formatINR(o.grandTotal)}</td><td className="whitespace-nowrap text-a-muted">{formatDate(o.placedAt)}</td>

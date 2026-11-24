@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/server/db";
-import { TestLogin, User } from "@/server/models";
+import { AccountLinkRequest, Address, Cart, CustomerNote, Inventory, InventoryMovement, Notification, Order, OtpVerification, Payment, ProductReview, PromotionCustomer, PromotionRedemption, RecentlyViewed, Refund, RefreshToken, ReturnRequest, Session, TestLogin, User, Wishlist } from "@/server/models";
 import { ForbiddenError, requireAdmin } from "@/server/auth/guard";
 import { audit } from "@/server/admin/audit";
 import { normalizeMobile } from "@/lib/phone";
@@ -49,15 +49,53 @@ export async function setTestLoginActive(id: string, active: boolean): Promise<T
   } catch (e) { return fail(e); }
 }
 
+/** Permanently removes a test user and everything they created: orders, payments, addresses, cart, sessions, OTP logs. */
 export async function deleteTestLogin(id: string): Promise<TestLoginResult> {
   try {
     const admin = await requireAdmin("customers.write");
     if (!/^[a-f0-9]{24}$/.test(id)) return { ok: false, error: "Invalid request." };
     await db();
-    const t = (await TestLogin.findByIdAndDelete(id).lean()) as unknown as { mobile: string } | null;
+    const t = (await TestLogin.findById(id).lean()) as unknown as { mobile: string; userId?: unknown } | null;
     if (!t) return { ok: false, error: "Test login not found." };
-    await audit(admin, "testlogin.delete", "TestLogin", id, { before: { mobile: t.mobile } });
-    revalidatePath("/admin/customers/test-logins");
-    return { ok: true, message: "Removed. The customer account it created is kept (suspend it on the Customers page if needed)." };
+    const user = (await User.findOne({ mobile: t.mobile, "roleKeys.0": { $exists: false } }, "_id").lean()) as unknown as { _id: unknown } | null;
+    const uid = user?._id ?? null;
+
+    // Orders placed by the account, plus guest orders placed with the test number.
+    const orderQuery = { $or: [...(uid ? [{ userId: uid }] : []), { userId: null, "contact.phone": t.mobile }] };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const orderIds: any[] = ((await Order.find(orderQuery, "_id").lean()) as unknown as { _id: unknown }[]).map((o) => o._id);
+
+    // Put stock back: undo whatever these orders reserved or sold, then drop the movement rows.
+    if (orderIds.length) {
+      const net = await InventoryMovement.aggregate([
+        { $match: { orderId: { $in: orderIds } } },
+        { $group: { _id: "$variantId", onHand: { $sum: "$onHandDelta" }, reserved: { $sum: "$reservedDelta" } } },
+      ]);
+      for (const n of net) {
+        if (n.onHand || n.reserved) await Inventory.updateOne({ variantId: n._id }, { $inc: { onHand: -n.onHand, reserved: -n.reserved } });
+      }
+      await InventoryMovement.deleteMany({ orderId: { $in: orderIds } });
+      await Promise.all([
+        Payment.deleteMany({ orderId: { $in: orderIds } }), Refund.deleteMany({ orderId: { $in: orderIds } }), ReturnRequest.deleteMany({ orderId: { $in: orderIds } }),
+        PromotionRedemption.deleteMany({ orderId: { $in: orderIds } }), ProductReview.deleteMany({ orderId: { $in: orderIds } }),
+      ]);
+      await Order.deleteMany({ _id: { $in: orderIds } });
+    }
+    if (uid) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sessionIds: any[] = ((await Session.find({ userId: uid }, "_id").lean()) as unknown as { _id: unknown }[]).map((x) => x._id);
+      await Promise.all([
+        RefreshToken.deleteMany({ sessionId: { $in: sessionIds } }), Session.deleteMany({ userId: uid }),
+        Address.deleteMany({ userId: uid }), CustomerNote.deleteMany({ customerId: uid }), Cart.deleteMany({ userId: uid }), Wishlist.deleteMany({ userId: uid }),
+        RecentlyViewed.deleteMany({ userId: uid }), ProductReview.deleteMany({ userId: uid }), Notification.deleteMany({ userId: uid }),
+        PromotionCustomer.deleteMany({ userId: uid }), PromotionRedemption.deleteMany({ userId: uid }), AccountLinkRequest.deleteMany({ userId: uid }),
+      ]);
+      await User.deleteOne({ _id: uid });
+    }
+    await OtpVerification.deleteMany({ destination: t.mobile });
+    await TestLogin.deleteOne({ _id: id });
+    await audit(admin, "testlogin.delete", "TestLogin", id, { before: { mobile: t.mobile }, after: { ordersDeleted: orderIds.length, userDeleted: !!uid } });
+    revalidatePath("/admin/customers/test-logins"); revalidatePath("/admin/customers"); revalidatePath("/admin/orders");
+    return { ok: true, message: `Deleted the test user and all related data (${orderIds.length} order${orderIds.length === 1 ? "" : "s"}).` };
   } catch (e) { return fail(e); }
 }

@@ -33,7 +33,7 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
             <td><Badge tone={r.active ? "ok" : "neutral"}>{r.active ? "active" : "disabled"}</Badge></td>
             <td className="space-x-2 whitespace-nowrap">{canWrite && <>
               <button className={button("secondary", "!py-1")} disabled={pending} onClick={() => run(() => setTestLoginActive(r.id, !r.active))}>{r.active ? "Disable" : "Enable"}</button>
-              <button className={button("danger", "!py-1")} disabled={pending} onClick={() => { if (confirm("Remove this test login?")) run(() => deleteTestLogin(r.id)); }}>Remove</button>
+              <button className={button("danger", "!py-1")} disabled={pending} onClick={() => { if (confirm("Permanently delete this test user and ALL their data (orders, payments, addresses, cart, sessions)? This cannot be undone.")) run(() => deleteTestLogin(r.id)); }}>Delete</button>
             </>}</td>
           </tr>
         ))}
