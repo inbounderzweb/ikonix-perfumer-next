@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/store/cart-context";
 import { createCheckout, getCheckoutQuote, verifyPayment, type Quote } from "@/app/actions/checkout";
 import { getCartView, type CartLineView } from "@/app/actions/cart";
+import { lookupPincode, reverseGeocode } from "@/app/actions/location";
 import { INDIAN_STATES } from "@/lib/india";
 import { areaSummary, notServiceableMessage, serviceable, type DeliveryArea } from "@/lib/delivery-area";
 import { saveAddressAction } from "@/app/actions/customer/account";
@@ -50,6 +51,50 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
   const [busy, setBusy] = useState(false);
   const attempt = useRef<{ sig: string; key: string } | null>(null);
   const set = (k: keyof typeof f, v: string) => setF((p) => ({ ...p, [k]: v }));
+
+  // Address auto-fill: PIN code -> city/state/localities, and "Use my current location". Typed values are never overwritten:
+  // a field is only auto-filled while it is empty or still holds the value we filled last time.
+  const [geoNote, setPinNote] = useState<{ tone: "ok" | "warn"; text: string } | null>(null); // location-button messages
+  const [lookup, setLookup] = useState<{ pin: string; note: { tone: "ok" | "warn"; text: string }; areas: string[] } | null>(null);
+  const current = lookup?.pin === f.postalCode ? lookup : null; // a result only counts for the PIN it was fetched for
+  const pinNote = geoNote ?? current?.note ?? null;
+  const areas = current?.areas ?? [];
+  const [locating, setLocating] = useState(false);
+  const auto = useRef({ city: "", state: "" });
+  useEffect(() => {
+    if (!/^[1-9]\d{5}$/.test(f.postalCode)) return;
+    let live = true;
+    const pin = f.postalCode;
+    lookupPincode(pin).then((r) => {
+      if (!live) return;
+      if (!r.ok) { setLookup({ pin, note: { tone: "warn", text: r.error }, areas: [] }); return; }
+      setLookup({ pin, note: { tone: "ok", text: `${r.city}, ${r.state}` }, areas: r.areas });
+      setF((p) => {
+        const city = !p.city || p.city === auto.current.city ? r.city : p.city;
+        const state = !p.state || p.state === auto.current.state ? r.state : p.state;
+        auto.current = { city, state };
+        return { ...p, city, state };
+      });
+    });
+    return () => { live = false; };
+  }, [f.postalCode]);
+
+  function locate() {
+    if (!navigator.geolocation) { setPinNote({ tone: "warn", text: "Your browser can't share its location. Please enter your PIN code." }); return; }
+    setLocating(true); setPinNote(null);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const r = await reverseGeocode(pos.coords.latitude, pos.coords.longitude);
+        setLocating(false);
+        if (!r.ok) { setPinNote({ tone: "warn", text: r.error }); return; }
+        auto.current = { city: r.city, state: r.state };
+        setPicked("");
+        setF((p) => ({ ...p, postalCode: r.postalCode, city: r.city, state: r.state, line1: r.line1 || p.line1, line2: r.area || p.line2 }));
+      },
+      () => { setLocating(false); setPinNote({ tone: "warn", text: "Location permission was denied. Please enter your PIN code instead." }); },
+      { timeout: 10000, maximumAge: 60000 },
+    );
+  }
 
   useEffect(() => {
     let live = true;
@@ -137,7 +182,7 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
             <div className="grid gap-4 sm:grid-cols-2">
               <div><label className={label} htmlFor="name">Full name</label><input id="name" autoComplete="name" required className={field} value={f.name} onChange={(e) => set("name", e.target.value)} />{fe("contact.name")}</div>
               <div><label className={label} htmlFor="phone">Mobile number</label><input id="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="10-digit number" required className={field} value={f.phone} onChange={(e) => set("phone", e.target.value)} />{fe("contact.phone")}</div>
-              <div className="sm:col-span-2"><label className={label} htmlFor="email">Email <span className="font-normal text-taupe-600">(for your receipt, optional)</span></label><input id="email" type="email" autoComplete="email" className={field} value={f.email} onChange={(e) => set("email", e.target.value)} />{fe("contact.email")}</div>
+              <div className="sm:col-span-2"><label className={label} htmlFor="email">Email</label><input id="email" type="email" autoComplete="email" required placeholder="you@example.com" className={field} value={f.email} onChange={(e) => set("email", e.target.value)} /><p className="mt-1 font-fancy text-xs text-taupe-600">We&apos;ll email your invoice and order status updates here.</p>{fe("contact.email")}</div>
             </div>
           </fieldset>
 
@@ -155,12 +200,21 @@ export function CheckoutClient({ customer, addresses, area }: { customer: { name
               </div>
             )}
             <div className="grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <button type="button" onClick={locate} disabled={locating} className="inline-flex items-center gap-2 rounded-full border border-taupe-400 px-4 py-2 font-fancy text-sm text-taupe-900 transition hover:bg-[#faf5f2] disabled:opacity-60">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /><circle cx="12" cy="12" r="8" /></svg>
+                  {locating ? "Finding your location…" : "Use my current location"}
+                </button>
+              </div>
+              <div><label className={label} htmlFor="pin">PIN code</label><input id="pin" inputMode="numeric" autoComplete="postal-code" maxLength={6} required className={field} value={f.postalCode} onChange={(e) => { setPinNote(null); set("postalCode", e.target.value.replace(/\D/g, "")); }} />
+                {pinNote && <p role="status" className={`mt-1 font-fancy text-xs ${pinNote.tone === "ok" ? "text-[#2e7d32]" : "text-amber-800"}`}>{pinNote.text}</p>}{fe("address.postalCode")}</div>
+              <div className="hidden sm:block" aria-hidden />
               <div className="sm:col-span-2"><label className={label} htmlFor="line1">Address</label><input id="line1" autoComplete="address-line1" placeholder="House no., building, street" required className={field} value={f.line1} onChange={(e) => set("line1", e.target.value)} />{fe("address.line1")}</div>
-              <div><label className={label} htmlFor="line2">Area / locality <span className="font-normal text-taupe-600">(optional)</span></label><input id="line2" autoComplete="address-line2" className={field} value={f.line2} onChange={(e) => set("line2", e.target.value)} /></div>
+              <div><label className={label} htmlFor="line2">Area / locality <span className="font-normal text-taupe-600">(optional)</span></label><input id="line2" list="areas" autoComplete="address-line2" className={field} value={f.line2} onChange={(e) => set("line2", e.target.value)} /></div>
+              <datalist id="areas">{areas.map((a) => <option key={a} value={a} />)}</datalist>
               <div><label className={label} htmlFor="landmark">Landmark <span className="font-normal text-taupe-600">(optional)</span></label><input id="landmark" className={field} value={f.landmark} onChange={(e) => set("landmark", e.target.value)} /></div>
               <div><label className={label} htmlFor="city">City</label><input id="city" autoComplete="address-level2" required className={field} value={f.city} onChange={(e) => set("city", e.target.value)} />{fe("address.city")}</div>
               <div><label className={label} htmlFor="state">State</label><select id="state" autoComplete="address-level1" required className={field} value={f.state} onChange={(e) => set("state", e.target.value)}><option value="">Select state</option>{INDIAN_STATES.map((s) => <option key={s}>{s}</option>)}</select>{fe("address.state")}</div>
-              <div><label className={label} htmlFor="pin">PIN code</label><input id="pin" inputMode="numeric" autoComplete="postal-code" maxLength={6} required className={field} value={f.postalCode} onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))} />{fe("address.postalCode")}</div>
               {customer && !picked && <label className="flex items-center gap-2 font-fancy text-sm text-taupe-900 sm:col-span-2"><input type="checkbox" checked={saveIt} onChange={(e) => setSaveIt(e.target.checked)} /> Save this address to my account</label>}
               <div><label className={label} htmlFor="note">Delivery note <span className="font-normal text-taupe-600">(optional)</span></label><input id="note" maxLength={300} className={field} value={f.note} onChange={(e) => set("note", e.target.value)} /></div>
             </div>

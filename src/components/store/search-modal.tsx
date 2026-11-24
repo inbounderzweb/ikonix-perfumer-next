@@ -75,7 +75,7 @@ export function SearchModal({ open, onClose }: { open: boolean; onClose: () => v
             }}
             placeholder="Search products, collections …"
             aria-label="Search products"
-            className="flex-1 text-lg caret-[#b49d91] outline-none placeholder:text-gray-400"
+            className="flex-1 text-lg caret-[#b49d91] outline-none placeholder:text-gray-400 [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-cancel-button]:appearance-none"
           />
         </form>
         <div className="mt-5 max-h-80 overflow-y-auto" ref={listRef}>

@@ -35,7 +35,7 @@ const checkoutInput = z.object({
   lines: cartLines,
   shippingMethodId: z.string().regex(/^[a-f0-9]{24}$/, "Choose a delivery method"),
   idempotencyKey: z.string().uuid(),
-  contact: z.object({ name: text(2, 80), phone, email: z.union([z.email().max(200), z.literal("")]).transform((s) => s.toLowerCase()) }),
+  contact: z.object({ name: text(2, 80), phone, email: z.string().trim().min(1, "Enter your email address").pipe(z.email("Enter a valid email address").max(200)).transform((s) => s.toLowerCase()) }),
   address: z.object({
     line1: text(3, 150), line2: z.string().trim().max(150).default(""), landmark: z.string().trim().max(100).default(""),
     city: text(2, 80), state: z.enum(INDIAN_STATES), postalCode: z.string().trim().regex(/^[1-9]\d{5}$/, "Enter a 6-digit PIN code"),
