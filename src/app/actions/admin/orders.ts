@@ -9,6 +9,7 @@ import { ForbiddenError, requireAdmin } from "@/server/auth/guard";
 import { audit } from "@/server/admin/audit";
 import { cancelOrder } from "@/server/commerce/orders";
 import { allowedNext } from "@/server/commerce/order-flow";
+import { queueOrderNotification, retryNotification, type OrderEvent } from "@/server/notify/order-notify";
 import { RazorpayError, refundRazorpayPayment } from "@/server/commerce/razorpay";
 
 export type OrderResult = { ok: true; message?: string } | { ok: false; error: string };
@@ -48,6 +49,7 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
       const done = await cancelOrder(o._id, v.note || "Cancelled by staff", { type: "ADMIN", userId: admin.id });
       if (!done) return { ok: false, error: "The order was already cancelled." };
       await audit(admin, "order.cancel", "Order", v.orderNumber, { before: { status: o.status } });
+      queueOrderNotification(o._id, "CANCELLED", o.status);
       revalidatePath("/admin/orders");
       return { ok: true, message: o.paymentStatus === "CAPTURED" ? "Order cancelled and stock returned. Remember to refund the customer." : "Order cancelled." };
     }
@@ -70,6 +72,7 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
       await Order.updateOne({ _id: o._id, "shipments.0": { $exists: true } }, { $set: { "shipments.$[].status": shipStatus, ...(v.to === "DELIVERED" ? { "shipments.$[].deliveredAt": now } : {}) } } as never);
     }
     await audit(admin, "order.status", "Order", v.orderNumber, { before: { status: o.status }, after: { status: v.to } });
+    queueOrderNotification(o._id, v.to as OrderEvent, o.status);
     revalidatePath("/admin/orders");
     return { ok: true };
   } catch (e) { return failure(e); }
@@ -146,11 +149,24 @@ export async function refundOrder(raw: unknown): Promise<OrderResult> {
       await Payment.updateOne({ _id: pay._id }, { status: full ? "REFUNDED" : "PARTIALLY_REFUNDED" });
       await Order.updateOne({ _id: o._id }, { paymentStatus: full ? "REFUNDED" : "PARTIALLY_REFUNDED", ...(full && o.status !== "CANCELLED" ? { status: "REFUNDED" } : {}), $push: { statusHistory: { from: o.status, to: full && o.status !== "CANCELLED" ? "REFUNDED" : o.status, note: `Refund of ₹${(amount / 100).toFixed(2)}: ${p.data.reason}`, actorType: "ADMIN", actorUserId: admin.id } } });
       await audit(admin, "order.refund", "Order", p.data.orderNumber, { after: { amount, razorpayRefund: rf.id } });
+      if (full) queueOrderNotification(o._id, "REFUNDED", o.status);
       revalidatePath("/admin/orders");
       return { ok: true, message: `Refund of ₹${(amount / 100).toFixed(2)} initiated.` };
     } catch (e) {
       await Refund.updateOne({ _id: row._id }, { status: "FAILED" });
       return { ok: false, error: e instanceof RazorpayError ? `Razorpay: ${e.message}` : "The refund could not be processed." };
     }
+  } catch (e) { return failure(e); }
+}
+
+/** Retry a failed customer email/SMS from the order's notification history. */
+export async function retryOrderNotification(notificationId: string): Promise<OrderResult> {
+  try {
+    const admin = await requireAdmin("orders.write");
+    if (!/^[a-f0-9]{24}$/i.test(notificationId)) return { ok: false, error: "Invalid request." };
+    const r = await retryNotification(notificationId);
+    await audit(admin, "order.notification.retry", "Notification", notificationId, { after: { ok: r.ok } });
+    revalidatePath("/admin/orders");
+    return r.ok ? { ok: true, message: "Sent." } : { ok: false, error: r.error ?? "Retry failed." };
   } catch (e) { return failure(e); }
 }

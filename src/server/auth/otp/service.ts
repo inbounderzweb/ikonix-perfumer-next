@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { OtpVerification, TestLogin } from "@/server/models";
 import { hmacSha256Hex, safeEqual } from "../crypto";
 import { rateLimit } from "../rate-limit";
-import { getSmsProvider } from "./sms-provider";
+import { getSmsProvider, otpMessage } from "./sms-provider";
 
 export type OtpPurpose = "LOGIN" | "CHANGE_MOBILE";
 
@@ -28,8 +28,8 @@ const hashCode = (destination: string, purpose: OtpPurpose, code: string) => hma
 
 function generateCode(isMock: boolean): string {
   // Mock mode uses a fixed code so flows can be tested without an SMS gateway. Never reachable in production (see provider).
-  if (isMock) return /^\d{6}$/.test(process.env.MOCK_OTP_CODE ?? "") ? process.env.MOCK_OTP_CODE! : "123456";
-  return String(randomInt(100000, 1000000));
+  if (isMock) return /^\d{4,6}$/.test(process.env.MOCK_OTP_CODE ?? "") ? process.env.MOCK_OTP_CODE! : "1234";
+  return String(randomInt(1000, 10000)); // 4-digit OTP
 }
 
 export type RequestResult =
@@ -73,7 +73,7 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
     throw e;
   }
   try {
-    const r = await provider.send(destination, `Your Ikonix verification code is ${code}. It expires in ${Math.round(cfg.ttlSec / 60)} minutes. Do not share it with anyone.`);
+    const r = await provider.send(destination, otpMessage(code, Math.round(cfg.ttlSec / 60)));
     await OtpVerification.updateOne({ _id: doc._id }, { providerMessageId: r.messageId, deliveryStatus: provider.isMock ? "QUEUED" : "SENT" });
   } catch (e) {
     await OtpVerification.updateOne({ _id: doc._id }, { active: false, deliveryStatus: "FAILED" });
@@ -90,7 +90,7 @@ const BAD = "That code is incorrect or has expired.";
 export async function verifyOtp(input: { destination: string; purpose: OtpPurpose; code: string; ip?: string }): Promise<VerifyResult> {
   await db();
   const { destination, purpose } = input;
-  if (!/^\d{6}$/.test(input.code)) return { ok: false, error: BAD };
+  if (!/^\d{4,6}$/.test(input.code)) return { ok: false, error: BAD };
   if (input.ip && !(await rateLimit(`otp-verify-ip:${input.ip}`, 60, 900))) return { ok: false, error: "Too many attempts. Try again later." };
 
   // Claim one attempt atomically (concurrent guesses cannot exceed maxAttempts).

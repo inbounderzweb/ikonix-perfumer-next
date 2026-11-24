@@ -1,5 +1,6 @@
 "use client";
 
+import { capFirst } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -96,12 +97,12 @@ export function BestSellers({ tabs }: { tabs: { label: string; products: Product
   const [active, setActive] = useState(tabs[0]?.label);
   const current = tabs.find((t) => t.label === active) ?? tabs[0];
   return (
-    <section className="mx-auto mt-[4.5rem] w-[90%] py-6 lg:w-[80%]">
+    <section className="mx-auto mt-8 w-[90%] py-3 md:mt-[4.5rem] md:py-6 lg:w-[80%]">
       <div className="no-scrollbar mb-4 flex gap-4 overflow-x-auto" role="tablist">
         {tabs.map((t) => (
           <button key={t.label} role="tab" aria-selected={active === t.label} onClick={() => setActive(t.label)}
             className={`flex-shrink-0 rounded-full px-6 py-3 font-fancy text-[16px] transition ${active === t.label ? "bg-[#b49d91] text-[#3f342c]" : "border border-[#c9b6a9] bg-transparent text-[#a08876]"}`}>
-            {t.label}
+            {capFirst(t.label)}
           </button>
         ))}
       </div>

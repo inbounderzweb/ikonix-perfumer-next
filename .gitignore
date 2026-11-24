@@ -10,3 +10,6 @@ node_modules
 # Basic site images (public/ikonix/site, categories) stay tracked.
 public/ikonix/products/*
 !public/ikonix/products/.gitkeep
+
+# local-only OAuth secrets
+.secrets/

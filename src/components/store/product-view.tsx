@@ -1,5 +1,6 @@
 "use client";
 
+import { capFirst } from "@/lib/format";
 import Image from "@/components/store/store-image";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -191,7 +192,7 @@ export function ProductView({ product: p, initialVariantId }: { product: Product
             <div className="overflow-hidden rounded-xl border border-[#E8D9D0]">
               {[
                 ["Brand", "Ikonix Perfumer"],
-                ["Category", p.categoryName ?? "—"],
+                ["Category", p.categoryName ? capFirst(p.categoryName) : "—"],
                 ...(variant ? [["Size / Volume", variant.label]] : []),
                 ["Fragrance Type", "Eau de Parfum (EDP)"],
                 ["Country of Origin", "India"],

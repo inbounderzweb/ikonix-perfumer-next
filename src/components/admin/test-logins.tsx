@@ -21,7 +21,7 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
           <form className="grid gap-3 sm:grid-cols-4" onSubmit={(e) => { e.preventDefault(); run(() => createTestLogin(form), () => setForm({ name: "", mobile: "", code: "" })); }}>
             <Field label="Name" htmlFor="tl-name"><input id="tl-name" required className={inputCls} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></Field>
             <Field label="Mobile" htmlFor="tl-mobile"><input id="tl-mobile" required inputMode="numeric" placeholder="10-digit number" className={inputCls} value={form.mobile} onChange={(e) => setForm({ ...form, mobile: e.target.value })} /></Field>
-            <Field label="Fixed OTP" htmlFor="tl-code"><input id="tl-code" required inputMode="numeric" maxLength={6} placeholder="6 digits" className={inputCls} value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value.replace(/\D/g, "") })} /></Field>
+            <Field label="Fixed OTP" htmlFor="tl-code"><input id="tl-code" required inputMode="numeric" maxLength={6} placeholder="4 digits" className={inputCls} value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value.replace(/\D/g, "") })} /></Field>
             <div className="flex items-end"><button className={button("primary")} disabled={pending}>Create</button></div>
           </form>
         </Card>

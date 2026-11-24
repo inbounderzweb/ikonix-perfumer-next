@@ -9,7 +9,7 @@ import { audit } from "@/server/admin/audit";
 import { normalizeMobile } from "@/lib/phone";
 
 export type TestLoginResult = { ok: true; message?: string } | { ok: false; error: string };
-const input = z.object({ name: z.string().trim().min(2).max(80), mobile: z.string().max(20), code: z.string().regex(/^\d{6}$/, "The code must be 6 digits.") });
+const input = z.object({ name: z.string().trim().min(2).max(80), mobile: z.string().max(20), code: z.string().regex(/^\d{4,6}$/, "The code must be 4 to 6 digits.") });
 
 function fail(e: unknown): TestLoginResult {
   if (e instanceof ForbiddenError || e instanceof Response) return { ok: false, error: "You do not have permission to do that." };
@@ -54,7 +54,7 @@ export async function resetTestLoginCode(id: string, code: string): Promise<Test
   try {
     const admin = await requireAdmin("customers.write");
     if (!/^[a-f0-9]{24}$/.test(id)) return { ok: false, error: "Invalid request." };
-    if (!/^\d{6}$/.test(code)) return { ok: false, error: "The code must be 6 digits." };
+    if (!/^\d{4,6}$/.test(code)) return { ok: false, error: "The code must be 4 to 6 digits." };
     await db();
     const t = (await TestLogin.findByIdAndUpdate(id, { code }).lean()) as unknown as { mobile: string } | null;
     if (!t) return { ok: false, error: "Test login not found." };

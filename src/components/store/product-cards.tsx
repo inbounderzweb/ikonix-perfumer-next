@@ -1,5 +1,6 @@
 "use client";
 
+import { capFirst } from "@/lib/format";
 import Image from "@/components/store/store-image";
 import Link from "next/link";
 import type { ProductCardDTO } from "@/lib/catalogue-types";
@@ -38,7 +39,7 @@ export function HomeProductCard({ p }: { p: ProductCardDTO }) {
     <div className="flex w-[70%] flex-shrink-0 flex-col sm:w-full">
       <div className="relative aspect-square overflow-hidden rounded-[22px] bg-[#f0e4da]">
         {p.categoryName && (
-          <span className="absolute top-3 left-3 z-10 rounded-full border border-[#c9b6a9] bg-white/60 px-2 py-0.5 text-[10px] text-[#6b5d52]">{p.categoryName}</span>
+          <span className="absolute top-3 left-3 z-10 rounded-full border border-[#c9b6a9] bg-white/60 px-2 py-0.5 text-[10px] text-[#6b5d52]">{capFirst(p.categoryName)}</span>
         )}
         {!p.inStock && <span className="absolute bottom-3 left-3 z-10 rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-semibold text-white">Out of stock</span>}
         <AddButton p={p} className="absolute top-3 right-3 z-10 rounded-full border border-[#c9b6a9] bg-white/50 p-2.5 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40" />

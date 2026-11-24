@@ -1,4 +1,5 @@
 import "server-only";
+import { HttpSmsProvider } from "./http-provider";
 
 /**
  * SMS gateway contract. The OTP service only ever talks to this interface, so adding MSG91, Twilio, etc. means
@@ -14,7 +15,8 @@ export interface SmsProvider {
   readonly name: string;
   /** Mock providers never send anything and use a predictable code. They are refused in production. */
   readonly isMock: boolean;
-  send(to: string, message: string): Promise<{ messageId?: string }>;
+  /** `templateId` overrides SMS_TEMPLATE_ID (each DLT-approved message type has its own id). */
+  send(to: string, message: string, opts?: { templateId?: string }): Promise<{ messageId?: string }>;
 }
 
 class MockSmsProvider implements SmsProvider {
@@ -37,7 +39,18 @@ export function getSmsProvider(): SmsProvider {
       // In production the mock is only usable for an explicit allowlist of test numbers (OTP_TEST_MOBILES); see requestOtp.
       if (process.env.NODE_ENV === "production" && testMobiles().length === 0) throw new Error("OTP_PROVIDER=mock is not allowed in production without OTP_TEST_MOBILES. Integrate an SMS provider (see sms-provider.ts).");
       return new MockSmsProvider();
+    case "http": case "thesmsbuddy":
+      return new HttpSmsProvider();
     default:
       throw new Error(`Unknown OTP_PROVIDER "${name}". Implement it in src/server/auth/otp and register it in getSmsProvider().`);
   }
+}
+
+/**
+ * The SMS text. Indian operators only deliver text that matches a DLT-approved template, so the wording comes from
+ * OTP_SMS_TEMPLATE (copy it exactly from your DLT template; use {code} and {minutes} where the variables go).
+ */
+export function otpMessage(code: string, minutes: number): string {
+  const t = process.env.OTP_SMS_TEMPLATE?.trim() || "Your Ikonix verification code is {code}. It expires in {minutes} minutes. Do not share it with anyone.";
+  return t.replaceAll("{code}", code).replaceAll("{minutes}", String(minutes));
 }

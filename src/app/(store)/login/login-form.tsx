@@ -44,7 +44,7 @@ export function LoginForm({ next, google, initialError, mock, resendSeconds }: {
             <input type="hidden" name="mobile" value={mobile} />
             <input type="hidden" name="next" value={next} />
             <p className="font-fancy text-sm text-[#53443D]">Enter the code sent to <strong>{mobile.replace(/^\+91/, "+91 ")}</strong>. {state?.info}</p>
-            <input name="code" inputMode="numeric" autoComplete="one-time-code" pattern="\d{6}" maxLength={6} placeholder="6-digit code" aria-label="Verification code" required autoFocus className={`${input} text-center tracking-[0.5em]`} />
+            <input name="code" inputMode="numeric" autoComplete="one-time-code" pattern="\d{4,6}" maxLength={6} placeholder="4-digit code" aria-label="Verification code" required autoFocus className={`${input} text-center tracking-[0.5em]`} />
             <button className={btn} disabled={verifying}>{verifying ? "Verifying…" : "Verify & sign in"}</button>
           </form>
           <form action={send} className="flex items-center justify-between text-sm">

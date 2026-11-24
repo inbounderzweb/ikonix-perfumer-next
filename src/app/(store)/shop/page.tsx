@@ -1,3 +1,4 @@
+import { capFirst } from "@/lib/format";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCategories, getShopPage, searchProducts } from "@/server/catalogue/queries";
@@ -26,7 +27,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
   const known = new Set(["all", "featured", ...categories.map((c) => c.slug)]);
   const cat = known.has(str(sp.cat)) ? str(sp.cat) : "all";
   const page = Math.max(1, Number.parseInt(str(sp.page), 10) || 1);
-  const tabs = [{ slug: "all", label: "All" }, { slug: "featured", label: "Featured" }, ...categories.map((c) => ({ slug: c.slug, label: c.name }))];
+  const tabs = [{ slug: "all", label: "All" }, { slug: "featured", label: "Featured" }, ...categories.map((c) => ({ slug: c.slug, label: capFirst(c.name) }))];
 
   const result = q ? { items: await searchProducts(q, 40), page: 1, totalPages: 1, total: 0 } : await getShopPage(cat, page);
 

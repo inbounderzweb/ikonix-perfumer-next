@@ -94,6 +94,11 @@ async function fetchDetail(filter: Record<string, unknown>) {
   return toDetail(o, pay);
 }
 
+/** Trusted server-side lookup (notifications only): no ownership check. Never expose to a request without staff auth. */
+export async function getOrderTrusted(orderNumber: string) {
+  return /^IKX-\d{6}-\d{5}$/.test(orderNumber) ? fetchDetail({ orderNumber }) : null;
+}
+
 export async function getOrder(userId: string, orderNumber: string) {
   if (!/^IKX-\d{6}-\d{5}$/.test(orderNumber)) return null;
   // Ownership is part of the query: someone else's order number returns null, indistinguishable from "doesn't exist".

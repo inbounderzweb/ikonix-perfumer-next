@@ -1,5 +1,6 @@
 "use client";
 
+import { capFirst } from "@/lib/format";
 import Image from "@/components/store/store-image";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -86,7 +87,7 @@ export function SearchModal({ open, onClose }: { open: boolean; onClose: () => v
               {p.image && <Image src={(p.variant?.image ?? p.image).url} alt={p.name} width={48} height={48} className="h-12 w-12 flex-shrink-0 rounded-md object-cover" />}
               <div className="flex-1 overflow-hidden">
                 <p className="line-clamp-1 text-sm leading-tight font-medium">{highlight(p.name, q)}</p>
-                <p className="line-clamp-1 text-xs text-gray-500">{p.categoryName ?? ""} • ₹{p.variant ? rupees(p.variant.salePrice) : "—"}</p>
+                <p className="line-clamp-1 text-xs text-gray-500">{p.categoryName ? capFirst(p.categoryName) : ""} • ₹{p.variant ? rupees(p.variant.salePrice) : "—"}</p>
               </div>
             </button>
           ))}

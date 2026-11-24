@@ -1,4 +1,5 @@
 import "server-only";
+import { queueOrderNotification } from "@/server/notify/order-notify";
 import { Types } from "mongoose";
 import { db } from "@/server/db";
 import { Counter, Inventory, InventoryMovement, Order, Payment, Product } from "@/server/models";
@@ -105,6 +106,7 @@ export async function markOrderPaid(orderId: Types.ObjectId | string, payment: {
   );
   await Payment.updateOne({ orderId: prior._id }, { providerPaymentId: payment.providerPaymentId, status: "CAPTURED", method: payment.method, methodDetail: payment.methodDetail, capturedAt: new Date(), signatureVerifiedAt: new Date() });
   if (status === "CONFIRMED") for (const it of prior.items) await Product.updateOne({ _id: it.productId }, { $inc: { soldCount: it.quantity + it.freeQuantity } });
+  if (status === "CONFIRMED") queueOrderNotification(prior._id, "CONFIRMED", prior.status);
   return status === "CONFIRMED" ? "confirmed" : "needs_refund";
 }
 

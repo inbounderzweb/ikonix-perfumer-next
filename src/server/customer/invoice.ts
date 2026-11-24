@@ -1,12 +1,14 @@
 import "server-only";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { getOrder, getOrderByToken } from "./orders";
+import { getOrder, getOrderByToken, getOrderTrusted } from "./orders";
 
 const inr = (paise: number) => `Rs. ${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; // StandardFonts lack the rupee glyph
 const clean = (s: string) => s.replace(/[^\x20-\x7E]/g, "?"); // WinAnsi-safe
 
 /** Invoice for a PAID order only. Tax lines appear only if tax was actually charged (no invented GST breakdown). */
 export const buildInvoice = async (userId: string, orderNumber: string) => renderInvoice(await getOrder(userId, orderNumber));
+/** For emails sent by the server after payment/status changes. */
+export const buildInvoiceForNotification = async (orderNumber: string) => renderInvoice(await getOrderTrusted(orderNumber));
 export const buildGuestInvoice = async (orderNumber: string, token: string) => renderInvoice(await getOrderByToken(orderNumber, token));
 
 async function renderInvoice(o: Awaited<ReturnType<typeof getOrder>>): Promise<Uint8Array | null> {

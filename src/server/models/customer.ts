@@ -93,7 +93,7 @@ const testLoginSchema = new Schema(
   {
     mobile: { type: String, required: true, unique: true, match: /^\+[1-9][0-9]{7,14}$/ },
     name: { type: String, required: true, trim: true, maxlength: 80 },
-    code: { type: String, required: true, match: /^\d{6}$/ },
+    code: { type: String, required: true, match: /^\d{4,6}$/ },
     active: { type: Boolean, default: true },
     userId: { type: ObjectId, ref: "User", default: null },
     createdBy: { type: ObjectId, ref: "User", default: null },

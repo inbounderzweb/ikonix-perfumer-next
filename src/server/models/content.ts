@@ -83,6 +83,7 @@ const notificationSchema = new Schema(
 );
 notificationSchema.index({ status: 1, scheduledAt: 1 });
 notificationSchema.index({ userId: 1, createdAt: -1 });
+notificationSchema.index({ "payload.orderId": 1, createdAt: -1 });
 export type NotificationDoc = InferSchemaType<typeof notificationSchema>;
 export const Notification = defineModel("Notification", notificationSchema, "notifications");
 

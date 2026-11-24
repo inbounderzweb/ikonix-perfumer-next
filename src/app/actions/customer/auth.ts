@@ -26,7 +26,7 @@ export async function verifyLoginOtp(_p: OtpState, form: FormData): Promise<OtpS
   const mobile = normalizeMobile(String(form.get("mobile") ?? ""));
   const code = String(form.get("code") ?? "").replace(/\s/g, "");
   if (!mobile) return { step: "mobile", error: "Enter your mobile number again." };
-  if (!/^\d{6}$/.test(code)) return { step: "code", mobile, error: "Enter the 6-digit code." };
+  if (!/^\d{4,6}$/.test(code)) return { step: "code", mobile, error: "Enter the 4-digit code." };
   const { ip } = await clientMeta();
   if (!(await rateLimit(`otp-verify-ip:${ip}`, 40, 900))) return { step: "code", mobile, error: "Too many attempts. Try again in a few minutes." };
   const v = await verifyOtp({ destination: mobile, purpose: "LOGIN", code, ip });

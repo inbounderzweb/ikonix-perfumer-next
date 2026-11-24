@@ -7,7 +7,8 @@ import { OrderActions } from "@/components/admin/order-actions";
 import { allowedNext } from "@/server/commerce/order-flow";
 import { requireAdminPage } from "@/server/auth/guard";
 import { db } from "@/server/db";
-import { Order, Payment, Refund } from "@/server/models";
+import { Notification, Order, Payment, Refund } from "@/server/models";
+import { NotificationHistory, type NotificationRow } from "@/components/admin/notification-history";
 
 export const metadata: Metadata = { title: "Order" };
 
@@ -24,6 +25,8 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
     Payment.findOne({ orderId: o._id }).lean() as unknown as Promise<{ providerOrderId: string; providerPaymentId?: string; method?: string; methodDetail?: string; status: string; amount: number; failureReason?: string } | null>,
     Refund.find({ orderId: o._id }).sort({ createdAt: -1 }).lean() as unknown as Promise<{ amount: number; status: string; reason?: string; createdAt: Date }[]>,
   ]);
+  type N = { _id: Types.ObjectId; channel: string; recipient: string; status: string; lastError?: string; attempts: number; createdAt: Date; sentAt?: Date; audience: string; payload?: { event?: string; fromStatus?: string | null; toStatus?: string } };
+  const notes = ((await Notification.find({ "payload.orderId": o._id }).sort({ createdAt: -1 }).limit(50).lean()) as unknown as N[]).map((n): NotificationRow => ({ id: String(n._id), channel: n.channel, event: n.payload?.event ?? "", from: n.payload?.fromStatus ?? null, to: n.payload?.toStatus ?? "", recipient: n.recipient, status: n.status, at: (n.sentAt ?? n.createdAt).toISOString(), error: n.lastError ?? null, attempts: n.attempts }));
   const refunded = refunds.filter((r) => r.status !== "FAILED").reduce((a, r) => a + r.amount, 0);
   const a = o.shippingAddress;
   return (
@@ -51,6 +54,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
         </div>
         <div className="space-y-5">
           <OrderActions orderNumber={o.orderNumber} next={allowedNext(o.status)} canWrite={admin.permissions.has("orders.write")} />
+          <NotificationHistory rows={notes} canRetry={admin.permissions.has("orders.write")} />
           <Card title="Customer"><p className="text-sm">{o.contact.name}<br />{o.contact.phone}<br />{o.contact.email}</p></Card>
           <Card title="Ship to"><p className="text-sm">{a.fullName}<br />{a.line1}{a.line2 ? `, ${a.line2}` : ""}{a.landmark ? ` (${a.landmark})` : ""}<br />{a.city}, {a.state} {a.postalCode}<br />{a.phone}</p>{o.customerNote && <p className="mt-2 text-xs text-a-muted">Note: {o.customerNote}</p>}</Card>
           <Card title="Payment">

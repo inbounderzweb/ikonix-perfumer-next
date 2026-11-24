@@ -24,7 +24,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
     <section className="mx-auto w-[92%] max-w-md py-12 lg:py-20">
       <h1 className="text-center font-heading text-[32px] text-[#8C7367]">Sign in</h1>
       <p className="mt-2 text-center font-fancy text-[#53443D]">Track orders, save addresses and keep a wishlist.</p>
-      <LoginForm next={next} google={googleConfigured()} initialError={err} mock={process.env.OTP_PROVIDER !== "msg91" && process.env.OTP_PROVIDER !== "twilio"} resendSeconds={otpConfig().resendSec} />
+      <LoginForm next={next} google={googleConfigured()} initialError={err} mock={!["msg91", "twilio", "http", "thesmsbuddy"].includes(process.env.OTP_PROVIDER ?? "")} resendSeconds={otpConfig().resendSec} />
     </section>
   );
 }
