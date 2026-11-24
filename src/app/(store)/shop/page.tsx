@@ -42,10 +42,10 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
             <Link href="/shop" className="rounded-full border border-[#b49d91] px-4 py-1 text-sm text-[#b49d91]">Clear search</Link>
           </div>
         ) : (
-          <div className="no-scrollbar mb-6 flex gap-4 overflow-x-auto pb-4" role="tablist">
+          <div className="no-scrollbar mb-6 flex gap-4 overflow-x-auto pb-2 md:pb-4" role="tablist">
             {tabs.map((t) => (
               <Link key={t.slug} href={qs(t.slug)} role="tab" aria-selected={cat === t.slug} scroll={false}
-                className={`flex-shrink-0 rounded-full px-4 py-2 transition ${cat === t.slug ? "bg-[#b49d91] text-white" : "border border-[#b49d91] bg-white text-[#b49d91]"}`}>
+                className={`flex-shrink-0 rounded-full px-3.5 py-1.5 text-[15px] transition md:px-4 md:py-2 md:text-base ${cat === t.slug ? "bg-[#b49d91] text-white" : "border border-[#b49d91] bg-white text-[#b49d91]"}`}>
                 {t.label}
               </Link>
             ))}

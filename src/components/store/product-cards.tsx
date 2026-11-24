@@ -47,12 +47,12 @@ export function HomeProductCard({ p }: { p: ProductCardDTO }) {
           {p.image && <Image src={p.image.url} alt={p.name} fill sizes="(min-width:1280px) 20vw, (min-width:640px) 45vw, 70vw" className="scale-105 object-cover" />}
         </Link>
       </div>
-      <div className="mt-4 px-1">
-        <h3 className="line-clamp-2 min-h-[2.6em] font-fancy text-[16px] leading-snug text-[#2f3647] sm:text-[17px]">
+      <div className="mt-2.5 px-1 sm:mt-4">
+        <h3 className="line-clamp-2 font-fancy sm:min-h-[2.6em] text-[16px] leading-snug text-[#2f3647] sm:text-[17px]">
           <Link href={href(p)}>{p.name}</Link>
         </h3>
         {v && (
-          <div className="mt-2 flex flex-wrap items-baseline gap-2">
+          <div className="mt-1 flex flex-wrap items-baseline gap-2 sm:mt-2">
             <span className="text-[17px] font-semibold text-[#2f3647]">Rs.{rupees(v.salePrice)}/-</span>
             {showStrike && <span className="text-sm text-[#2f3647]/50 line-through">Rs.{rupees(v.regularPrice)}/-</span>}
           </div>

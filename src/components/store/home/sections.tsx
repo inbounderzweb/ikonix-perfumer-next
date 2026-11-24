@@ -85,15 +85,15 @@ const USPS = [
 export function UspStrip() {
   return (
     <div className="w-full bg-[#e8d5cf]">
-      <section className="mx-auto grid w-[90%] justify-start p-2 md:w-[90%] md:justify-center md:p-4 lg:w-[80%] xl:flex xl:space-x-10">
+      <section className="mx-auto grid w-[90%] justify-stretch gap-2 py-4 md:w-[90%] md:justify-center md:gap-0 md:justify-center md:p-4 lg:w-[80%] xl:flex xl:space-x-10">
         {USPS.map((u) => (
-          <div key={u.title} className="m-[10px] flex items-center space-x-4 border-b border-[#B39384] p-2 last:border-b-0 md:space-x-6 md:border-r md:border-b-0 md:py-4 md:pr-10 md:last:border-r-0 md:last:pr-0 xl:flex-1">
-            <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-[#b39384] md:h-24 md:w-24">
-              <Image src={u.icon} alt="" width={48} height={48} className="w-10 object-contain md:w-12" />
+          <div key={u.title} className="mx-0 my-1.5 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-3 rounded-2xl border border-[#c9ada0] bg-[#f3e6e1] p-4 shadow-sm md:m-[10px] md:rounded-none md:border-0 md:bg-transparent md:p-2 md:shadow-none md:border-[#B39384] md:last:border-b-0 md:flex md:gap-0 md:space-x-6 md:border-r md:border-b-0 md:py-4 md:pr-10 md:last:border-r-0 md:last:pr-0 xl:flex-1">
+            <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#b39384] md:h-24 md:w-24">
+              <Image src={u.icon} alt="" width={48} height={48} className="w-8 object-contain md:w-12" />
             </div>
-            <div className="text-left">
-              <span className="block font-fancy text-xl font-bold">{u.title}</span>
-              <p className="mt-2 font-fancy text-sm text-gray-700">{u.copy}</p>
+            <div className="contents text-left md:block">
+              <span className="block font-fancy text-xl font-bold leading-7">{u.title}</span>
+              <p className="col-span-2 font-fancy text-sm text-gray-700 md:col-span-1 md:mt-2">{u.copy}</p>
             </div>
           </div>
         ))}

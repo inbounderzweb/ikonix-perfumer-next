@@ -67,8 +67,8 @@ body {
 }
 .ikx-deals .swiper-button-prev, .ikx-deals .swiper-button-next { background: rgb(68 50 43 / 0.6); }
 .ikx-deals .swiper-button-disabled { opacity: 0.3; }
-.ikx-testimonials .swiper-button-prev, .ikx-testimonials .swiper-button-next { background: #c5a291; }
-.ikx-insta .swiper-button-next { width: 40px; height: 40px; background: rgb(255 255 255 / 0.4); color: #c7a895; }
+.ikx-testimonials .swiper-button-prev, .ikx-testimonials .swiper-button-next { background: #8c7367; backdrop-filter: none; box-shadow: 0 2px 8px rgb(0 0 0 / 0.2); }
+.ikx-insta .swiper-button-next { width: 40px; height: 40px; background: rgb(68 50 43 / 0.75); color: #fff; backdrop-filter: none; box-shadow: 0 2px 8px rgb(0 0 0 / 0.25); }
 .ikx-insta .swiper-button-prev { display: none; }
 .ikx-deals .swiper-button-prev svg, .ikx-deals .swiper-button-next svg,
 .ikx-testimonials .swiper-button-prev svg, .ikx-testimonials .swiper-button-next svg,

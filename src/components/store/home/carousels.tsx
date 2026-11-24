@@ -97,20 +97,20 @@ export function BestSellers({ tabs }: { tabs: { label: string; products: Product
   const [active, setActive] = useState(tabs[0]?.label);
   const current = tabs.find((t) => t.label === active) ?? tabs[0];
   return (
-    <section className="mx-auto mt-8 w-[90%] py-3 md:mt-[4.5rem] md:py-6 lg:w-[80%]">
-      <div className="no-scrollbar mb-4 flex gap-4 overflow-x-auto" role="tablist">
+    <section className="mx-auto mt-2 w-[90%] py-2 md:mt-[4.5rem] md:py-6 lg:w-[80%]">
+      <div className="no-scrollbar mb-3 flex gap-2 overflow-x-auto md:mb-4 md:gap-4" role="tablist">
         {tabs.map((t) => (
           <button key={t.label} role="tab" aria-selected={active === t.label} onClick={() => setActive(t.label)}
-            className={`flex-shrink-0 rounded-full px-6 py-3 font-fancy text-[16px] transition ${active === t.label ? "bg-[#b49d91] text-[#3f342c]" : "border border-[#c9b6a9] bg-transparent text-[#a08876]"}`}>
+            className={`flex-shrink-0 rounded-full px-4 py-1.5 font-fancy text-[13px] transition md:px-6 md:py-3 md:text-[16px] ${active === t.label ? "bg-[#b49d91] text-[#3f342c]" : "border border-[#c9b6a9] bg-transparent text-[#a08876]"}`}>
             {capFirst(t.label)}
           </button>
         ))}
       </div>
-      <div className="no-scrollbar flex flex-row gap-6 overflow-x-auto pb-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 xl:grid-cols-4">
+      <div className="no-scrollbar flex flex-row gap-6 overflow-x-auto sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 xl:grid-cols-4">
         {current?.products.map((p) => <HomeProductCard key={p.id} p={p} />)}
       </div>
-      <div className="mt-8 flex justify-center">
-        <Link href="/shop" className="rounded-full bg-[#b49d91] px-10 py-3 font-fancy text-[17px] text-[#3f342c] transition hover:opacity-90">View all Products</Link>
+      <div className="mb-3 mt-4 flex justify-center md:mb-0 md:mt-8">
+        <Link href="/shop" className="rounded-full bg-[#b49d91] px-7 py-2 font-fancy text-[14px] text-[#3f342c] transition hover:opacity-90 md:px-10 md:py-3 md:text-[17px]">View all Products</Link>
       </div>
     </section>
   );
@@ -171,14 +171,15 @@ const POSTS = [
 export function InstagramStrip() {
   return (
     <section className="w-full bg-gradient-to-b from-[#c7a895] to-[#EDE2DD] pt-[20px] lg:bg-gradient-to-r lg:to-white">
-      <div className="relative ml-4 flex w-[90%] flex-col gap-1 md:ml-auto md:flex-row md:items-end md:justify-between">
+      <div className="relative flex w-[90%] flex-col gap-1 max-md:mx-auto md:ml-auto md:flex-row md:items-end md:justify-between">
         <div className="relative mx-auto aspect-[365/372] w-full overflow-hidden md:mx-0 md:aspect-[365/352] md:w-[55%] lg:aspect-auto lg:w-[28%] lg:overflow-visible">
           <Image src={`${R}/instapage.webp`} alt="Instagram page preview" width={1080} height={1471} sizes="(min-width:1024px) 26vw, (min-width:768px) 50vw, 90vw" className="h-full w-full object-cover object-top lg:h-auto lg:object-contain" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#c7a895] via-[#c7a895]/70 to-transparent lg:hidden" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/6 bg-gradient-to-t from-[#c7a895]/60 to-transparent lg:hidden" />
         </div>
-        <div className="ikx-insta relative z-20 mt-[-1.5rem] ml-auto w-full overflow-hidden pb-[40px] md:flex-1 md:pl-4 lg:mt-0 lg:pb-0">
-          <Swiper modules={[Navigation]} rewind speed={600} navigation slidesPerView={1.2} centeredSlides spaceBetween={16}
-            breakpoints={{ 1024: { slidesPerView: 3, centeredSlides: false } }}>
+        <div className="ikx-insta relative z-20 mt-[-1.5rem] ml-auto w-full overflow-hidden pb-[40px] md:flex-1 md:pl-4 lg:mt-0 lg:pb-0 max-md:pb-2">
+          <Swiper modules={[Navigation]} rewind speed={600} navigation slidesPerView={1.5} centeredSlides spaceBetween={12}
+            onInit={(s) => { if (window.innerWidth < 1024) s.slideTo(1, 0); }}
+            breakpoints={{ 1024: { slidesPerView: 3, centeredSlides: false, spaceBetween: 16 } }}>
             {POSTS.map((p) => (
               <SwiperSlide key={p.img}>
                 <Image src={p.img} alt={p.title} width={600} height={750} sizes="(min-width:1024px) 22vw, 80vw" className="w-full rounded-2xl object-cover shadow-lg" />
@@ -186,12 +187,12 @@ export function InstagramStrip() {
             ))}
           </Swiper>
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-32 bg-gradient-to-l from-white via-white/80 to-transparent lg:flex" />
-          <div className="mt-4 flex items-center gap-8 2xl:mt-5">
-            <div className="grid pb-12">
+          <div className="mt-4 flex items-end gap-8 md:pb-12 2xl:mt-5">
+            <div className="grid">
               <span className="text-left font-fancy text-[16px] leading-[150%] font-normal tracking-[0.5px] text-[#53443D]">Check us out on</span>
               <span className="text-left font-heading text-[36px] font-normal text-[#8C7367]">Instagram</span>
             </div>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/ikonix_perfumer/?hl=en" className="rounded-[24px] bg-[#C5A291] px-[24px] py-[8px] font-fancy">Click here</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/ikonix_perfumer/?hl=en" className="mb-3 rounded-[24px] bg-[#C5A291] px-[24px] py-[8px] font-fancy leading-none">Click here</a>
           </div>
         </div>
       </div>
