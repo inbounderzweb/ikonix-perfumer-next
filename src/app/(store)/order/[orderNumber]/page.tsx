@@ -12,7 +12,7 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
   const { orderNumber } = await params;
   const t = (await searchParams).t;
   const token = Array.isArray(t) ? t[0] : t;
-  type O = { orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; quantity: number; lineTotal: number }[]; subtotal: number; shippingTotal: number; grandTotal: number; shippingAddress: { fullName: string; line1: string; line2?: string; city: string; state: string; postalCode: string; phone: string }; shippingMethodName: string; placedAt: Date; accessTokenHash?: string; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
+  type O = { orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; quantity: number; freeQuantity?: number; lineTotal: number; offer?: { label: string; savedAmount: number } | null }[]; subtotal: number; shippingTotal: number; grandTotal: number; shippingAddress: { fullName: string; line1: string; line2?: string; city: string; state: string; postalCode: string; phone: string }; shippingMethodName: string; placedAt: Date; accessTokenHash?: string; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
   let order: O | null = null;
   if (/^IKX-\d{6}-\d{5}$/.test(orderNumber) && token && token.length < 80) {
     await db();
@@ -43,7 +43,7 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
           {paid ? `We’re preparing it for ${order.shippingMethodName.toLowerCase()}.` : order.status === "CANCELLED" ? "If you were charged, the amount will be refunded to your original payment method." : "This page updates automatically. Please don’t pay again."}
         </p>
         <ul className="mt-6 divide-y divide-[#eee3dd] border-y border-[#eee3dd]">
-          {order.items.map((i, k) => <li key={k} className="flex justify-between gap-3 py-3 font-fancy text-sm"><span>{i.productName} <span className="text-[#8C7367]">· {i.variantLabel} × {i.quantity}</span></span><span className="font-bold">{inr(i.lineTotal)}</span></li>)}
+          {order.items.map((i, k) => <li key={k} className="flex justify-between gap-3 py-3 font-fancy text-sm"><span>{i.productName} <span className="text-[#8C7367]">· {i.variantLabel} × {i.quantity}{i.freeQuantity ? ` + ${i.freeQuantity} free` : ""}</span>{i.offer && !!i.freeQuantity && <span className="block text-xs text-[#2e7d32]">{i.offer.label} – you saved {inr(i.offer.savedAmount)}</span>}</span><span className="font-bold">{inr(i.lineTotal)}</span></li>)}
         </ul>
         <dl className="mt-4 space-y-1.5 font-fancy text-sm">
           <div className="flex justify-between"><dt>Subtotal</dt><dd>{inr(order.subtotal)}</dd></div>

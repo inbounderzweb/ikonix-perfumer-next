@@ -186,7 +186,7 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
           {loading ? <p className="font-fancy text-sm text-[#8C7367]">Loading…</p> : (
             <ul className="divide-y divide-[#eee3dd]">
               {view.map((l) => (
-                <li key={l.variantId} className="flex justify-between gap-3 py-2.5 font-fancy text-sm"><span>{l.name} <span className="text-[#8C7367]">· {l.label} × {l.qty}</span>{!l.inStock && <span className="ml-1 text-red-700">(out of stock)</span>}</span><span className="font-bold">{inr(l.unitPrice * l.qty)}</span></li>
+                <li key={l.variantId} className="flex justify-between gap-3 py-2.5 font-fancy text-sm"><span>{l.name} <span className="text-[#8C7367]">· {l.label} × {l.paidQty}{l.freeQty > 0 && ` + ${l.freeQty} free`}</span>{l.freeQty > 0 && <span className="block text-xs text-[#2e7d32]">{l.offerLabel} – you saved {inr(l.saved)}</span>}{!l.inStock && <span className="ml-1 text-red-700">(out of stock)</span>}</span><span className="font-bold">{inr(l.lineTotal)}</span></li>
               ))}
             </ul>
           )}

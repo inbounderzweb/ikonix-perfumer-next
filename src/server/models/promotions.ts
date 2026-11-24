@@ -14,6 +14,12 @@ const targetSchema = new Schema(
   { _id: false },
 );
 
+// Variant-level Buy X Get Y: every variant carries its own X/Y (src/lib/bxgy.ts). Only used when type = BUY_X_GET_Y.
+const variantRuleSchema = new Schema(
+  { productId: { type: ObjectId, ref: "Product", required: true }, variantId: { type: ObjectId, required: true }, buy: { ...int(1), required: true, max: 99 }, free: { ...int(1), required: true, max: 99 } },
+  { _id: false },
+);
+
 const promotionSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -29,6 +35,11 @@ const promotionSchema = new Schema(
     buyQuantity: int(1),
     getQuantity: int(1),
     getDiscountBps: { ...int(1), max: 10000, default: 10000 },
+    variantRules: { type: [variantRuleSchema], default: [] },
+    pricingBasis: { type: String, enum: ["SELLING", "MRP"], default: "SELLING" }, // which price values the free units in the savings figure
+    poolAcrossProducts: { type: Boolean, default: false }, // legacy: same as poolMode SAME_SIZE
+    poolMode: { type: String, enum: ["NONE", "SAME_SIZE", "ANY"], default: "NONE" }, // NONE = per variant; SAME_SIZE = same size across products; ANY = every variant in the offer. Cheapest units are free.
+    minQuantity: int(1), // total units of the variant needed before the offer applies
     firstOrderOnly: { type: Boolean, default: false },
     customerSpecific: { type: Boolean, default: false }, // only users in promotion_customers
     stackable: { type: Boolean, default: false },
@@ -48,12 +59,15 @@ promotionSchema.pre("validate", function () {
   if (this.type === "PERCENTAGE" && (this.value < 1 || this.value > 10000)) this.invalidate("value", "Percentage must be 0.01%–100%");
   if (this.type === "FIXED_AMOUNT" && this.value <= 0) this.invalidate("value", "Fixed discount must be positive");
   if (this.type === "BUY_X_GET_Y" && (!this.buyQuantity || !this.getQuantity)) this.invalidate("buyQuantity", "Buy X Get Y needs both quantities");
+  const vr = this.variantRules as unknown as { variantId: unknown }[];
+  if (vr.length && new Set(vr.map((r) => String(r.variantId))).size !== vr.length) this.invalidate("variantRules", "A variant can only appear once per offer");
   if (this.scope === "TARGETS" && (this.targets as unknown as unknown[]).length === 0) this.invalidate("targets", "Targeted promotion needs at least one target");
   if (this.startsAt && this.endsAt && this.startsAt >= this.endsAt) this.invalidate("endsAt", "endsAt must be after startsAt");
   if (this.usageLimitTotal != null && this.usageCount > this.usageLimitTotal) this.invalidate("usageCount", "Usage exceeds limit");
 });
 promotionSchema.index({ code: 1 }, { unique: true, partialFilterExpression: { code: { $type: "string" } } });
 promotionSchema.index({ trigger: 1, status: 1, startsAt: 1, endsAt: 1 });
+promotionSchema.index({ "variantRules.variantId": 1 }, { partialFilterExpression: { type: "BUY_X_GET_Y" } });
 export type PromotionDoc = InferSchemaType<typeof promotionSchema>;
 export const Promotion = defineModel("Promotion", promotionSchema, "promotions");
 

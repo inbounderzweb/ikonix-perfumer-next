@@ -6,6 +6,7 @@ import { db } from "@/server/db";
 import { Inventory, Order, Payment } from "@/server/models";
 import { INDIAN_STATES } from "@/lib/india";
 import { activeShippingMethods, cartLines, priceCart } from "@/server/commerce/pricing";
+import { claimOffers, recordRedemptions, unclaimOffers } from "@/server/commerce/offers";
 import { RESERVATION_MS, cancelOrder, expirePendingOrders, markOrderPaid, nextOrderNumber, reserveStock } from "@/server/commerce/orders";
 import { RazorpayError, captureRazorpayPayment, createRazorpayOrder, fetchRazorpayPayment, razorpayMode, razorpayPublicKey, verifyPaymentSignature } from "@/server/commerce/razorpay";
 import { randomToken, sha256, safeEqual } from "@/server/auth/crypto";
@@ -19,7 +20,8 @@ export type Quote = { ok: true; subtotal: number; shipping: number; discount: nu
 export async function getCheckoutQuote(lines: unknown, shippingMethodId?: string): Promise<Quote> {
   const methods = await activeShippingMethods();
   const chosen = shippingMethodId && methods.some((m) => m.id === shippingMethodId) ? shippingMethodId : methods[0]?.id;
-  const p = await priceCart(lines, chosen);
+  const me = await getCustomer();
+  const p = await priceCart(lines, chosen, { userId: me?.id ?? null });
   if (!p.ok) return p;
   return { ok: true, subtotal: p.subtotal, shipping: p.shippingTotal, discount: p.discountTotal, tax: p.taxTotal, total: p.grandTotal, methods };
 }
@@ -68,13 +70,20 @@ export async function createCheckout(raw: unknown): Promise<CheckoutResult> {
     return { ok: true, orderNumber: existing.orderNumber, accessToken: token, razorpay: { keyId: razorpayPublicKey(), orderId: pay.providerOrderId, amount: existing.grandTotal, currency: "INR", testMode: razorpayMode() === "test" }, prefill: { name: existing.contact.name, email: existing.contact.email ?? "", contact: existing.contact.phone } };
   }
 
-  const priced = await priceCart(input.lines, input.shippingMethodId);
+  // Server-side re-pricing: free quantities, savings and the payable amount are recomputed here; nothing from the browser is trusted.
+  const priced = await priceCart(input.lines, input.shippingMethodId, { userId: me?.id ?? null });
   if (!priced.ok) return priced;
   if (!priced.method) return { ok: false, error: "Choose a delivery method." };
   if (priced.grandTotal < 100) return { ok: false, error: "The order total is too low to pay online." };
 
   const stock = await reserveStock(priced.items);
   if (!stock.ok) return stock;
+
+  // Take one redemption per applied offer (total cap is enforced atomically). Lost the race → hand the stock back and re-quote.
+  const offerIds = priced.items.filter((i) => i.offer && i.offer.freeQuantity > 0).map((i) => i.offer!.offerId);
+  const claim = await claimOffers(offerIds);
+  const rollbackHolds = async () => { for (const r of stock.reserved) await Inventory.updateOne({ variantId: r.variantId, reserved: { $gte: r.qty } }, { $inc: { reserved: -r.qty } }); };
+  if (!claim.ok) { await rollbackHolds(); return { ok: false, error: "An offer in your cart has just ended. Please review your cart." }; }
 
   const token = randomToken(24);
   const orderNumber = await nextOrderNumber();
@@ -86,7 +95,7 @@ export async function createCheckout(raw: unknown): Promise<CheckoutResult> {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       items: priced.items.map(({ tracked, ...i }) => i),
       subtotal: priced.subtotal, discountTotal: 0, shippingTotal: priced.shippingTotal, packingTotal: 0, taxTotal: 0, grandTotal: priced.grandTotal,
-      pricingSnapshot: { version: 1, note: "Offers, packing and tax not applied (rules pending)", stockState: stock.reserved.length ? "RESERVED" : "NONE", reserved: stock.reserved },
+      pricingSnapshot: { version: 2, note: "Variant Buy X Get Y offers applied; packing and tax not applied (rules pending)", offerSavings: priced.items.reduce((a, i) => a + (i.offer?.savedAmount ?? 0), 0), offerIds: [...new Set(offerIds)], stockState: stock.reserved.length ? "RESERVED" : "NONE", reserved: stock.reserved },
       contact: { name: input.contact.name, phone: input.contact.phone, email: input.contact.email || undefined },
       shippingAddress: addr, billingAddress: addr, shippingMethodId: priced.method.id, shippingMethodName: priced.method.name,
       customerNote: input.customerNote || undefined, idempotencyKey: input.idempotencyKey, accessTokenHash: sha256(token),
@@ -94,11 +103,15 @@ export async function createCheckout(raw: unknown): Promise<CheckoutResult> {
       ipAddress: ip, userAgent,
     });
   } catch (e) {
-    for (const r of stock.reserved) await Inventory.updateOne({ variantId: r.variantId, reserved: { $gte: r.qty } }, { $inc: { reserved: -r.qty } });
+    await rollbackHolds();
+    await unclaimOffers(claim.claimed);
     if ((e as { code?: number }).code === 11000) return { ok: false, error: "This checkout is already in progress. Refresh and try again." };
     console.error("order create failed", e instanceof Error ? e.message : e);
     return { ok: false, error: "Could not create your order. Please try again." };
   }
+
+  // Per-customer cap bookkeeping. The total cap was already taken atomically above, so a failure here must not fail the order.
+  await recordRedemptions(order._id, me?.id ?? null, priced.items).catch((e) => console.error("offer redemption record failed", e instanceof Error ? e.message : e));
 
   try {
     const rz = await createRazorpayOrder(priced.grandTotal, orderNumber, { orderId: String(order._id), orderNumber });

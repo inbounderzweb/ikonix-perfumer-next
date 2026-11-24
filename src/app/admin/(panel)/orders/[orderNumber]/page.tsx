@@ -17,7 +17,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
   if (!/^IKX-\d{6}-\d{5}$/.test(orderNumber)) notFound();
   await db();
   type A = { fullName?: string; phone?: string; line1?: string; line2?: string; landmark?: string; city?: string; state?: string; postalCode?: string };
-  type O = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; sku: string; quantity: number; unitSalePrice: number; lineTotal: number; imageUrl?: string }[]; subtotal: number; discountTotal: number; shippingTotal: number; taxTotal: number; grandTotal: number; contact: { name: string; phone: string; email?: string }; shippingAddress: A; shippingMethodName: string; customerNote?: string; placedAt: Date; statusHistory: { from?: string; to: string; note?: string; description?: string; actorType: string; at: Date }[]; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
+  type O = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; sku: string; freeQuantity?: number; offer?: { offerId: string; label: string; pricingBasis: string; savedAmount: number } | null; quantity: number; unitSalePrice: number; lineTotal: number; imageUrl?: string }[]; subtotal: number; discountTotal: number; shippingTotal: number; taxTotal: number; grandTotal: number; contact: { name: string; phone: string; email?: string }; shippingAddress: A; shippingMethodName: string; customerNote?: string; placedAt: Date; statusHistory: { from?: string; to: string; note?: string; description?: string; actorType: string; at: Date }[]; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
   const o = (await Order.findOne({ orderNumber }).lean()) as unknown as O | null;
   if (!o) notFound();
   const [pay, refunds] = await Promise.all([
@@ -33,7 +33,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
         <div className="space-y-5 lg:col-span-2">
           <Card title="Items">
             <Table head={["Item", "SKU", "Qty", "Price", "Total"]}>
-              {o.items.map((i, k) => <tr key={k}><td className="font-medium">{i.productName} <span className="text-a-muted">· {i.variantLabel}</span></td><td className="font-mono text-xs">{i.sku}</td><td>{i.quantity}</td><td>{formatINR(i.unitSalePrice)}</td><td>{formatINR(i.lineTotal)}</td></tr>)}
+              {o.items.map((i, k) => <tr key={k}><td className="font-medium">{i.productName} <span className="text-a-muted">· {i.variantLabel}</span></td><td className="font-mono text-xs">{i.sku}</td><td>{i.quantity}{!!i.freeQuantity && <span className="text-a-ok"> + {i.freeQuantity} free</span>}{i.offer && !!i.freeQuantity && <span className="block text-xs text-a-muted">{i.offer.label} · {i.offer.pricingBasis.toLowerCase()} basis · saved {formatINR(i.offer.savedAmount)}</span>}</td><td>{formatINR(i.unitSalePrice)}</td><td>{formatINR(i.lineTotal)}</td></tr>)}
             </Table>
             <dl className="ml-auto mt-4 max-w-xs space-y-1 text-sm">
               <div className="flex justify-between"><dt className="text-a-muted">Subtotal</dt><dd>{formatINR(o.subtotal)}</dd></div>

@@ -51,6 +51,8 @@ const orderItemSchema = new Schema({
   lineDiscount: { ...money(), default: 0 },
   lineTotal: { ...money(), required: true }, // unitSalePrice * quantity - lineDiscount
   taxAmount: { ...money(), default: 0 },
+  // Buy X Get Y snapshot (offer id, X/Y, pricing basis, savings) so the order stays explainable after the offer changes or is deleted.
+  offer: { type: Schema.Types.Mixed, default: null },
 });
 
 const statusChangeSchema = new Schema(

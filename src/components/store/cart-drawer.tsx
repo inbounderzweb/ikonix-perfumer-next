@@ -20,7 +20,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
     return () => { alive = false; };
   }, [open, lines]);
 
-  const subtotal = (view ?? []).reduce((a, l) => a + l.unitPrice * l.qty, 0);
+  const subtotal = (view ?? []).reduce((a, l) => a + l.lineTotal, 0);
   const unavailable = (view ?? []).some((l) => !l.inStock);
 
   return (
@@ -57,6 +57,15 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                       <span className="mt-1 block w-fit rounded-full border border-[#B39384] px-2 py-0.5 text-xs text-[#53443D]">{l.label}</span>
                     </div>
                     <span className="font-fancy text-[16px] leading-[150%] font-bold tracking-[0.5px] text-[#2A3443] sm:text-[21px]">{money(l.unitPrice)}</span>
+                    {l.freeQty > 0 && (
+                      <div className="rounded-md bg-[#f4ece6] p-2 font-fancy text-sm text-[#53443D]" data-testid="bxgy-breakdown">
+                        <p>Paid: {l.paidQty} × {money(l.unitPrice)}</p>
+                        <p>Free: {l.freeQty} × {money(0)}</p>
+                        <p className="font-bold">Total: {l.qty} units · {money(l.lineTotal)}</p>
+                        <p className="mt-1 text-[#2e7d32]">{l.offerLabel} – You saved {money(l.saved)}!</p>
+                      </div>
+                    )}
+                    {l.hint && <p className="font-fancy text-xs text-[#8C7367]">{l.offerLabel}: {l.hint}</p>}
                     {!l.inStock && <p className="text-sm font-semibold text-red-600">Out of stock</p>}
                     <div className="flex items-center gap-3">
                       <div className="flex items-center rounded-md border border-[#B39384]">

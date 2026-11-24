@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { db } from "@/server/db";
 import { Counter, Inventory, InventoryMovement, Order, Payment, Product } from "@/server/models";
 import type { PricedItem } from "./pricing";
+import { releaseRedemptions } from "./offers";
 
 export const RESERVATION_MS = 30 * 60 * 1000;
 type Reserved = { variantId: string; productId: string; qty: number };
@@ -22,15 +23,16 @@ export async function reserveStock(items: PricedItem[]): Promise<{ ok: true; res
   const done: Reserved[] = [];
   for (const it of items) {
     if (!it.tracked) continue;
+    const units = it.quantity + it.freeQuantity; // free units leave the shelf too
     const r = await Inventory.updateOne(
-      { variantId: it.variantId, tracked: true, $expr: { $gte: [{ $subtract: ["$onHand", "$reserved"] }, it.quantity] } },
-      { $inc: { reserved: it.quantity } },
+      { variantId: it.variantId, tracked: true, $expr: { $gte: [{ $subtract: ["$onHand", "$reserved"] }, units] } },
+      { $inc: { reserved: units } },
     );
     if (!r.modifiedCount) {
       await releaseReserved(done);
       return { ok: false, error: `${it.productName} (${it.variantLabel}) just sold out. Please review your cart.` };
     }
-    done.push({ variantId: String(it.variantId), productId: String(it.productId), qty: it.quantity });
+    done.push({ variantId: String(it.variantId), productId: String(it.productId), qty: units });
   }
   return { ok: true, reserved: done };
 }
@@ -102,7 +104,7 @@ export async function markOrderPaid(orderId: Types.ObjectId | string, payment: {
     },
   );
   await Payment.updateOne({ orderId: prior._id }, { providerPaymentId: payment.providerPaymentId, status: "CAPTURED", method: payment.method, methodDetail: payment.methodDetail, capturedAt: new Date(), signatureVerifiedAt: new Date() });
-  if (status === "CONFIRMED") for (const it of prior.items) await Product.updateOne({ _id: it.productId }, { $inc: { soldCount: it.quantity } });
+  if (status === "CONFIRMED") for (const it of prior.items) await Product.updateOne({ _id: it.productId }, { $inc: { soldCount: it.quantity + it.freeQuantity } });
   return status === "CONFIRMED" ? "confirmed" : "needs_refund";
 }
 
@@ -116,13 +118,14 @@ export async function cancelOrder(orderId: Types.ObjectId | string, reason: stri
     { $set: { status: "CANCELLED", cancelledAt: new Date(), cancelReason: reason, "pricingSnapshot.stockState": "NONE" }, $unset: { reservationExpiresAt: 1 }, $push: { statusHistory: { from: o.status, to: "CANCELLED", note: reason, actorType: actor.type, actorUserId: actor.userId ?? null } } },
   ).lean();
   if (!flipped) return false;
+  await releaseRedemptions(o._id); // the order no longer counts against the offer's caps
   const list = o.pricingSnapshot?.reserved ?? [];
   const state = o.pricingSnapshot?.stockState;
   for (const r of list) {
     if (state === "RESERVED") { await releaseReserved([r]); await movement(r, "RELEASE", o._id, reason); }
     else if (state === "CONSUMED") { await Inventory.updateOne({ variantId: r.variantId }, { $inc: { onHand: r.qty } }); await movement(r, "RETURN", o._id, reason); }
   }
-  if (o.paymentStatus === "CAPTURED") for (const it of o.items) await Product.updateOne({ _id: it.productId, soldCount: { $gte: it.quantity } }, { $inc: { soldCount: -it.quantity } });
+  if (o.paymentStatus === "CAPTURED") for (const it of o.items) await Product.updateOne({ _id: it.productId, soldCount: { $gte: it.quantity + it.freeQuantity } }, { $inc: { soldCount: -(it.quantity + it.freeQuantity) } });
   return true;
 }
 

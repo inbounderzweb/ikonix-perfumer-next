@@ -9,6 +9,7 @@ const NAV: (NavItem & { perm: Permission })[] = [
   { href: "/admin/products", label: "Products", icon: "box", perm: "products.read" },
   { href: "/admin/media", label: "Media library", icon: "image", perm: "media.read" },
   { href: "/admin/banners", label: "Popup banner", icon: "tag", perm: "promotions.write" },
+  { href: "/admin/offers", label: "Offers", icon: "tag", perm: "promotions.write" },
   { href: "/admin/orders", label: "Orders", icon: "cart", perm: "orders.read" },
   { href: "/admin/delivery", label: "Delivery", icon: "truck", perm: "delivery.read" },
   { href: "/admin/customers", label: "Customers", icon: "users", perm: "customers.read" },
