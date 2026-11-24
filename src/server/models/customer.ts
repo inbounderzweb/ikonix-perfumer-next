@@ -19,10 +19,12 @@ const addressSchema = new Schema(
     gstin: { type: String, uppercase: true, trim: true },
     location: { lat: Number, lng: Number },
     deletedAt: Date,
+    legacy: { source: String, addressId: Number, migratedAt: Date }, // imported from the previous site
   },
   { timestamps: true },
 );
 addressSchema.index({ userId: 1, deletedAt: 1 });
+addressSchema.index({ "legacy.source": 1, "legacy.addressId": 1 }, { unique: true, partialFilterExpression: { "legacy.addressId": { $type: "number" } } });
 export type AddressDoc = InferSchemaType<typeof addressSchema>;
 export const Address = defineModel("Address", addressSchema, "addresses");
 

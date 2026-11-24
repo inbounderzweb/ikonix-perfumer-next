@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { db } from "@/server/db";
 import { Inventory, Order, Payment, Product } from "@/server/models";
 import { safeEqual, sha256 } from "@/server/auth/crypto";
+import { isViewableOrderNumber } from "@/lib/order-number";
 
 /** Orders a customer should see: unpaid checkout attempts (PENDING, never captured) are hidden. */
 const visible = { $or: [{ status: { $ne: "PENDING" } }, { paymentStatus: "CAPTURED" }] };
@@ -15,7 +16,7 @@ export const STATUS_LABEL: Record<string, string> = {
 const ACTIVE = ["CONFIRMED", "PROCESSING", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERY_FAILED"];
 const FILTERS: Record<string, string[]> = { active: ACTIVE, delivered: ["DELIVERED"], cancelled: ["CANCELLED", "REFUNDED"], returned: ["RETURN_REQUESTED", "RETURNED"] };
 
-type Item = { productId: Types.ObjectId; variantId: Types.ObjectId; productName: string; variantLabel: string; imageUrl?: string; unitSalePrice: number; unitRegularPrice: number; quantity: number; freeQuantity: number; lineDiscount: number; lineTotal: number };
+type Item = { productId?: Types.ObjectId; variantId?: Types.ObjectId; productName: string; variantLabel: string; imageUrl?: string; unitSalePrice: number; unitRegularPrice: number; quantity: number; freeQuantity: number; lineDiscount: number; lineTotal: number };
 type Row = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; placedAt: Date; grandTotal: number; items: Item[] };
 
 export type OrderSummary = { orderNumber: string; status: string; statusLabel: string; paymentStatus: string; placedAt: string; total: number; itemCount: number; thumbs: { name: string; image: string | null }[]; lines: string[]; moreItems: number; paymentLabel: string };
@@ -76,7 +77,7 @@ function toDetail(o: Row & { subtotal: number; discountTotal: number; shippingTo
   const sh = o.shipments[0];
   return {
     ...summary(o),
-    items: o.items.map((i) => ({ productId: String(i.productId), variantId: String(i.variantId), name: i.productName, variant: i.variantLabel, image: i.imageUrl ?? null, unit: i.unitSalePrice, regular: i.unitRegularPrice, qty: i.quantity, free: i.freeQuantity, discount: i.lineDiscount, total: i.lineTotal })),
+    items: o.items.map((i) => ({ productId: i.productId ? String(i.productId) : "", variantId: i.variantId ? String(i.variantId) : "", name: i.productName, variant: i.variantLabel, image: i.imageUrl ?? null, unit: i.unitSalePrice, regular: i.unitRegularPrice, qty: i.quantity, free: i.freeQuantity, discount: i.lineDiscount, total: i.lineTotal })),
     subtotal: o.subtotal, discount: o.discountTotal, shipping: o.shippingTotal, packing: o.packingTotal, tax: o.taxTotal, coupon: o.couponCode ?? null,
     shippingMethod: o.shippingMethodName, address: { name: o.shippingAddress.fullName ?? "", phone: o.shippingAddress.phone ?? "", lines: [o.shippingAddress.line1, o.shippingAddress.line2, o.shippingAddress.landmark].filter(Boolean) as string[], city: o.shippingAddress.city ?? "", state: o.shippingAddress.state ?? "", postalCode: o.shippingAddress.postalCode ?? "" },
     payment: { status: o.paymentStatus, method: pay?.method ?? null, methodDetail: pay?.methodDetail ?? null, transactionId: pay?.providerPaymentId ?? null },
@@ -102,7 +103,7 @@ export async function getOrderTrusted(orderNumber: string) {
 }
 
 export async function getOrder(userId: string, orderNumber: string) {
-  if (!/^IKX-\d{6}-\d{5}$/.test(orderNumber)) return null;
+  if (!isViewableOrderNumber(orderNumber)) return null; // includes imported legacy orders (IKX-L-…)
   // Ownership is part of the query: someone else's order number returns null, indistinguishable from "doesn't exist".
   return fetchDetail({ orderNumber, userId: new Types.ObjectId(userId), ...visible });
 }
@@ -137,17 +138,18 @@ export type ReorderResult = { ok: true; lines: { variantId: string; qty: number 
 
 /** Re-adds what is still purchasable, at today's prices (the cart is always re-priced server-side at checkout). */
 export async function reorderLines(userId: string, orderNumber: string): Promise<ReorderResult> {
-  if (!/^IKX-\d{6}-\d{5}$/.test(orderNumber)) return { ok: false, error: "Order not found." };
+  if (!isViewableOrderNumber(orderNumber)) return { ok: false, error: "Order not found." };
   await db();
   const o = (await Order.findOne({ orderNumber, userId: new Types.ObjectId(userId), ...visible } as never, "items").lean()) as unknown as { items: Item[] } | null;
   if (!o) return { ok: false, error: "Order not found." };
-  const vids = o.items.map((i) => i.variantId);
+  const vids = o.items.map((i) => i.variantId).filter((v): v is Types.ObjectId => !!v);
   const ps = (await Product.find({ "variants._id": { $in: vids }, status: "ACTIVE", deletedAt: null }, "variants._id variants.isActive").lean()) as unknown as { variants: { _id: Types.ObjectId; isActive: boolean }[] }[];
   const live = new Set(ps.flatMap((p) => p.variants.filter((v) => v.isActive).map((v) => String(v._id))));
   const inv = (await Inventory.find({ variantId: { $in: vids } }).lean()) as unknown as { variantId: Types.ObjectId; tracked: boolean; onHand: number; reserved: number; manualAvailability: string }[];
   const free = new Map(inv.map((r) => [String(r.variantId), r.tracked ? Math.max(0, r.onHand - r.reserved) : r.manualAvailability === "IN_STOCK" ? 99 : 0]));
   const lines: { variantId: string; qty: number }[] = []; const skipped: { name: string; reason: string }[] = [];
   for (const i of o.items) {
+    if (!i.variantId) { skipped.push({ name: `${i.productName} (${i.variantLabel})`, reason: "no longer available" }); continue; } // snapshot-only legacy line
     const id = String(i.variantId); const avail = free.get(id) ?? 0;
     if (!live.has(id)) skipped.push({ name: `${i.productName} (${i.variantLabel})`, reason: "no longer available" });
     else if (avail <= 0) skipped.push({ name: `${i.productName} (${i.variantLabel})`, reason: "out of stock" });

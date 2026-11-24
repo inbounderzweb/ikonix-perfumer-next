@@ -41,6 +41,8 @@ const userSchema = new Schema(
     failedLoginCount: { ...int(0), default: 0 },
     lockedUntil: Date,
     deletedAt: Date,
+    // Set only on customers imported from the previous PHP/MySQL site (scripts/legacy-migration). Never read by app code.
+    legacy: { source: String, customerId: Number, migratedAt: Date },
   },
   { timestamps: true },
 );
@@ -50,6 +52,7 @@ userSchema.pre("validate", function () {
 userSchema.index({ mobile: 1 }, { unique: true, partialFilterExpression: { mobile: { $type: "string" } } });
 userSchema.index({ email: 1 }, { unique: true, partialFilterExpression: { email: { $type: "string" } } });
 userSchema.index({ "google.sub": 1 }, { unique: true, partialFilterExpression: { "google.sub": { $type: "string" } } });
+userSchema.index({ "legacy.source": 1, "legacy.customerId": 1 }, { unique: true, partialFilterExpression: { "legacy.customerId": { $type: "number" } } });
 userSchema.index({ roleKeys: 1 });
 userSchema.index({ status: 1, createdAt: -1 });
 export type UserDoc = InferSchemaType<typeof userSchema>;

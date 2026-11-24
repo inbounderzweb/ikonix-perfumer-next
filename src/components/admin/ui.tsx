@@ -64,12 +64,34 @@ export function Notice({ tone = "neutral", children }: { tone?: keyof typeof ton
   return <div role={tone === "danger" ? "alert" : "status"} className={`rounded-lg border px-3 py-2 text-sm ${tones[tone]}`}>{children}</div>;
 }
 
-export function Table({ head, children, empty }: { head: string[]; children: ReactNode; empty?: string }) {
+export type Column = string | { label: string; sort?: string; className?: string };
+export type SortState = { key: string; dir: "asc" | "desc" };
+
+/** `head` entries with a `sort` key become sortable links when `sortHref` is given (server-rendered, no JS needed). */
+export function Table({ head, children, empty, sort, sortHref, onSort }: { head: Column[]; children: ReactNode; empty?: string; sort?: SortState; sortHref?: (key: string, dir: "asc" | "desc") => string; onSort?: (key: string) => void }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-a-border bg-a-surface">
       <table className="w-full min-w-[640px] text-left text-sm">
         <thead className="border-b border-a-border bg-a-raised text-xs uppercase tracking-wide text-a-muted">
-          <tr>{head.map((h) => <th key={h} scope="col" className="px-4 py-2.5 font-medium">{h}</th>)}</tr>
+          <tr>
+            {head.map((h, i) => {
+              const c = typeof h === "string" ? { label: h } : h;
+              const active = !!c.sort && sort?.key === c.sort;
+              return (
+                <th key={`${c.label}-${i}`} scope="col" aria-sort={active ? (sort!.dir === "asc" ? "ascending" : "descending") : c.sort ? "none" : undefined} className={`px-4 py-2.5 font-medium ${c.className ?? ""}`}>
+                  {c.sort && onSort ? (
+                    <button type="button" onClick={() => onSort(c.sort!)} className={`inline-flex items-center gap-1 uppercase hover:text-a-fg ${active ? "text-a-fg" : ""}`}>
+                      {c.label}<span aria-hidden className={active ? "" : "opacity-40"}>{active ? (sort!.dir === "asc" ? "▲" : "▼") : "↕"}</span>
+                    </button>
+                  ) : c.sort && sortHref ? (
+                    <Link href={sortHref(c.sort, active && sort!.dir === "asc" ? "desc" : "asc")} className={`inline-flex items-center gap-1 hover:text-a-fg ${active ? "text-a-fg" : ""}`}>
+                      {c.label}<span aria-hidden className={active ? "" : "opacity-40"}>{active ? (sort!.dir === "asc" ? "▲" : "▼") : "↕"}</span>
+                    </Link>
+                  ) : c.label}
+                </th>
+              );
+            })}
+          </tr>
         </thead>
         <tbody className="divide-y divide-a-border [&_td]:px-4 [&_td]:py-3">{children}</tbody>
       </table>
@@ -78,14 +100,42 @@ export function Table({ head, children, empty }: { head: string[]; children: Rea
   );
 }
 
-export function Pagination({ page, pages, href }: { page: number; pages: number; href: (p: number) => string }) {
-  if (pages <= 1) return null;
+/** 1 … 4 5 [6] 7 8 … 20: first, last and two either side of the current page; null = gap. */
+export function pageWindow(page: number, pages: number): (number | null)[] {
+  const keep = new Set([1, pages, ...[-2, -1, 0, 1, 2].map((d) => page + d)].filter((n) => n >= 1 && n <= pages));
+  const out: (number | null)[] = []; let prev = 0;
+  for (const n of [...keep].sort((a, b) => a - b)) { if (n - prev > 1) out.push(null); out.push(n); prev = n; }
+  return out;
+}
+
+/**
+ * Pagination. With `total` + `size` it also shows the visible range, first/last links and (when `sizeHref` is given) a rows-per-page switch.
+ * Without them it behaves as before (Previous / Next).
+ */
+export function Pagination({ page, pages, href, total, size, sizes = [10, 25, 50, 100], sizeHref }: { page: number; pages: number; href: (p: number) => string; total?: number; size?: number; sizes?: number[]; sizeHref?: (size: number) => string }) {
+  const showSizes = !!(sizeHref && size && total !== undefined && total > sizes[0]);
+  if (pages <= 1 && !showSizes) return null;
+  const off = (cls = "") => button("secondary", `pointer-events-none opacity-40 ${cls}`);
+  const range = total !== undefined && size ? (total === 0 ? "No results" : `${((page - 1) * size + 1).toLocaleString("en-IN")}–${Math.min(page * size, total).toLocaleString("en-IN")} of ${total.toLocaleString("en-IN")}`) : `Page ${page} of ${pages}`;
   return (
-    <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm text-a-muted">
-      <span>Page {page} of {pages}</span>
-      <div className="flex gap-2">
-        {page > 1 ? <Link className={button("secondary")} href={href(page - 1)}>Previous</Link> : <span className={button("secondary", "pointer-events-none opacity-40")}>Previous</span>}
-        {page < pages ? <Link className={button("secondary")} href={href(page + 1)}>Next</Link> : <span className={button("secondary", "pointer-events-none opacity-40")}>Next</span>}
+    <nav aria-label="Pagination" className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-a-muted">
+      <span>{range}{total !== undefined && pages > 1 ? ` · page ${page} of ${pages}` : ""}</span>
+      <div className="flex flex-wrap items-center gap-2">
+        {showSizes && (
+          <span className="mr-2 flex items-center gap-1" role="group" aria-label="Rows per page">
+            Rows
+            {sizes.map((n) => n === size ? <span key={n} aria-current="true" className="rounded-md bg-a-raised px-2 py-1 font-medium text-a-fg">{n}</span> : <Link key={n} href={sizeHref!(n)} className="rounded-md px-2 py-1 hover:bg-a-raised hover:text-a-fg">{n}</Link>)}
+          </span>
+        )}
+        {pages > 1 && (
+          <>
+            {page > 1 ? <Link className={button("secondary")} href={href(1)} aria-label="First page">«</Link> : <span className={off()}>«</span>}
+            {page > 1 ? <Link className={button("secondary")} href={href(page - 1)}>Previous</Link> : <span className={off()}>Previous</span>}
+            {pageWindow(page, pages).map((n, i) => n === null ? <span key={`gap${i}`} aria-hidden className="px-1">…</span> : n === page ? <span key={n} aria-current="page" className="min-w-8 rounded-lg bg-a-accent px-2.5 py-1.5 text-center font-medium text-white">{n}</span> : <Link key={n} href={href(n)} aria-label={`Page ${n}`} className="min-w-8 rounded-lg border border-a-border px-2.5 py-1.5 text-center hover:bg-a-raised hover:text-a-fg">{n}</Link>)}
+            {page < pages ? <Link className={button("secondary")} href={href(page + 1)}>Next</Link> : <span className={off()}>Next</span>}
+            {page < pages ? <Link className={button("secondary")} href={href(pages)} aria-label="Last page">»</Link> : <span className={off()}>»</span>}
+          </>
+        )}
       </div>
     </nav>
   );

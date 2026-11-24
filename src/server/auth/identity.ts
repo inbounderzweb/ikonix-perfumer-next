@@ -1,9 +1,22 @@
 import "server-only";
 import { db } from "@/server/db";
-import { User } from "@/server/models";
+import { Order, User } from "@/server/models";
 
 export type LoginUser = { id: string; created: boolean } | { error: string };
 const SUSPENDED = "This account is not available. Please contact support.";
+
+/**
+ * Attaches imported guest orders from the previous website to the customer who just proved ownership of the phone number.
+ * Runs only after a verified OTP, matches the exact normalised mobile, touches only unowned legacy guest orders
+ * (userId null), and is idempotent: once linked, an order no longer matches. Never blocks or fails a login.
+ */
+async function linkLegacyGuestOrders(userId: unknown, mobile: string) {
+  try {
+    await Order.updateMany({ userId: null, "legacy.source": { $exists: true }, "legacy.guest": true, "contact.phone": mobile }, { $set: { userId } });
+  } catch (e) {
+    console.error("[legacy-link] could not link guest orders:", (e as Error).message);
+  }
+}
 
 /** After a verified OTP: finds the customer who owns this mobile, or creates one. */
 export async function userForVerifiedMobile(mobile: string): Promise<LoginUser> {
@@ -12,15 +25,17 @@ export async function userForVerifiedMobile(mobile: string): Promise<LoginUser> 
   if (found) {
     if (found.status !== "ACTIVE") return { error: SUSPENDED };
     await User.updateOne({ _id: found._id }, { lastLoginAt: new Date(), mobileVerifiedAt: new Date() });
+    await linkLegacyGuestOrders(found._id, mobile);
     return { id: found._id.toString(), created: false };
   }
   try {
     const u = await User.create({ mobile, mobileVerifiedAt: new Date(), lastLoginAt: new Date() });
+    await linkLegacyGuestOrders(u._id, mobile);
     return { id: String(u._id), created: true };
   } catch (e) {
     if ((e as { code?: number }).code === 11000) { // created concurrently by a parallel verification
       const again = (await User.findOne({ mobile }, "_id").lean()) as unknown as { _id: { toString(): string } } | null;
-      if (again) return { id: again._id.toString(), created: false };
+      if (again) { await linkLegacyGuestOrders(again._id, mobile); return { id: again._id.toString(), created: false }; }
     }
     throw e;
   }

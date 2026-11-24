@@ -13,3 +13,7 @@ public/ikonix/products/*
 
 # local-only OAuth secrets
 .secrets/
+
+# Legacy migration reports contain order/customer ids; keep local
+scripts/legacy-migration/reports/
+*.sql

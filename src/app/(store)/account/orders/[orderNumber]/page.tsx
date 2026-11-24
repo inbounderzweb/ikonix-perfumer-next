@@ -27,8 +27,8 @@ export default async function OrderDetail({ params }: PageProps<"/account/orders
       <OrderTracker orderNumber={o.orderNumber} initial={{ timeline: o.timeline, events: o.events, shipment: o.shipment, status: o.status, statusLabel: o.statusLabel, cancelReason: o.cancelReason }} />
       <Card title="Items">
         <ul className="divide-y divide-[#e7dbd3]">
-          {o.items.map((i) => (
-            <li key={`${i.variantId}`} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+          {o.items.map((i, n) => (
+            <li key={`${i.variantId}-${n}`} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#f4ece6]">{i.image && <StoreImage src={i.image} alt={i.name} fill sizes="64px" className="object-cover" />}</div>
               <div className="min-w-0 flex-1 font-fancy text-sm text-[#3f342c]"><p className="font-semibold">{i.name}</p><p className="text-[#6b5446]">{i.variant} · Qty {i.qty}{i.free ? ` + ${i.free} free` : ""} × {inr(i.unit)}</p></div>
               <p className="font-fancy font-semibold text-[#3f342c]">{inr(i.total)}</p>

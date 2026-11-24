@@ -3,20 +3,22 @@ import { Types } from "mongoose";
 import { db } from "@/server/db";
 import { Category, Inventory, Product } from "@/server/models";
 
-export const PAGE_SIZE = 20;
+export const PAGE_SIZE = 10;
 export const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export type AdminProductRow = { id: string; name: string; slug: string; status: string; image: string | null; variants: number; minPrice: number | null; categories: string[]; updatedAt: string };
 
-export async function listProducts(opts: { q?: string; status?: string; page: number }) {
+export async function listProducts(opts: { q?: string; status?: string; categoryId?: string; page: number; size?: number; sort?: Record<string, 1 | -1> }) {
+  const size = opts.size ?? PAGE_SIZE;
   await db();
   const filter: Record<string, unknown> = {};
   if (opts.status === "ARCHIVED") filter.deletedAt = { $ne: null };
   else { filter.deletedAt = null; if (["DRAFT", "ACTIVE"].includes(opts.status ?? "")) filter.status = opts.status; }
+  if (opts.categoryId && /^[a-f0-9]{24}$/.test(opts.categoryId)) filter.categoryIds = new Types.ObjectId(opts.categoryId);
   if (opts.q) { const re = new RegExp(escapeRe(opts.q), "i"); filter.$or = [{ name: re }, { "variants.sku": re }, { inspiredByName: re }]; }
   const [total, rows, cats] = await Promise.all([
     Product.countDocuments(filter),
-    Product.find(filter, "name slug status images primaryImageId variants.isActive minSalePrice categoryIds updatedAt").sort({ updatedAt: -1 }).skip((opts.page - 1) * PAGE_SIZE).limit(PAGE_SIZE).lean(),
+    Product.find(filter, "name slug status images primaryImageId variants.isActive minSalePrice categoryIds updatedAt").sort(opts.sort ?? { updatedAt: -1, _id: -1 }).skip((opts.page - 1) * size).limit(size).lean(),
     Category.find({}, "name").lean(),
   ]);
   const catName = new Map((cats as unknown as { _id: Types.ObjectId; name: string }[]).map((c) => [String(c._id), c.name]));
@@ -27,7 +29,7 @@ export async function listProducts(opts: { q?: string; status?: string; page: nu
     variants: p.variants.filter((v) => v.isActive).length, minPrice: p.minSalePrice ?? null,
     categories: p.categoryIds.map((c) => catName.get(String(c))).filter((x): x is string => !!x), updatedAt: p.updatedAt.toISOString(),
   }));
-  return { items, total, pages: Math.max(1, Math.ceil(total / PAGE_SIZE)) };
+  return { items, total, pages: Math.max(1, Math.ceil(total / size)) };
 }
 
 export type ProductFormData = {

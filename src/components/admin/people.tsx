@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { ClientPagination, ClientSearch, useClientTable } from "./client-table";
 import { changeOwnPassword, createStaff, resetStaffPassword, setCustomerStatus, setStaffRoles, setStaffStatus, type PeopleResult } from "@/app/actions/admin/people";
 import { Badge, Card, Field, Notice, button, inputCls } from "./ui";
 import { ROLES, ROLE_KEYS } from "@/server/auth/permissions";
@@ -37,6 +38,7 @@ export function CustomerActions({ id, status, canWrite }: { id: string; status: 
 export type StaffRow = { id: string; name: string; email: string; roles: string[]; status: string; lastLoginAt: string | null; isOwner: boolean; isSelf: boolean };
 
 export function StaffManager({ staff }: { staff: StaffRow[] }) {
+  const t = useClientTable(staff, { text: (s) => `${s.name} ${s.email} ${s.roles.join(" ")}`, sorts: {}, size: 10 });
   const router = useRouter();
   const [pending, start] = useTransition();
   const [res, setRes] = useState<PeopleResult | null>(null);
@@ -57,7 +59,8 @@ export function StaffManager({ staff }: { staff: StaffRow[] }) {
       </Card>
 
       <div className="space-y-3">
-        {staff.map((s) => (
+        <ClientSearch t={t} placeholder="Search name, email or role" />
+        {t.view.map((s) => (
           <Card key={s.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div><p className="font-medium">{s.name} {s.isOwner && <Badge tone="ok">owner · .env</Badge>} {s.isSelf && <Badge>you</Badge>}</p><p className="text-sm text-a-muted">{s.email}{s.lastLoginAt && ` · last sign-in ${new Date(s.lastLoginAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}</p></div>
@@ -72,6 +75,7 @@ export function StaffManager({ staff }: { staff: StaffRow[] }) {
                       <input type="checkbox" defaultChecked={s.roles.includes(k)} onChange={(e) => { const next = e.target.checked ? [...s.roles, k] : s.roles.filter((r) => r !== k); run(() => setStaffRoles(s.id, next)); }} />{ROLES[k].name}
                     </label>
                   ))}
+        <ClientPagination t={t} />
                 </fieldset>
                 <div className="flex flex-wrap gap-2">
                   <button className={button("secondary", "!py-1")} disabled={pending} onClick={() => { if (confirm("Generate a new password for this person? They will be signed out.")) run(() => resetStaffPassword(s.id)); }}>Reset password</button>

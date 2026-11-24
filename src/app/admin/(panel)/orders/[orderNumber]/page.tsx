@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Types } from "mongoose";
 import { Badge, Card, PageHeader, Table, formatDate, formatINR } from "@/components/admin/ui";
 import { OrderActions } from "@/components/admin/order-actions";
+import { isLegacyOrderNumber, isViewableOrderNumber } from "@/lib/order-number";
 import { allowedNext } from "@/server/commerce/order-flow";
 import { requireAdminPage } from "@/server/auth/guard";
 import { db } from "@/server/db";
@@ -15,7 +16,8 @@ export const metadata: Metadata = { title: "Order" };
 export default async function OrderDetail({ params }: PageProps<"/admin/orders/[orderNumber]">) {
   const admin = await requireAdminPage("orders.read");
   const { orderNumber } = await params;
-  if (!/^IKX-\d{6}-\d{5}$/.test(orderNumber)) notFound();
+  if (!isViewableOrderNumber(orderNumber)) notFound();
+  const legacy = isLegacyOrderNumber(orderNumber);
   await db();
   type A = { fullName?: string; phone?: string; line1?: string; line2?: string; landmark?: string; city?: string; state?: string; postalCode?: string };
   type O = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; sku: string; freeQuantity?: number; offer?: { offerId: string; label: string; pricingBasis: string; savedAmount: number } | null; quantity: number; unitSalePrice: number; lineTotal: number; imageUrl?: string }[]; subtotal: number; discountTotal: number; shippingTotal: number; taxTotal: number; grandTotal: number; contact: { name: string; phone: string; email?: string }; shippingAddress: A; shippingMethodName: string; customerNote?: string; placedAt: Date; statusHistory: { from?: string; to: string; note?: string; description?: string; actorType: string; at: Date }[]; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
@@ -53,7 +55,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
           </Card>
         </div>
         <div className="space-y-5">
-          <OrderActions orderNumber={o.orderNumber} next={allowedNext(o.status)} canWrite={admin.permissions.has("orders.write")} />
+          {legacy ? <p className="rounded-md border border-a-border bg-a-raised p-3 text-sm text-a-muted">Imported from the previous website. This order is read-only history: status changes, refunds and customer notifications are disabled.</p> : <OrderActions orderNumber={o.orderNumber} next={allowedNext(o.status)} canWrite={admin.permissions.has("orders.write")} />}
           <NotificationHistory rows={notes} canRetry={admin.permissions.has("orders.write")} />
           <Card title="Customer"><p className="text-sm">{o.contact.name}<br />{o.contact.phone}<br />{o.contact.email}</p></Card>
           <Card title="Ship to"><p className="text-sm">{a.fullName}<br />{a.line1}{a.line2 ? `, ${a.line2}` : ""}{a.landmark ? ` (${a.landmark})` : ""}<br />{a.city}, {a.state} {a.postalCode}<br />{a.phone}</p>{o.customerNote && <p className="mt-2 text-xs text-a-muted">Note: {o.customerNote}</p>}</Card>

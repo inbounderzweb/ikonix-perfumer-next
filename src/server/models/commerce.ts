@@ -38,8 +38,11 @@ const addressSnapshotSchema = new Schema(
 
 // Snapshot of what was bought, at the price paid. Never re-read from the catalogue.
 const orderItemSchema = new Schema({
-  productId: { type: ObjectId, ref: "Product", required: true },
-  variantId: { type: ObjectId, required: true },
+  // Required for every line sold by this site. Lines imported from the previous site whose product no longer exists are snapshot-only.
+  productId: { type: ObjectId, ref: "Product", required: [function (this: { snapshotOnly?: boolean }) { return !this.snapshotOnly; }, "productId is required"] },
+  variantId: { type: ObjectId, required: [function (this: { snapshotOnly?: boolean }) { return !this.snapshotOnly; }, "variantId is required"] },
+  snapshotOnly: { type: Boolean, default: false },
+  legacy: { type: Schema.Types.Mixed, default: undefined }, // original order-item row ids (audit)
   sku: { type: String, required: true },
   productName: { type: String, required: true },
   variantLabel: { type: String, required: true },
@@ -115,6 +118,8 @@ const orderSchema = new Schema(
     deliveredAt: Date,
     ipAddress: String,
     userAgent: String,
+    // Present only on orders imported from the previous site: original ids/status/address text for audit. Imported orders are read-only history.
+    legacy: { type: Schema.Types.Mixed, default: undefined },
   },
   { timestamps: true },
 );
@@ -133,6 +138,7 @@ orderSchema.index({ paymentStatus: 1, placedAt: -1 });
 orderSchema.index({ "contact.phone": 1 });
 orderSchema.index({ reservationExpiresAt: 1 }, { partialFilterExpression: { status: "PENDING" } });
 orderSchema.index({ "items.productId": 1 });
+orderSchema.index({ "legacy.source": 1, "legacy.orderId": 1 }, { unique: true, partialFilterExpression: { "legacy.orderId": { $type: "number" } } });
 export type OrderDoc = InferSchemaType<typeof orderSchema>;
 export const Order = defineModel("Order", orderSchema, "orders");
 
@@ -152,9 +158,11 @@ const paymentSchema = new Schema(
     failureCode: String,
     failureReason: String,
     capturedAt: Date,
+    legacy: { type: Schema.Types.Mixed, default: undefined }, // imported from the previous site (no amount was stored there: amount is reconstructed from the order)
   },
   { timestamps: true },
 );
+paymentSchema.index({ "legacy.source": 1, "legacy.paymentId": 1 }, { unique: true, partialFilterExpression: { "legacy.paymentId": { $type: "number" } } });
 paymentSchema.index({ providerPaymentId: 1 }, { unique: true, partialFilterExpression: { providerPaymentId: { $type: "string" } } });
 paymentSchema.index({ orderId: 1 });
 paymentSchema.index({ status: 1, createdAt: -1 });

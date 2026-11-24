@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { createTestLogin, deleteTestLogin, resetTestLoginCode, setTestLoginActive, type TestLoginResult } from "@/app/actions/admin/test-logins";
+import { ClientPagination, ClientSearch, useClientTable } from "./client-table";
 import { Badge, Card, Field, Notice, Table, button, inputCls } from "./ui";
 
 export type TestLoginRow = { id: string; name: string; mobile: string; code: string; active: boolean };
@@ -12,6 +13,7 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
   const [pending, start] = useTransition();
   const [res, setRes] = useState<TestLoginResult | null>(null);
   const [form, setForm] = useState({ name: "", mobile: "", code: "" });
+  const t = useClientTable(rows, { text: (r) => `${r.name} ${r.mobile}`, sorts: { name: (a, b) => a.name.localeCompare(b.name), mobile: (a, b) => a.mobile.localeCompare(b.mobile), status: (a, b) => Number(b.active) - Number(a.active) } });
   const run = (fn: () => Promise<TestLoginResult>, after?: () => void) => start(async () => { const r = await fn(); setRes(r); if (r.ok) { after?.(); router.refresh(); } });
   return (
     <div className="space-y-6">
@@ -26,8 +28,10 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
           </form>
         </Card>
       )}
-      <Table head={["Name", "Mobile", "OTP", "Status", ""]} empty={rows.length ? undefined : "No test users yet."}>
-        {rows.map((r) => (
+      <div>
+      <ClientSearch t={t} placeholder="Search name or mobile" />
+      <Table head={[{ label: "Name", sort: "name" }, { label: "Mobile", sort: "mobile" }, "OTP", { label: "Status", sort: "status" }, ""]} sort={t.sort} onSort={t.onSort} empty={t.view.length ? undefined : rows.length ? "No test users match." : "No test users yet."}>
+        {t.view.map((r) => (
           <tr key={r.id}>
             <td className="font-medium">{r.name}</td><td>{r.mobile}</td><td><code className="font-mono text-xs">{r.code}</code></td>
             <td><Badge tone={r.active ? "ok" : "neutral"}>{r.active ? "active" : "disabled"}</Badge></td>
@@ -39,6 +43,8 @@ export function TestLoginManager({ rows, canWrite }: { rows: TestLoginRow[]; can
           </tr>
         ))}
       </Table>
+      <ClientPagination t={t} />
+      </div>
     </div>
   );
 }
