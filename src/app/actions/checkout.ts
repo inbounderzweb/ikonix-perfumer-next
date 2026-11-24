@@ -12,6 +12,8 @@ import { RazorpayError, captureRazorpayPayment, createRazorpayOrder, fetchRazorp
 import { randomToken, sha256, safeEqual } from "@/server/auth/crypto";
 import { rateLimit } from "@/server/auth/rate-limit";
 import { clientMeta } from "@/server/auth/request";
+import { getDeliveryArea } from "@/server/commerce/delivery-area";
+import { notServiceableMessage, serviceable } from "@/lib/delivery-area";
 import { getCustomer } from "@/server/auth/customer-session";
 
 export type Quote = { ok: true; subtotal: number; shipping: number; discount: number; tax: number; total: number; methods: Awaited<ReturnType<typeof activeShippingMethods>> } | { ok: false; error: string };
@@ -69,6 +71,10 @@ export async function createCheckout(raw: unknown): Promise<CheckoutResult> {
     await Order.updateOne({ _id: existing._id }, { accessTokenHash: sha256(token) });
     return { ok: true, orderNumber: existing.orderNumber, accessToken: token, razorpay: { keyId: razorpayPublicKey(), orderId: pay.providerOrderId, amount: existing.grandTotal, currency: "INR", testMode: razorpayMode() === "test" }, prefill: { name: existing.contact.name, email: existing.contact.email ?? "", contact: existing.contact.phone } };
   }
+
+  // Delivery area is enforced here too: the checkout screen check is only a convenience.
+  const area = await getDeliveryArea();
+  if (!serviceable(area, input.address.state, input.address.postalCode)) return { ok: false, error: notServiceableMessage(area), fields: { "address.postalCode": "Not deliverable", "address.state": "Not deliverable" } };
 
   // Server-side re-pricing: free quantities, savings and the payable amount are recomputed here; nothing from the browser is trusted.
   const priced = await priceCart(input.lines, input.shippingMethodId, { userId: me?.id ?? null });

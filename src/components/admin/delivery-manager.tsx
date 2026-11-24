@@ -13,7 +13,8 @@ export function DeliveryManager({ methods, canWrite }: { methods: MethodRow[]; c
     <div className="space-y-4">
       {methods.length === 0 && <Notice tone="warn">No delivery methods yet. Customers can’t check out until you add at least one active method.</Notice>}
       {methods.map((m) => <Method key={m.id} initial={m} canWrite={canWrite} />)}
-      {canWrite && <Method initial={blank} canWrite isNew />}
+      {/* "Add delivery method" is switched off for now (one standard method is used at checkout). Re-enable by restoring the line below.
+      {canWrite && <Method initial={blank} canWrite isNew />} */}
     </div>
   );
 }

@@ -27,15 +27,19 @@ export const StatusBadge = ({ status, label }: { status: string; label: string }
 
 export function OrderCard({ o }: { o: OrderSummary }) {
   return (
-    <Link href={`/account/orders/${o.orderNumber}`} className="flex items-center gap-4 rounded-xl border border-[#e7dbd3] bg-white p-3 transition hover:border-[#b49d91] sm:p-4">
-      <div className="flex -space-x-3">
-        {o.thumbs.map((t, i) => <div key={i} className="relative h-14 w-14 overflow-hidden rounded-lg border-2 border-white bg-[#f4ece6]">{t.image && <StoreImage src={t.image} alt={t.name} fill sizes="56px" className="object-cover" />}</div>)}
+    <Link href={`/account/orders/${o.orderNumber}`} className="block rounded-xl border border-[#e7dbd3] bg-white p-3 transition hover:border-[#b49d91] sm:p-4">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex -space-x-3">
+          {o.thumbs.map((t, i) => <div key={i} className="relative h-14 w-14 overflow-hidden rounded-lg border-2 border-white bg-[#f4ece6]">{t.image && <StoreImage src={t.image} alt={t.name} fill sizes="56px" className="object-cover" />}</div>)}
+        </div>
+        <div className="text-right"><p className="font-fancy font-semibold text-[#3f342c]">{inr(o.total)}</p><StatusBadge status={o.status} label={o.statusLabel} /></div>
       </div>
-      <div className="min-w-0 flex-1">
-        <p className="truncate font-fancy font-semibold text-[#3f342c]">{o.orderNumber}</p>
-        <p className="font-fancy text-xs text-[#6b5446]">{fmtDate(o.placedAt)} · {o.itemCount} item{o.itemCount === 1 ? "" : "s"}</p>
+      <div className="mt-3 space-y-0.5 border-t border-[#f0e6df] pt-2.5 font-fancy text-xs text-[#6b5446]">
+        <p className="text-sm font-semibold text-[#3f342c]">{o.orderNumber}</p>
+        {o.lines.map((l, i) => <p key={i}>{l}</p>)}
+        {o.moreItems > 0 && <p className="text-[#8C7367]">+ {o.moreItems} more item{o.moreItems === 1 ? "" : "s"}</p>}
+        <p className="pt-1 text-[#8C7367]">{fmtDate(o.placedAt)} · {o.itemCount} item{o.itemCount === 1 ? "" : "s"} · {o.paymentLabel}</p>
       </div>
-      <div className="text-right"><p className="font-fancy font-semibold text-[#3f342c]">{inr(o.total)}</p><StatusBadge status={o.status} label={o.statusLabel} /></div>
     </Link>
   );
 }

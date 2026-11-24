@@ -21,7 +21,7 @@ export default async function HomePage() {
       </section>
       <section className="mt-6 w-full md:hidden">
         <HeroMobile />
-        <div className="mx-auto w-[90%]"><OfferMarquee /></div>
+        <div className="mx-auto w-[90%] overflow-hidden rounded-b-[6px]"><OfferMarquee /></div>
         <div className="mt-3"><CollectionTiles /></div>
       </section>
       <div className="bg-[#F9F6F4]"><BestSellers tabs={tabs} /></div>

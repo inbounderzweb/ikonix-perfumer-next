@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCustomer } from "@/server/auth/customer-session";
 import { listAddresses } from "@/server/customer/addresses";
+import { getDeliveryArea } from "@/server/commerce/delivery-area";
 import { CheckoutClient } from "./checkout-client";
 
 export const metadata: Metadata = { title: "Checkout", robots: { index: false, follow: false } };
@@ -8,5 +9,5 @@ export const metadata: Metadata = { title: "Checkout", robots: { index: false, f
 export default async function CheckoutPage() {
   const me = await getCustomer();
   const addresses = me ? await listAddresses(me.id) : [];
-  return <CheckoutClient customer={me ? { name: me.name, email: me.email, mobile: me.mobile } : null} addresses={addresses} />;
+  return <CheckoutClient customer={me ? { name: me.name, email: me.email, mobile: me.mobile } : null} addresses={addresses} area={await getDeliveryArea()} />;
 }

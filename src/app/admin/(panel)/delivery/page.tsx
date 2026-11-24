@@ -4,6 +4,8 @@ import { DeliveryManager, type MethodRow } from "@/components/admin/delivery-man
 import { requireAdminPage } from "@/server/auth/guard";
 import { db } from "@/server/db";
 import { ShippingMethod } from "@/server/models";
+import { DeliveryAreaForm } from "@/components/admin/delivery-area-form";
+import { getDeliveryArea } from "@/server/commerce/delivery-area";
 
 export const metadata: Metadata = { title: "Delivery" };
 
@@ -16,6 +18,7 @@ export default async function DeliveryPage() {
   return (
     <>
       <PageHeader title="Delivery" subtitle="Methods and charges offered at checkout. A free-delivery threshold waives the charge once the cart subtotal reaches it." />
+      <div className="mb-6"><DeliveryAreaForm area={await getDeliveryArea()} canWrite={admin.permissions.has("delivery.write")} /></div>
       <DeliveryManager methods={methods} canWrite={admin.permissions.has("delivery.write")} />
     </>
   );

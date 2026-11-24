@@ -26,12 +26,12 @@ const HERO_DESKTOP = [
 
 export function HeroDesktop() {
   return (
-    <div className="relative overflow-hidden rounded-[18px]">
+    <div className="relative overflow-hidden rounded-t-[18px]">
       <Swiper modules={[Autoplay, EffectFade, Navigation]} effect="fade" fadeEffect={{ crossFade: true }} loop speed={500}
         autoplay={{ delay: 3000, disableOnInteraction: false }} navigation={{ prevEl: ".ikx-hero-prev", nextEl: ".ikx-hero-next" }} className="h-full w-full">
         {HERO_DESKTOP.map((s, i) => (
           <SwiperSlide key={s.image}>
-            <div className={`relative aspect-[1128/520] overflow-hidden rounded-[18px] ${s.variant === "stock-up" ? "[container-type:inline-size]" : ""}`}>
+            <div className={`relative aspect-[1128/520] overflow-hidden rounded-t-[18px] ${s.variant === "stock-up" ? "[container-type:inline-size]" : ""}`}>
               <Image src={s.image} alt={s.title.replace(/\s+/g, " ").trim()} fill fetchPriority={i === 0 ? "high" : undefined} sizes="(min-width:1024px) 80vw, 90vw" className="object-cover object-center" />
               {s.variant === "stock-up" ? (
                 <div className="absolute top-[36.5%] left-[8.3%] flex flex-col items-start">
@@ -70,13 +70,13 @@ const HERO_MOBILE = [
 
 export function HeroMobile() {
   return (
-    <div className="ikx-hero-mobile relative mx-auto w-[90%] overflow-hidden rounded-[6px] lg:w-[80%]">
+    <div className="ikx-hero-mobile relative mx-auto w-[90%] overflow-hidden rounded-t-[6px] lg:w-[80%]">
       <Swiper modules={[Autoplay, EffectFade, Pagination]} effect="fade" fadeEffect={{ crossFade: true }} loop speed={400}
         autoplay={{ delay: 3000, disableOnInteraction: false }} pagination={{ clickable: true }}>
         {HERO_MOBILE.map((s, i) => (
           <SwiperSlide key={s.image}>
-            <div className="relative h-[75svh] overflow-hidden rounded-[6px]">
-              <Image src={s.image} alt={`Slide ${i + 1}`} fill fetchPriority={i === 0 ? "high" : undefined} sizes="90vw" className="rounded-[6px] object-cover" />
+            <div className="relative h-[75svh] overflow-hidden rounded-t-[6px]">
+              <Image src={s.image} alt={`Slide ${i + 1}`} fill fetchPriority={i === 0 ? "high" : undefined} sizes="90vw" className="rounded-t-[6px] object-cover" />
               <div className="absolute inset-0 flex flex-col items-center justify-between px-4 pt-10 pb-6 text-center sm:pt-12 sm:pb-10">
                 <div className={s.light ? "invisible" : ""}>
                   <h2 className="mb-3 font-heading text-[22px] leading-tight font-semibold text-[#2F3A4A] sm:text-[28px]">{s.title}</h2>

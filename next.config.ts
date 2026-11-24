@@ -19,8 +19,17 @@ const csp = [
   ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
+// Extra hosts the site is reached through (tunnels such as ngrok/cloudflared, a LAN IP when testing on a phone, a custom domain).
+// Without this, Next.js rejects form posts whose Origin differs from the Host it sees: "Invalid Server Actions request".
+// Comma-separated, host[:port] only, e.g. APP_ALLOWED_ORIGINS=192.168.1.20:3000,my-tunnel.ngrok-free.app
+const extraHosts = (process.env.APP_ALLOWED_ORIGINS ?? "").split(",").map((h) => h.trim()).filter(Boolean);
+const siteHost = (() => { try { return new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "").host; } catch { return ""; } })();
+const allowedOrigins = [...new Set([...extraHosts, ...(siteHost ? [siteHost] : [])])];
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  allowedDevOrigins: extraHosts.map((h) => h.replace(/:\d+$/, "")),
+  experimental: { serverActions: { allowedOrigins } },
   images: {
     // Product photos come from Cloudinary and are resized there by src/lib/cloudinary-loader.ts.
     // The allow-list still pins this account's path in case the default loader is ever used.

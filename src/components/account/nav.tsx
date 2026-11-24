@@ -17,7 +17,7 @@ export function AccountNav({ name, sub, avatar }: { name: string; sub: string; a
         </div>
         <div className="min-w-0"><p className="truncate font-heading text-lg text-[#8C7367]">{name}</p><p className="truncate font-fancy text-xs text-[#6b5446]">{sub}</p></div>
       </div>
-      <nav aria-label="Account" className="-mx-[4%] flex gap-2 overflow-x-auto px-[4%] pb-1 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0">
+      <nav aria-label="Account" className="no-scrollbar -mx-[4%] flex gap-2 overflow-x-auto px-[4%] pb-1 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0">
         {LINKS.map(([h, l]) => (
           <Link key={h} href={h} aria-current={active(h) ? "page" : undefined} className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 font-fancy text-sm transition lg:rounded-lg ${active(h) ? "bg-[#b49d91] text-[#3f342c]" : "bg-[#f4ece6] text-[#53443D] hover:bg-[#ecdfd6]"}`}>{l}</Link>
         ))}

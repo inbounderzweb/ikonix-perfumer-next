@@ -18,10 +18,12 @@ const FILTERS: Record<string, string[]> = { active: ACTIVE, delivered: ["DELIVER
 type Item = { productId: Types.ObjectId; variantId: Types.ObjectId; productName: string; variantLabel: string; imageUrl?: string; unitSalePrice: number; unitRegularPrice: number; quantity: number; freeQuantity: number; lineDiscount: number; lineTotal: number };
 type Row = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; placedAt: Date; grandTotal: number; items: Item[] };
 
-export type OrderSummary = { orderNumber: string; status: string; statusLabel: string; paymentStatus: string; placedAt: string; total: number; itemCount: number; thumbs: { name: string; image: string | null }[] };
+export type OrderSummary = { orderNumber: string; status: string; statusLabel: string; paymentStatus: string; placedAt: string; total: number; itemCount: number; thumbs: { name: string; image: string | null }[]; lines: string[]; moreItems: number; paymentLabel: string };
+const PAY_LABEL: Record<string, string> = { CAPTURED: "Paid", CREATED: "Payment pending", AUTHORIZED: "Payment pending", FAILED: "Payment failed", REFUNDED: "Refunded", PARTIALLY_REFUNDED: "Partly refunded" };
 const summary = (o: Row): OrderSummary => ({
   orderNumber: o.orderNumber, status: o.status, statusLabel: STATUS_LABEL[o.status] ?? o.status, paymentStatus: o.paymentStatus, placedAt: o.placedAt.toISOString(), total: o.grandTotal,
   itemCount: o.items.reduce((a, i) => a + i.quantity + i.freeQuantity, 0), thumbs: o.items.slice(0, 3).map((i) => ({ name: i.productName, image: i.imageUrl ?? null })),
+  lines: o.items.slice(0, 3).map((i) => `${i.productName} (${i.variantLabel}) × ${i.quantity}${i.freeQuantity ? ` + ${i.freeQuantity} free` : ""}`), moreItems: Math.max(0, o.items.length - 3), paymentLabel: PAY_LABEL[o.paymentStatus] ?? o.paymentStatus.toLowerCase().replace(/_/g, " "),
 });
 
 export type OrderQuery = { q?: string; status?: string; from?: string; to?: string; page?: number };

@@ -7,6 +7,7 @@ import { useCart } from "@/components/store/cart-context";
 import { createCheckout, getCheckoutQuote, verifyPayment, type Quote } from "@/app/actions/checkout";
 import { getCartView, type CartLineView } from "@/app/actions/cart";
 import { INDIAN_STATES } from "@/lib/india";
+import { areaSummary, notServiceableMessage, serviceable, type DeliveryArea } from "@/lib/delivery-area";
 import { saveAddressAction } from "@/app/actions/customer/account";
 import type { AddressDTO } from "@/server/customer/addresses";
 
@@ -29,7 +30,7 @@ function loadRazorpay(): Promise<boolean> {
   });
 }
 
-export function CheckoutClient({ customer, addresses }: { customer: { name: string; email: string; mobile: string } | null; addresses: AddressDTO[] }) {
+export function CheckoutClient({ customer, addresses, area }: { customer: { name: string; email: string; mobile: string } | null; addresses: AddressDTO[]; area: DeliveryArea }) {
   const { lines, clear } = useCart();
   const router = useRouter();
   const [view, setView] = useState<CartLineView[] | null>(null);
@@ -59,7 +60,8 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
 
   const loading = view === null || quote === null;
   const empty = !loading && view.length === 0;
-  const ready = quote?.ok && quote.methods.length > 0;
+  const inArea = serviceable(area, f.state, f.postalCode);
+  const ready = quote?.ok && quote.methods.length > 0 && inArea;
 
   async function pay(e: React.FormEvent) {
     e.preventDefault();
@@ -129,8 +131,8 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
       <h1 className="mb-6 text-center font-heading text-[30px] text-[#8C7367] md:text-[38px]">Checkout</h1>
       <form onSubmit={pay} className="grid gap-8 lg:grid-cols-[1fr_380px]" noValidate>
         <div className="space-y-8">
-          <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6" disabled={busy}>
-            <legend className="font-heading text-xl text-[#53443D]">Contact</legend>
+          <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 [&>legend+*]:clear-both" disabled={busy}>
+            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-[#53443D]">Contact</legend>
             {!customer && <p className="font-fancy text-sm text-[#53443D]">Checking out as a guest. <Link href="/login?next=/checkout" className="underline">Sign in instead</Link></p>}
             <div className="grid gap-4 sm:grid-cols-2">
               <div><label className={label} htmlFor="name">Full name</label><input id="name" autoComplete="name" required className={field} value={f.name} onChange={(e) => set("name", e.target.value)} />{fe("contact.name")}</div>
@@ -139,8 +141,8 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
             </div>
           </fieldset>
 
-          <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6" disabled={busy}>
-            <legend className="font-heading text-xl text-[#53443D]">Delivery address</legend>
+          <fieldset className="space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 [&>legend+*]:clear-both" disabled={busy}>
+            <legend className="float-left mb-4 w-full p-0 font-heading text-xl text-[#53443D]">Delivery address</legend>
             {addresses.length > 0 && (
               <div className="space-y-2" role="radiogroup" aria-label="Saved addresses">
                 {addresses.map((a) => (
@@ -162,23 +164,12 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
               {customer && !picked && <label className="flex items-center gap-2 font-fancy text-sm text-[#53443D] sm:col-span-2"><input type="checkbox" checked={saveIt} onChange={(e) => setSaveIt(e.target.checked)} /> Save this address to my account</label>}
               <div><label className={label} htmlFor="note">Delivery note <span className="font-normal text-[#8C7367]">(optional)</span></label><input id="note" maxLength={300} className={field} value={f.note} onChange={(e) => set("note", e.target.value)} /></div>
             </div>
-            <p className="font-fancy text-xs text-[#8C7367]">We currently deliver within India.</p>
+            {inArea ? <p className="font-fancy text-xs text-[#8C7367]">{areaSummary(area)}</p> : <p role="alert" className="rounded-md bg-amber-50 p-3 font-fancy text-sm text-amber-900">{notServiceableMessage(area)}</p>}
           </fieldset>
 
-          <fieldset className="space-y-3 rounded-2xl bg-white p-5 shadow-sm md:p-6" disabled={busy}>
-            <legend className="font-heading text-xl text-[#53443D]">Delivery method</legend>
-            {quote?.ok && quote.methods.length === 0 && <p role="alert" className="rounded-md bg-amber-50 p-3 font-fancy text-sm text-amber-900">Delivery isn’t set up yet, so orders can’t be placed right now. Please contact us at ikonixperfumer@gmail.com.</p>}
-            {quote?.ok && quote.methods.map((m) => (
-              <label key={m.id} className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 ${methodId === m.id ? "border-[#8C7367] bg-[#faf5f2]" : "border-[#e6dad3]"}`}>
-                <input type="radio" name="method" className="mt-1" checked={methodId === m.id} onChange={() => setMethodId(m.id)} />
-                <span className="flex-1 font-fancy text-[15px]"><span className="font-bold text-[#2f3647]">{m.name}</span>{m.description && <span className="block text-sm text-[#6c5950]">{m.description}</span>}
-                  {m.minDays != null && <span className="block text-xs text-[#8C7367]">{m.minDays}{m.maxDays != null && m.maxDays !== m.minDays ? `–${m.maxDays}` : ""} days</span>}</span>
-                <span className="font-fancy text-sm font-bold">{m.freeAbove != null && quote.subtotal >= m.freeAbove ? "Free" : inr(m.charge)}</span>
-              </label>
-            ))}
-            {quote?.ok && quote.methods.some((m) => m.freeAbove != null) && <p className="font-fancy text-xs text-[#8C7367]">Free delivery on orders of {inr(Math.min(...quote.methods.filter((m) => m.freeAbove != null).map((m) => m.freeAbove as number)))} and above.</p>}
-            {fe("shippingMethodId")}
-          </fieldset>
+          {/* Delivery method picker removed: the first active method is applied automatically (see methodId). */}
+          {quote?.ok && quote.methods.length === 0 && <p role="alert" className="rounded-md bg-amber-50 p-3 font-fancy text-sm text-amber-900">Delivery isn’t set up yet, so orders can’t be placed right now. Please contact us at ikonixperfumer@gmail.com.</p>}
+          {fe("shippingMethodId")}
         </div>
 
         <aside className="h-fit space-y-4 rounded-2xl bg-white p-5 shadow-sm md:p-6 lg:sticky lg:top-28">

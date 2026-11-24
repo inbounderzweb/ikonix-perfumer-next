@@ -6,6 +6,9 @@ import { db } from "@/server/db";
 import { Order, ShippingMethod } from "@/server/models";
 import { ForbiddenError, requireAdmin } from "@/server/auth/guard";
 import { audit } from "@/server/admin/audit";
+import { Setting } from "@/server/models";
+import { AREA_KEY } from "@/server/commerce/delivery-area";
+import { AREA_MODES, parsePincodes, validStates } from "@/lib/delivery-area";
 
 const rupees = z.coerce.number().min(0).max(1_000_000).refine((v) => Math.abs(v * 100 - Math.round(v * 100)) < 1e-6, "At most 2 decimals");
 const methodInput = z.object({
@@ -77,5 +80,30 @@ export async function deleteShippingMethod(id: string): Promise<DeliveryResult> 
     if (e instanceof ForbiddenError || e instanceof Response) return { ok: false, error: "You do not have permission to do that." };
     console.error("deleteShippingMethod", e instanceof Error ? e.message : e);
     return { ok: false, error: "Could not delete." };
+  }
+}
+
+const areaInput = z.object({ mode: z.enum(AREA_MODES), states: z.array(z.string()).max(40), pincodes: z.string().max(20000), message: z.string().trim().max(200) });
+
+export async function saveDeliveryArea(raw: unknown): Promise<DeliveryResult> {
+  try {
+    const admin = await requireAdmin("delivery.write");
+    const p = areaInput.safeParse(raw);
+    if (!p.success) return { ok: false, error: "Invalid delivery area." };
+    const v = p.data;
+    const value = { mode: v.mode, states: validStates(v.states), pincodes: parsePincodes(v.pincodes), message: v.message };
+    if ((v.mode === "STATES") && value.states.length === 0) return { ok: false, error: "Choose at least one state." };
+    if (v.mode === "PINCODES" && value.pincodes.length === 0) return { ok: false, error: "Enter at least one PIN code (3 to 6 digits)." };
+    if (v.mode === "EXCLUDE_STATES" && value.states.length >= 36) return { ok: false, error: "That would exclude every state." };
+    await db();
+    await Setting.updateOne({ _id: AREA_KEY }, { $set: { value, updatedById: admin.id } }, { upsert: true });
+    await audit(admin, "delivery.area", "Setting", AREA_KEY, { after: { mode: value.mode, states: value.states.length, pincodes: value.pincodes.length } });
+    revalidatePath("/admin/delivery");
+    revalidatePath("/checkout");
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ForbiddenError || e instanceof Response) return { ok: false, error: "You do not have permission to do that." };
+    console.error("saveDeliveryArea", e instanceof Error ? e.message : e);
+    return { ok: false, error: "Could not save. Try again." };
   }
 }
