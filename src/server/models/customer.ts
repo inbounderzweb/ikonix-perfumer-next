@@ -87,3 +87,17 @@ recentlyViewedSchema.index({ userId: 1, viewedAt: -1 });
 recentlyViewedSchema.index({ viewedAt: 1 }, { expireAfterSeconds: 180 * 24 * 3600 });
 export type RecentlyViewedDoc = InferSchemaType<typeof recentlyViewedSchema>;
 export const RecentlyViewed = defineModel("RecentlyViewed", recentlyViewedSchema, "recently_viewed");
+
+// Admin-registered test logins: these numbers get a fixed OTP and no SMS, so flows can be tested on any environment.
+const testLoginSchema = new Schema(
+  {
+    mobile: { type: String, required: true, unique: true, match: /^\+[1-9][0-9]{7,14}$/ },
+    name: { type: String, required: true, trim: true, maxlength: 80 },
+    code: { type: String, required: true, match: /^\d{6}$/ },
+    active: { type: Boolean, default: true },
+    userId: { type: ObjectId, ref: "User", default: null },
+    createdBy: { type: ObjectId, ref: "User", default: null },
+  },
+  { timestamps: true },
+);
+export const TestLogin = defineModel("TestLogin", testLoginSchema, "test_logins");

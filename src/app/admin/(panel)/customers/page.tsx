@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Badge, PageHeader, Pagination, Table, button, formatDate, inputCls } from "@/components/admin/ui";
 import { CustomerActions } from "@/components/admin/people";
 import { requireAdminPage } from "@/server/auth/guard";
@@ -24,7 +25,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/admin/
   const orders = new Map(counts.map((c) => [String(c._id), c.n as number]));
   return (
     <>
-      <PageHeader title="Customers" subtitle={`${total.toLocaleString("en-IN")} customers. Customer accounts appear here after sign-in launches.`} />
+      <PageHeader title="Customers" subtitle={`${total.toLocaleString("en-IN")} customers`} actions={admin.permissions.has("customers.write") && <Link href="/admin/customers/test-logins" className={button("secondary")}>Test users</Link>} />
       <form className="mb-4 flex gap-2" role="search"><input name="q" defaultValue={q} placeholder="Search name, email or mobile" aria-label="Search customers" className={`${inputCls} max-w-sm`} /><button className={button("secondary")}>Search</button></form>
       <Table head={["Customer", "Contact", "Orders", "Joined", "Status", ""]} empty={rows.length ? undefined : "No customers yet."}>
         {rows.map((u) => (

@@ -1,10 +1,10 @@
 import "server-only";
 import { randomInt } from "node:crypto";
 import { db } from "@/server/db";
-import { OtpVerification } from "@/server/models";
+import { OtpVerification, TestLogin } from "@/server/models";
 import { hmacSha256Hex, safeEqual } from "../crypto";
 import { rateLimit } from "../rate-limit";
-import { getSmsProvider, testMobiles } from "./sms-provider";
+import { getSmsProvider } from "./sms-provider";
 
 export type OtpPurpose = "LOGIN" | "CHANGE_MOBILE";
 
@@ -33,7 +33,7 @@ function generateCode(isMock: boolean): string {
 }
 
 export type RequestResult =
-  | { ok: true; resendAfterSec: number; expiresInSec: number; mock: boolean }
+  | { ok: true; resendAfterSec: number; expiresInSec: number; mock: boolean; test?: boolean }
   | { ok: false; error: string; retryAfterSec?: number };
 
 /** Creates and sends an OTP. All abuse limits live here, not in controllers. */
@@ -50,16 +50,15 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
     return { ok: false, error: "Please wait before requesting another code.", retryAfterSec: Math.ceil((live.resendAvailableAt.getTime() - Date.now()) / 1000) };
   }
 
+  // Admin-registered test numbers: a fixed code, nothing is sent, works in any environment.
+  const test = (await TestLogin.findOne({ mobile: destination, active: true }).lean()) as unknown as { code: string } | null;
   let provider;
-  try { provider = getSmsProvider(); } catch (e) {
+  try { provider = test ? ({ name: "test-login", isMock: true, send: async () => ({ messageId: "test" }) } as const) : getSmsProvider(); } catch (e) {
     // Misconfiguration (e.g. mock provider in production): fail with a readable message instead of a 500 page.
     console.error("[otp] SMS provider unavailable:", e instanceof Error ? e.message : e);
     return { ok: false, error: "Mobile sign-in is temporarily unavailable. Please try again later or continue as a guest." };
   }
-  if (provider.isMock && process.env.NODE_ENV === "production" && !testMobiles().includes(destination)) {
-    return { ok: false, error: "Mobile sign-in is temporarily unavailable. Please try again later or continue as a guest." };
-  }
-  const code = generateCode(provider.isMock);
+  const code = test ? test.code : generateCode(provider.isMock);
   await OtpVerification.updateMany({ destination, purpose, active: true }, { active: false }); // a resend replaces the old code
   let doc;
   try {
@@ -81,7 +80,7 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
     console.error("otp send failed", e instanceof Error ? e.message : e);
     return { ok: false, error: "We couldn't send the code right now. Please try again shortly." };
   }
-  return { ok: true, resendAfterSec: cfg.resendSec, expiresInSec: cfg.ttlSec, mock: provider.isMock };
+  return { ok: true, resendAfterSec: cfg.resendSec, expiresInSec: cfg.ttlSec, mock: provider.isMock, test: !!test };
 }
 
 export type VerifyResult = { ok: true; userId: string | null } | { ok: false; error: string };
