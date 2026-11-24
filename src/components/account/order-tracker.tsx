@@ -29,7 +29,7 @@ export function OrderTracker({ orderNumber, initial }: { orderNumber: string; in
   }, [live, orderNumber]);
 
   return (
-    <Card title="Tracking" action={live ? <span className="font-fancy text-xs text-[#6b5446]">{updated ? `Updated ${updated.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}` : "Auto-refreshing"}</span> : undefined}>
+    <Card title="Tracking" action={live ? <span className="font-fancy text-xs text-[#6b5446]">{updated ? `Updated ${updated.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" })}` : "Auto-refreshing"}</span> : undefined}>
       <ol className="relative space-y-0">
         {d.timeline.map((s, i) => {
           const bad = ["CANCELLED", "DELIVERY_FAILED", "RETURNED", "RETURN_REQUESTED", "REFUNDED"].includes(s.key);

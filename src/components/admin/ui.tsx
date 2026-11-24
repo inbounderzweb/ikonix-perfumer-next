@@ -92,7 +92,7 @@ export function Pagination({ page, pages, href }: { page: number; pages: number;
 }
 
 export const formatINR = (paise: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(paise / 100);
-export const formatDate = (d: Date | string) => new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short" }).format(new Date(d));
+export const formatDate = (d: Date | string) => new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" }).format(new Date(d));
 
 export function Icon({ name, className = "h-5 w-5" }: { name: keyof typeof ICONS; className?: string }) {
   return (

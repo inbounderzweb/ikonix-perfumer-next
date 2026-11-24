@@ -60,7 +60,7 @@ export function StaffManager({ staff }: { staff: StaffRow[] }) {
         {staff.map((s) => (
           <Card key={s.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div><p className="font-medium">{s.name} {s.isOwner && <Badge tone="ok">owner · .env</Badge>} {s.isSelf && <Badge>you</Badge>}</p><p className="text-sm text-a-muted">{s.email}{s.lastLoginAt && ` · last sign-in ${new Date(s.lastLoginAt).toLocaleString("en-IN")}`}</p></div>
+              <div><p className="font-medium">{s.name} {s.isOwner && <Badge tone="ok">owner · .env</Badge>} {s.isSelf && <Badge>you</Badge>}</p><p className="text-sm text-a-muted">{s.email}{s.lastLoginAt && ` · last sign-in ${new Date(s.lastLoginAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}</p></div>
               <Badge tone={s.status === "ACTIVE" ? "ok" : "danger"}>{s.status.toLowerCase()}</Badge>
             </div>
             {!s.isOwner && (
