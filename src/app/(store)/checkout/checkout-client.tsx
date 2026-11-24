@@ -103,7 +103,7 @@ export function CheckoutClient({ customer, addresses }: { customer: { name: stri
       </section>
     );
   }
-  if (!customer && !guest && !loading) {
+  if (!customer && !guest) {
     return (
       <div className="mx-auto w-[92%] max-w-3xl py-10 md:py-16">
         <h1 className="mb-6 text-center font-heading text-[30px] text-[#8C7367] md:text-[38px]">Checkout</h1>
