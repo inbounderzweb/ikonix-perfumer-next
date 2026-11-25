@@ -169,6 +169,33 @@ otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 30 * 24 * 3600 }); // ve
 export type OtpDoc = InferSchemaType<typeof otpSchema>;
 export const OtpVerification = defineModel("OtpVerification", otpSchema, "otp_verifications");
 
+// ── OTP activity: one durable row per mobile number (the OTP log above is purged after 30 days) ──
+// Counters feed the admin "OTP activity" page; `blocked` stops any further OTP being sent or accepted for the number.
+const otpActivitySchema = new Schema(
+  {
+    mobile: { type: String, required: true, unique: true, match: /^\+[1-9][0-9]{7,14}$/ },
+    requestCount: { ...int(0), default: 0 }, // codes requested (sends + resends), all time
+    verifiedCount: { ...int(0), default: 0 },
+    failedCount: { ...int(0), default: 0 }, // wrong-code attempts
+    blockedAttempts: { ...int(0), default: 0 }, // requests refused because the number is blocked
+    dayKey: String, // IST date (YYYY-MM-DD) that `todayCount` belongs to
+    todayCount: { ...int(0), default: 0 },
+    lastRequestAt: Date,
+    lastVerifiedAt: Date,
+    lastIp: String,
+    blocked: { type: Boolean, default: false },
+    blockedAt: Date,
+    blockedReason: String,
+    blockedBy: { type: ObjectId, ref: "User", default: null },
+  },
+  { timestamps: true },
+);
+otpActivitySchema.index({ blocked: 1, updatedAt: -1 });
+otpActivitySchema.index({ requestCount: -1 });
+otpActivitySchema.index({ lastRequestAt: -1 });
+export type OtpActivityDoc = InferSchemaType<typeof otpActivitySchema>;
+export const OtpActivity = defineModel("OtpActivity", otpActivitySchema, "otp_activity");
+
 // ── Account link request (Google email matches an existing account) ───────
 const linkRequestSchema = new Schema(
   {

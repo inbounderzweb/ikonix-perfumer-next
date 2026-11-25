@@ -13,9 +13,11 @@ const NAV: (NavItem & { perm: Permission })[] = [
   { href: "/admin/orders", label: "Orders", icon: "cart", perm: "orders.read" },
   { href: "/admin/delivery", label: "Delivery", icon: "truck", perm: "delivery.read" },
   { href: "/admin/customers", label: "Customers", icon: "users", perm: "customers.read" },
+  { href: "/admin/reports", label: "Reports", icon: "log", exact: true, perm: "dashboard.view" },
+  { href: "/admin/reports/sales", label: "Sales report", icon: "cart", perm: "orders.read" },
+  { href: "/admin/reports/otp", label: "OTP usage", icon: "shield", perm: "customers.read" },
   { href: "/admin/staff", label: "Staff & roles", icon: "shield", perm: "staff.manage" },
   { href: "/admin/audit", label: "Audit log", icon: "log", perm: "audit.read" },
-  { href: "/admin/profile", label: "My profile", icon: "users", perm: "dashboard.view" },
 ];
 
 export default async function PanelLayout({ children }: LayoutProps<"/admin">) {

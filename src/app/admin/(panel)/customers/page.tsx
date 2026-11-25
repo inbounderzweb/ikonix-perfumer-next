@@ -38,7 +38,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/admin/
   const filtered = !!(q || testOnly || status || source || from || to);
   return (
     <>
-      <PageHeader title="Customers" subtitle={`${total.toLocaleString("en-IN")} ${filtered ? "matching " : ""}customers`} actions={admin.permissions.has("customers.write") && <Link href="/admin/customers/test-logins" className={button("secondary")}>Test users</Link>} />
+      <PageHeader title="Customers" subtitle={`${total.toLocaleString("en-IN")} ${filtered ? "matching " : ""}customers`} actions={<div className="flex gap-2"><Link href="/admin/reports/otp" className={button("secondary")}>OTP usage</Link>{admin.permissions.has("customers.write") && <Link href="/admin/customers/test-logins" className={button("secondary")}>Test users</Link>}</div>} />
       <form className="mb-4 flex flex-wrap items-end gap-2" role="search">
         <input name="q" defaultValue={q} placeholder="Search name, email or mobile" aria-label="Search customers" className={`${inputCls} max-w-xs`} />
         <select name="test" defaultValue={testOnly ? "1" : ""} aria-label="Customer type" className={`${inputCls} !w-auto`}><option value="">All customers</option><option value="1">Test users only</option></select>

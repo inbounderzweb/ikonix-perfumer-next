@@ -5,6 +5,9 @@ import { OtpVerification, TestLogin } from "@/server/models";
 import { hmacSha256Hex, safeEqual } from "../crypto";
 import { rateLimit } from "../rate-limit";
 import { getSmsProvider, otpMessage } from "./sms-provider";
+import { isOtpBlocked, trackOtp } from "./activity";
+
+export const BLOCKED_MESSAGE = "OTP sign-in is not available for this number. Please contact support.";
 
 export type OtpPurpose = "LOGIN" | "CHANGE_MOBILE";
 
@@ -41,6 +44,9 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
   const cfg = otpConfig();
   const { destination, purpose } = input;
   await db();
+
+  // An admin-blocked number can never receive a code.
+  if (await isOtpBlocked(destination)) { await trackOtp(destination, "blocked", input.ip); return { ok: false, error: BLOCKED_MESSAGE }; }
 
   if (!(await rateLimit(`otp-ip:${input.ip}`, 20, 3600))) return { ok: false, error: "Too many requests from your network. Try again later.", retryAfterSec: 3600 };
   if (!(await rateLimit(`otp-dest:${destination}`, cfg.maxSendsPerHour, 3600))) return { ok: false, error: "Too many codes requested for this number. Try again in an hour.", retryAfterSec: 3600 };
@@ -80,6 +86,7 @@ export async function requestOtp(input: { destination: string; purpose: OtpPurpo
     console.error("otp send failed", e instanceof Error ? e.message : e);
     return { ok: false, error: "We couldn't send the code right now. Please try again shortly." };
   }
+  await trackOtp(destination, "request", input.ip);
   return { ok: true, resendAfterSec: cfg.resendSec, expiresInSec: cfg.ttlSec, mock: provider.isMock, test: !!test };
 }
 
@@ -92,6 +99,12 @@ export async function verifyOtp(input: { destination: string; purpose: OtpPurpos
   const { destination, purpose } = input;
   if (!/^\d{4,6}$/.test(input.code)) return { ok: false, error: BAD };
   if (input.ip && !(await rateLimit(`otp-verify-ip:${input.ip}`, 60, 900))) return { ok: false, error: "Too many attempts. Try again later." };
+  // Blocked after a code was sent: retire it so it cannot be used.
+  if (await isOtpBlocked(destination)) {
+    await OtpVerification.updateMany({ destination, active: true }, { active: false });
+    await trackOtp(destination, "blocked", input.ip);
+    return { ok: false, error: BLOCKED_MESSAGE };
+  }
 
   // Claim one attempt atomically (concurrent guesses cannot exceed maxAttempts).
   const claimed = (await OtpVerification.findOneAndUpdate(
@@ -107,11 +120,13 @@ export async function verifyOtp(input: { destination: string; purpose: OtpPurpos
 
   if (!safeEqual(hashCode(destination, purpose, input.code), claimed.codeHash)) {
     const locked = claimed.attempts >= claimed.maxAttempts;
+    await trackOtp(destination, "failed", input.ip);
     await OtpVerification.updateOne({ _id: claimed._id }, { ...(locked ? { active: false, lockedAt: new Date() } : {}), $push: { events: { type: locked ? "LOCKED" : "VERIFY_FAILURE", ipAddress: input.ip } } });
     return { ok: false, error: locked ? "Too many wrong attempts. Request a new code." : BAD };
   }
   // One-time use: only the request that flips `active` wins, even if two correct submissions race.
   const used = await OtpVerification.updateOne({ _id: claimed._id, active: true }, { active: false, consumedAt: new Date(), $push: { events: { type: "VERIFY_SUCCESS", ipAddress: input.ip } } });
   if (used.modifiedCount !== 1) return { ok: false, error: BAD };
+  await trackOtp(destination, "verified", input.ip);
   return { ok: true, userId: claimed.userId ? claimed.userId.toString() : null };
 }
