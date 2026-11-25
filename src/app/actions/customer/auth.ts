@@ -18,7 +18,7 @@ export async function sendLoginOtp(_p: OtpState, form: FormData): Promise<OtpSta
   const { ip, userAgent } = await clientMeta();
   const r = await requestOtp({ destination: mobile, purpose: "LOGIN", ip, userAgent });
   if (!r.ok) return { step: form.get("resend") ? "code" : "mobile", mobile, error: r.error, resendAfterSec: r.retryAfterSec };
-  return { step: "code", mobile, resendAfterSec: r.resendAfterSec, mock: r.mock, info: r.test ? "Test number: enter the test code set by the admin. No SMS is sent." : r.mock ? "Development mode: no SMS is sent. Use the mock code." : "We sent a 6-digit code by SMS." };
+  return { step: "code", mobile, resendAfterSec: r.resendAfterSec, mock: r.mock, info: r.test ? "Test number: enter the test code set by the admin. No SMS is sent." : r.mock ? "Development mode: no SMS is sent. Use the mock code." : "We sent a 4-digit code by SMS." };
 }
 
 /** Step 2: verify, then create (or find) the account and start a session. */
