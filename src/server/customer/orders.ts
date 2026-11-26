@@ -1,7 +1,8 @@
 import "server-only";
 import { Types } from "mongoose";
 import { db } from "@/server/db";
-import { Inventory, Order, Payment, Product } from "@/server/models";
+import { Inventory, Order, Payment, Product, ShipmentEvent } from "@/server/models";
+import { INDIA_POST, INDIA_POST_SITE, carrierLabel, shipmentStatusLabel } from "@/lib/shipment-tracking";
 import { safeEqual, sha256 } from "@/server/auth/crypto";
 import { isViewableOrderNumber } from "@/lib/order-number";
 
@@ -50,6 +51,7 @@ export async function listOrders(userId: string, f: OrderQuery) {
   return { orders: rows.map(summary), total, page, pages: Math.max(1, Math.ceil(total / PAGE_SIZE)) };
 }
 
+export type CourierEvent = { description: string; office: string | null; reason: string | null; at: string };
 export type TimelineStep = { key: string; label: string; state: "done" | "current" | "upcoming"; at: string | null };
 export type TimelineEvent = { status: string; label: string; at: string; description: string | null; by: string };
 const MAIN = ["CONFIRMED", "PROCESSING", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"] as const;
@@ -73,7 +75,7 @@ export function buildTimeline(status: string, placedAt: Date, history: { to: str
 }
 
 export type OrderDetail = ReturnType<typeof toDetail> extends infer R ? R : never;
-function toDetail(o: Row & { subtotal: number; discountTotal: number; shippingTotal: number; packingTotal: number; taxTotal: number; couponCode?: string; shippingMethodName: string; contact: { name: string; phone: string; email?: string }; shippingAddress: Record<string, string | undefined>; statusHistory: { from?: string; to: string; description?: string; actorType: string; at: Date }[]; shipments: { carrier: string; trackingNumber?: string; trackingUrl?: string; status: string; estimatedDeliveryDate?: Date; shippedAt?: Date; deliveredAt?: Date }[]; cancelReason?: string }, pay: { providerPaymentId?: string; method?: string; methodDetail?: string; status: string } | null) {
+function toDetail(o: Row & { subtotal: number; discountTotal: number; shippingTotal: number; packingTotal: number; taxTotal: number; couponCode?: string; shippingMethodName: string; contact: { name: string; phone: string; email?: string }; shippingAddress: Record<string, string | undefined>; statusHistory: { from?: string; to: string; description?: string; actorType: string; at: Date }[]; shipments: { _id?: Types.ObjectId; carrier: string; trackingNumber?: string; trackingUrl?: string; status: string; estimatedDeliveryDate?: Date; shippedAt?: Date; deliveredAt?: Date; trackingEnrolledAt?: Date; lastEventAt?: Date; lastTrackingCheckAt?: Date }[]; cancelReason?: string }, courierEvents: CourierEvent[], pay: { providerPaymentId?: string; method?: string; methodDetail?: string; status: string } | null) {
   const sh = o.shipments[0];
   return {
     ...summary(o),
@@ -81,7 +83,14 @@ function toDetail(o: Row & { subtotal: number; discountTotal: number; shippingTo
     subtotal: o.subtotal, discount: o.discountTotal, shipping: o.shippingTotal, packing: o.packingTotal, tax: o.taxTotal, coupon: o.couponCode ?? null,
     shippingMethod: o.shippingMethodName, address: { name: o.shippingAddress.fullName ?? "", phone: o.shippingAddress.phone ?? "", lines: [o.shippingAddress.line1, o.shippingAddress.line2, o.shippingAddress.landmark].filter(Boolean) as string[], city: o.shippingAddress.city ?? "", state: o.shippingAddress.state ?? "", postalCode: o.shippingAddress.postalCode ?? "" },
     payment: { status: o.paymentStatus, method: pay?.method ?? null, methodDetail: pay?.methodDetail ?? null, transactionId: pay?.providerPaymentId ?? null },
-    shipment: sh ? { carrier: sh.carrier, trackingNumber: sh.trackingNumber ?? null, trackingUrl: sh.trackingUrl ?? null, estimatedDelivery: sh.estimatedDeliveryDate?.toISOString() ?? null } : null,
+    shipment: sh ? {
+      carrier: carrierLabel(sh.carrier), trackingNumber: sh.trackingNumber ?? null, trackingUrl: sh.trackingUrl ?? null, estimatedDelivery: sh.estimatedDeliveryDate?.toISOString() ?? null,
+      // Courier tracking only: internal errors, retry counts and raw records never leave the server.
+      tracking: sh.carrier === INDIA_POST ? {
+        statusLabel: shipmentStatusLabel(sh.status), delivered: sh.status === "DELIVERED", deliveredAt: sh.deliveredAt?.toISOString() ?? null,
+        lastUpdatedAt: sh.lastEventAt?.toISOString() ?? null, lastCheckedAt: sh.lastTrackingCheckAt?.toISOString() ?? null, officialUrl: INDIA_POST_SITE, events: courierEvents,
+      } : null,
+    } : null,
     cancelReason: o.cancelReason ?? null,
     timeline: buildTimeline(o.status, o.placedAt, o.statusHistory),
     // Customer-visible history only: staff-internal notes are never selected into this view.
@@ -93,8 +102,12 @@ async function fetchDetail(filter: Record<string, unknown>) {
   await db();
   const o = (await Order.findOne(filter as never, "-statusHistory.note -ipAddress -userAgent -pricingSnapshot -idempotencyKey").lean()) as unknown as Parameters<typeof toDetail>[0] | null;
   if (!o) return null;
-  const pay = (await Payment.findOne({ orderId: o._id }, "providerPaymentId method methodDetail status").lean()) as unknown as Parameters<typeof toDetail>[1];
-  return toDetail(o, pay);
+  const pay = (await Payment.findOne({ orderId: o._id }, "providerPaymentId method methodDetail status").lean()) as unknown as Parameters<typeof toDetail>[2];
+  const sh = o.shipments[0];
+  const rows = sh?.carrier === INDIA_POST && sh.trackingNumber
+    ? ((await ShipmentEvent.find({ shipmentId: sh._id, trackingNumber: sh.trackingNumber } as never, "eventCode eventDescription eventOffice eventAt nonDeliveryReason").sort({ eventAt: -1 }).limit(100).lean()) as unknown as { eventCode: string; eventDescription?: string; eventOffice?: string; eventAt: Date; nonDeliveryReason?: string }[])
+    : [];
+  return toDetail(o, rows.map((e) => ({ description: e.eventDescription || e.eventCode.replace(/_/g, " ").toLowerCase(), office: e.eventOffice ?? null, reason: e.nonDeliveryReason ?? null, at: e.eventAt.toISOString() })), pay);
 }
 
 /** Trusted server-side lookup (notifications only): no ownership check. Never expose to a request without staff auth. */

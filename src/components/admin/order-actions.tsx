@@ -18,6 +18,7 @@ export function OrderActions({ orderNumber, next, canWrite }: { orderNumber: str
 
   return (
     <div className="space-y-5">
+      <datalist id="couriers"><option value="India Post" /></datalist>
       {res && <Notice tone={res.ok ? "ok" : "danger"}>{res.ok ? res.message ?? "Updated." : res.error}</Notice>}
       {canWrite && next.length > 0 && (
         <Card title="Update status">
@@ -25,7 +26,7 @@ export function OrderActions({ orderNumber, next, canWrite }: { orderNumber: str
             <Field label="Move to" htmlFor="to"><select id="to" className={inputCls} value={to} onChange={(e) => setTo(e.target.value)}>{next.map((n) => <option key={n} value={n}>{label(n)}</option>)}</select></Field>
             {to === "SHIPPED" && (
               <div className="grid gap-3 sm:grid-cols-2">
-                <Field label="Courier" htmlFor="carrier"><input id="carrier" className={inputCls} value={ship.carrier} onChange={(e) => setShip({ ...ship, carrier: e.target.value })} required /></Field>
+                <Field label="Courier" htmlFor="carrier" hint="Choose India Post for automatic tracking"><input id="carrier" list="couriers" className={inputCls} value={ship.carrier} onChange={(e) => setShip({ ...ship, carrier: e.target.value })} required /></Field>
                 <Field label="Tracking number" htmlFor="trk"><input id="trk" className={inputCls} value={ship.trackingNumber} onChange={(e) => setShip({ ...ship, trackingNumber: e.target.value })} /></Field>
                 <div className="sm:col-span-2"><Field label="Tracking link" htmlFor="trku" hint="Optional, https://…"><input id="trku" className={inputCls} value={ship.trackingUrl} onChange={(e) => setShip({ ...ship, trackingUrl: e.target.value })} /></Field></div>
                 <Field label="Estimated delivery date" htmlFor="eta" hint="Only if the courier gave one"><input id="eta" type="date" className={inputCls} value={ship.estimatedDeliveryDate} onChange={(e) => setShip({ ...ship, estimatedDeliveryDate: e.target.value })} /></Field>
@@ -42,7 +43,7 @@ export function OrderActions({ orderNumber, next, canWrite }: { orderNumber: str
           <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); run(async () => { const r = await postOrderUpdate({ orderNumber, ...upd }); if (r.ok) setUpd({ carrier: "", trackingNumber: "", trackingUrl: "", estimatedDeliveryDate: "", description: "" }); return r; }); }}>
             <p className="text-xs opacity-70">Post a message and/or courier details without changing the status. The customer sees this on their order.</p>
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Courier" htmlFor="ucar"><input id="ucar" className={inputCls} value={upd.carrier} onChange={(e) => setUpd({ ...upd, carrier: e.target.value })} /></Field>
+              <Field label="Courier" htmlFor="ucar"><input id="ucar" list="couriers" className={inputCls} value={upd.carrier} onChange={(e) => setUpd({ ...upd, carrier: e.target.value })} /></Field>
               <Field label="Tracking number" htmlFor="utrk"><input id="utrk" className={inputCls} value={upd.trackingNumber} onChange={(e) => setUpd({ ...upd, trackingNumber: e.target.value })} /></Field>
               <Field label="Tracking link" htmlFor="utrku"><input id="utrku" className={inputCls} value={upd.trackingUrl} onChange={(e) => setUpd({ ...upd, trackingUrl: e.target.value })} /></Field>
               <Field label="Estimated delivery date" htmlFor="ueta"><input id="ueta" type="date" className={inputCls} value={upd.estimatedDeliveryDate} onChange={(e) => setUpd({ ...upd, estimatedDeliveryDate: e.target.value })} /></Field>

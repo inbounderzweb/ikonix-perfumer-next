@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import { Card } from "./ui";
 import { fmtDate } from "@/lib/format";
-import type { TimelineEvent, TimelineStep } from "@/server/customer/orders";
+import type { CourierEvent, TimelineEvent, TimelineStep } from "@/server/customer/orders";
 
-type Data = { timeline: TimelineStep[]; events: TimelineEvent[]; shipment: { carrier: string; trackingNumber: string | null; trackingUrl: string | null; estimatedDelivery: string | null } | null; status: string; statusLabel: string; cancelReason: string | null };
+type Courier = { statusLabel: string; delivered: boolean; deliveredAt: string | null; lastUpdatedAt: string | null; lastCheckedAt: string | null; officialUrl: string; events: CourierEvent[] };
+type Data = { timeline: TimelineStep[]; events: TimelineEvent[]; shipment: { carrier: string; trackingNumber: string | null; trackingUrl: string | null; estimatedDelivery: string | null; tracking: Courier | null } | null; status: string; statusLabel: string; cancelReason: string | null };
 const DONE = new Set(["DELIVERED", "CANCELLED", "REFUNDED", "RETURNED"]);
 const POLL_MS = 20_000;
 
@@ -51,7 +52,20 @@ export function OrderTracker({ orderNumber, initial }: { orderNumber: string; in
           <p><b>Courier:</b> {d.shipment.carrier}</p>
           {d.shipment.trackingNumber && <p><b>Tracking number:</b> {d.shipment.trackingNumber}</p>}
           {d.shipment.estimatedDelivery && <p><b>Estimated delivery:</b> {fmtDate(d.shipment.estimatedDelivery)}</p>}
+          {d.shipment.tracking && <>
+            <p><b>Shipment status:</b> {d.shipment.tracking.statusLabel}</p>
+            {d.shipment.tracking.lastUpdatedAt && <p><b>Last updated:</b> {fmtDate(d.shipment.tracking.lastUpdatedAt, true)}</p>}
+            {!d.shipment.tracking.lastUpdatedAt && <p className="text-xs text-[#6b5446]">India Post updates appear here once the parcel is scanned.</p>}
+            {d.shipment.tracking.delivered && <p role="status" className="mt-1 font-semibold text-[#2e7d32]">✓ Delivered{d.shipment.tracking.deliveredAt ? ` on ${fmtDate(d.shipment.tracking.deliveredAt, true)}` : ""}</p>}
+            <a href={d.shipment.tracking.officialUrl} target="_blank" rel="noopener noreferrer nofollow" className="mr-4 mt-1 inline-block underline">India Post website ↗</a>
+          </>}
           {d.shipment.trackingUrl && <a href={d.shipment.trackingUrl} target="_blank" rel="noopener noreferrer nofollow" className="mt-1 inline-block underline">Track on courier website ↗</a>}
+        </div>
+      )}
+      {!!d.shipment?.tracking?.events.length && (
+        <div className="mt-4 border-t border-[#e7dbd3] pt-3">
+          <p className="mb-2 font-fancy text-sm font-semibold text-[#53443D]">Parcel journey</p>
+          <ol className="space-y-2">{d.shipment.tracking.events.map((e, i) => <li key={`${e.at}-${i}`} className="font-fancy text-sm text-[#3f342c]">{e.description}{e.reason ? ` (${e.reason})` : ""}<span className="block text-xs text-[#6b5446]">{fmtDate(e.at, true)}{e.office ? ` · ${e.office}` : ""}</span></li>)}</ol>
         </div>
       )}
       {d.events.some((e) => e.description) && (

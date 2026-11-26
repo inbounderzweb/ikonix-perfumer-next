@@ -6,6 +6,8 @@ import { db } from "@/server/db";
 import { ShippingMethod } from "@/server/models";
 import { DeliveryAreaForm } from "@/components/admin/delivery-area-form";
 import { getDeliveryArea } from "@/server/commerce/delivery-area";
+import Link from "next/link";
+import { button } from "@/components/admin/ui";
 
 export const metadata: Metadata = { title: "Delivery" };
 
@@ -17,7 +19,7 @@ export default async function DeliveryPage() {
   const methods: MethodRow[] = rows.map((m) => ({ id: String(m._id), code: m.code, name: m.name, description: m.description ?? "", charge: m.charge / 100, freeAbove: m.freeAboveSubtotal != null ? m.freeAboveSubtotal / 100 : "", minDays: m.minDays ?? "", maxDays: m.maxDays ?? "", status: m.status, sortOrder: m.sortOrder }));
   return (
     <>
-      <PageHeader title="Delivery" subtitle="Methods and charges offered at checkout. A free-delivery threshold waives the charge once the cart subtotal reaches it." />
+      <PageHeader title="Delivery" subtitle="Methods and charges offered at checkout. A free-delivery threshold waives the charge once the cart subtotal reaches it." actions={admin.permissions.has("tracking.configure") ? <Link href="/admin/settings/shipping/india-post" className={button("secondary")}>India Post tracking settings</Link> : undefined} />
       <div className="mb-6"><DeliveryAreaForm area={await getDeliveryArea()} canWrite={admin.permissions.has("delivery.write")} /></div>
       <DeliveryManager methods={methods} canWrite={admin.permissions.has("delivery.write")} />
     </>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Types } from "mongoose";
+import type { Shipment } from "@/server/shipping/tracking/shipments";
 import { Badge, Card, PageHeader, Table, formatDate, formatINR } from "@/components/admin/ui";
 import { OrderActions } from "@/components/admin/order-actions";
 import { isLegacyOrderNumber, isViewableOrderNumber } from "@/lib/order-number";
@@ -10,6 +11,7 @@ import { requireAdminPage } from "@/server/auth/guard";
 import { db } from "@/server/db";
 import { Notification, Order, Payment, Refund } from "@/server/models";
 import { NotificationHistory, type NotificationRow } from "@/components/admin/notification-history";
+import { ShipmentCard } from "@/components/admin/shipment-card";
 
 export const metadata: Metadata = { title: "Order" };
 
@@ -20,7 +22,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
   const legacy = isLegacyOrderNumber(orderNumber);
   await db();
   type A = { fullName?: string; phone?: string; line1?: string; line2?: string; landmark?: string; city?: string; state?: string; postalCode?: string };
-  type O = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; sku: string; freeQuantity?: number; offer?: { offerId: string; label: string; pricingBasis: string; savedAmount: number } | null; quantity: number; unitSalePrice: number; lineTotal: number; imageUrl?: string }[]; subtotal: number; discountTotal: number; shippingTotal: number; taxTotal: number; grandTotal: number; contact: { name: string; phone: string; email?: string }; shippingAddress: A; shippingMethodName: string; customerNote?: string; placedAt: Date; statusHistory: { from?: string; to: string; note?: string; description?: string; actorType: string; at: Date }[]; shipments?: { carrier: string; trackingNumber?: string; trackingUrl?: string }[] };
+  type O = { _id: Types.ObjectId; orderNumber: string; status: string; paymentStatus: string; items: { productName: string; variantLabel: string; sku: string; freeQuantity?: number; offer?: { offerId: string; label: string; pricingBasis: string; savedAmount: number } | null; quantity: number; unitSalePrice: number; lineTotal: number; imageUrl?: string }[]; subtotal: number; discountTotal: number; shippingTotal: number; taxTotal: number; grandTotal: number; contact: { name: string; phone: string; email?: string }; shippingAddress: A; shippingMethodName: string; customerNote?: string; placedAt: Date; statusHistory: { from?: string; to: string; note?: string; description?: string; actorType: string; at: Date }[]; shipments?: Shipment[] };
   const o = (await Order.findOne({ orderNumber }).lean()) as unknown as O | null;
   if (!o) notFound();
   const [pay, refunds] = await Promise.all([
@@ -63,7 +65,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
             {pay ? <dl className="space-y-1 text-sm"><div className="flex justify-between"><dt className="text-a-muted">Gateway</dt><dd>Razorpay</dd></div><div className="flex justify-between"><dt className="text-a-muted">Method</dt><dd>{pay.method ?? "—"}{pay.methodDetail ? ` · ${pay.methodDetail}` : ""}</dd></div><div className="flex justify-between gap-2"><dt className="text-a-muted">Payment id</dt><dd className="truncate font-mono text-xs">{pay.providerPaymentId ?? "—"}</dd></div>{pay.failureReason && <p className="text-xs text-a-danger">{pay.failureReason}</p>}</dl> : <p className="text-sm text-a-muted">No payment record.</p>}
             {refunds.length > 0 && <ul className="mt-3 space-y-1 border-t border-a-border pt-3 text-xs">{refunds.map((r, i) => <li key={i} className="flex justify-between"><span>{formatINR(r.amount)} · {r.status.toLowerCase()}{r.reason ? ` · ${r.reason}` : ""}</span><span className="text-a-muted">{formatDate(r.createdAt)}</span></li>)}</ul>}
           </Card>
-          {o.shipments?.map((s, i) => <Card key={i} title="Shipment"><p className="text-sm">{s.carrier} {s.trackingNumber}{s.trackingUrl && <> · <a className="text-a-accent underline" href={s.trackingUrl} target="_blank" rel="noopener noreferrer">Track</a></>}</p></Card>)}
+          {o.shipments?.map((s) => <ShipmentCard key={String(s._id)} orderNumber={o.orderNumber} shipment={s} canWrite={!legacy && admin.permissions.has("orders.write")} />)}
         </div>
       </div>
     </>

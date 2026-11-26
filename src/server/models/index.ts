@@ -6,3 +6,4 @@ export * from "./customer";
 export * from "./commerce";
 export * from "./promotions";
 export * from "./content";
+export * from "./tracking";

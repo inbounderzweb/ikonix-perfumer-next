@@ -1,5 +1,6 @@
 import { Schema, type InferSchemaType } from "mongoose";
 import { ACTIVE_STATUS, ObjectId, defineModel, int, money } from "./_shared";
+import { SHIPMENT_STATUS } from "../../lib/shipment-tracking";
 
 // ── Shipping methods (legacy "delivery-methods"; values are admin data, pending legacy source) ──
 const shippingMethodSchema = new Schema(
@@ -76,10 +77,24 @@ const shipmentSchema = new Schema(
     carrier: { type: String, required: true },
     trackingNumber: String,
     trackingUrl: String,
-    status: { type: String, enum: ["PENDING", "SHIPPED", "IN_TRANSIT", "OUT_FOR_DELIVERY", "DELIVERED", "RETURNED_TO_ORIGIN"], default: "PENDING" },
+    status: { type: String, enum: SHIPMENT_STATUS, default: "PENDING" },
     estimatedDeliveryDate: Date, // only ever set by staff or a verified courier integration
     shippedAt: Date,
     deliveredAt: Date,
+    // Automated courier tracking (see src/server/shipping). Absent on shipments that are only updated by hand.
+    trackingEnabled: { type: Boolean, default: false },
+    trackingEnrolledAt: Date,
+    trackingBackfillPending: Boolean, // history since shipping still has to be read
+    lastTrackingCheckAt: Date,
+    nextTrackingCheckAt: Date,
+    lastEventAt: Date,
+    lastEventCode: String,
+    lastEventDescription: String,
+    lastEventOffice: String,
+    statusEventKey: String, // event that produced `status`; the order is only touched when this changes
+    trackingError: String,
+    retryCount: { ...int(0), default: 0 },
+    trackingFailed: { type: Boolean, default: false }, // retry limit reached: waits for a manual retry
   },
   { timestamps: true },
 );
@@ -138,6 +153,9 @@ orderSchema.index({ paymentStatus: 1, placedAt: -1 });
 orderSchema.index({ "contact.phone": 1 });
 orderSchema.index({ reservationExpiresAt: 1 }, { partialFilterExpression: { status: "PENDING" } });
 orderSchema.index({ "items.productId": 1 });
+orderSchema.index({ "shipments.trackingNumber": 1 });
+orderSchema.index({ "shipments.trackingEnabled": 1, "shipments.nextTrackingCheckAt": 1 });
+orderSchema.index({ "shipments.status": 1 });
 orderSchema.index({ "legacy.source": 1, "legacy.orderId": 1 }, { unique: true, partialFilterExpression: { "legacy.orderId": { $type: "number" } } });
 export type OrderDoc = InferSchemaType<typeof orderSchema>;
 export const Order = defineModel("Order", orderSchema, "orders");

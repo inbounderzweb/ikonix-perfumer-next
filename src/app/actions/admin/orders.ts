@@ -11,6 +11,9 @@ import { cancelOrder } from "@/server/commerce/orders";
 import { allowedNext } from "@/server/commerce/order-flow";
 import { queueOrderNotification, retryNotification, type OrderEvent } from "@/server/notify/order-notify";
 import { RazorpayError, refundRazorpayPayment } from "@/server/commerce/razorpay";
+import { INDIA_POST, checkConsignment, isIndiaPostCarrier } from "@/lib/shipment-tracking";
+import { getConfig } from "@/server/shipping/india-post/config";
+import { enrolmentFields, syncEnrolment } from "@/server/shipping/tracking/shipments";
 
 export type OrderResult = { ok: true; message?: string } | { ok: false; error: string };
 
@@ -27,6 +30,16 @@ const statusInput = z.object({
   estimatedDeliveryDate: z.union([z.literal(""), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]).optional(), // only when staff or the courier actually provide one
 });
 
+const isIndiaPost = (carrier: string | undefined) => carrier === INDIA_POST || isIndiaPostCarrier(carrier);
+
+/** Validates an India Post consignment number and flags likely typing mistakes without blocking a genuine one. */
+async function consignment(raw: string, orderId: Types.ObjectId): Promise<{ ok: true; value: string; warnings: string[] } | { ok: false; error: string }> {
+  const c = checkConsignment(raw);
+  if (!c.ok) return c;
+  const other = (await Order.findOne({ _id: { $ne: orderId }, "shipments.trackingNumber": c.value } as never, "orderNumber").lean()) as unknown as { orderNumber: string } | null;
+  return { ok: true, value: c.value, warnings: [c.warning, other ? `${c.value} is also on order ${other.orderNumber}.` : undefined].filter((w): w is string => !!w) };
+}
+
 function failure(e: unknown): OrderResult {
   if (e instanceof ForbiddenError || e instanceof Response) return { ok: false, error: "You do not have permission to do that." };
   console.error("order action", e instanceof Error ? e.message : e);
@@ -40,7 +53,7 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
     if (!p.success) return { ok: false, error: p.error.issues[0]?.message ?? "Invalid request." };
     const v = p.data;
     await db();
-    const o = (await Order.findOne({ orderNumber: v.orderNumber }, "status paymentStatus").lean()) as unknown as { _id: Types.ObjectId; status: string; paymentStatus: string } | null;
+    const o = (await Order.findOne({ orderNumber: v.orderNumber }, "status paymentStatus shipments").lean()) as unknown as { _id: Types.ObjectId; status: string; paymentStatus: string; shipments?: { shippedAt?: Date }[] } | null;
     if (!o) return { ok: false, error: "Order not found." };
     if (!allowedNext(o.status).includes(v.to)) return { ok: false, error: `An order that is ${o.status.toLowerCase().replace(/_/g, " ")} can't move to ${v.to.toLowerCase().replace(/_/g, " ")}.` };
     if (v.to !== "CANCELLED" && o.paymentStatus !== "CAPTURED") return { ok: false, error: "The order hasn't been paid yet." };
@@ -56,25 +69,40 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
     if (v.to === "SHIPPED" && !v.carrier) return { ok: false, error: "Enter the courier name to mark as shipped." };
 
     const now = new Date();
+    let shipment: Record<string, unknown> | null = null;
+    let warnings: string[] = [];
+    if (v.to === "SHIPPED") {
+      let { carrier, trackingNumber } = v;
+      let tracking = {};
+      if (isIndiaPost(carrier)) {
+        const c = await consignment(trackingNumber ?? "", o._id);
+        if (!c.ok) return { ok: false, error: c.error };
+        [carrier, trackingNumber, warnings] = [INDIA_POST, c.value, c.warnings];
+        tracking = enrolmentFields(await getConfig(), now); // joins the central tracking queue
+      }
+      shipment = { carrier, trackingNumber: trackingNumber || undefined, trackingUrl: v.trackingUrl || undefined, status: "SHIPPED", shippedAt: now, estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined, ...tracking };
+    }
+    // Courier details posted before dispatch already made a shipment: complete that one instead of adding a second.
+    const reuse = !!shipment && !!o.shipments?.length && !o.shipments[0].shippedAt;
     const r = await Order.updateOne(
       { _id: o._id, status: o.status as never }, // guard against two staff acting at once
       {
-        $set: { status: v.to, ...(v.to === "DELIVERED" ? { deliveredAt: now } : {}) },
+        $set: { status: v.to, ...(v.to === "DELIVERED" ? { deliveredAt: now } : {}), ...(reuse ? Object.fromEntries(Object.entries(shipment!).filter(([, x]) => x !== undefined).map(([k, x]) => [`shipments.0.${k}`, x])) : {}) },
         $push: {
           statusHistory: { from: o.status, to: v.to, note: v.note || undefined, description: v.description || undefined, actorType: "ADMIN", actorUserId: admin.id },
-          ...(v.to === "SHIPPED" ? { shipments: { carrier: v.carrier, trackingNumber: v.trackingNumber || undefined, trackingUrl: v.trackingUrl || undefined, status: "SHIPPED", shippedAt: now, estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined } } : {}),
+          ...(shipment && !reuse ? { shipments: shipment } : {}),
         },
-      },
+      } as never,
     );
     if (!r.modifiedCount) return { ok: false, error: "The order changed while you were editing. Reload and try again." };
     const shipStatus = ({ OUT_FOR_DELIVERY: "OUT_FOR_DELIVERY", DELIVERED: "DELIVERED" } as Record<string, string>)[v.to];
     if (shipStatus && v.to !== "SHIPPED") {
-      await Order.updateOne({ _id: o._id, "shipments.0": { $exists: true } }, { $set: { "shipments.$[].status": shipStatus, ...(v.to === "DELIVERED" ? { "shipments.$[].deliveredAt": now } : {}) } } as never);
+      await Order.updateOne({ _id: o._id, "shipments.0": { $exists: true } }, { $set: { "shipments.$[].status": shipStatus, ...(v.to === "DELIVERED" ? { "shipments.$[].deliveredAt": now, "shipments.$[].trackingEnabled": false } : {}) } } as never);
     }
     await audit(admin, "order.status", "Order", v.orderNumber, { before: { status: o.status }, after: { status: v.to } });
     queueOrderNotification(o._id, v.to as OrderEvent, o.status);
     revalidatePath("/admin/orders");
-    return { ok: true };
+    return { ok: true, ...(warnings.length ? { message: `Updated. ${warnings.join(" ")}` } : {}) };
   } catch (e) { return failure(e); }
 }
 
@@ -96,11 +124,22 @@ export async function postOrderUpdate(raw: unknown): Promise<OrderResult> {
     const v = p.data;
     if (!v.description && !v.carrier && !v.trackingNumber && !v.trackingUrl && !v.estimatedDeliveryDate) return { ok: false, error: "Nothing to update." };
     await db();
-    const o = (await Order.findOne({ orderNumber: v.orderNumber }, "status shipments").lean()) as unknown as { _id: Types.ObjectId; status: string; shipments: { _id: Types.ObjectId; carrier: string }[] } | null;
+    const o = (await Order.findOne({ orderNumber: v.orderNumber }, "status shipments").lean()) as unknown as { _id: Types.ObjectId; status: string; shipments: { _id: Types.ObjectId; carrier: string; trackingNumber?: string }[] } | null;
     if (!o) return { ok: false, error: "Order not found." };
     if (["PENDING", "CANCELLED", "REFUNDED"].includes(o.status)) return { ok: false, error: "This order can't receive delivery updates." };
     const hasShipmentInfo = v.carrier || v.trackingNumber || v.trackingUrl || v.estimatedDeliveryDate;
+    let warnings: string[] = [];
     if (hasShipmentInfo) {
+      const before = o.shipments[0] ? { carrier: o.shipments[0].carrier, trackingNumber: o.shipments[0].trackingNumber } : undefined;
+      if ((v.carrier || v.trackingNumber) && isIndiaPost(v.carrier || before?.carrier)) {
+        const number = v.trackingNumber || before?.trackingNumber;
+        v.carrier = INDIA_POST;
+        if (number) {
+          const c = await consignment(number, o._id);
+          if (!c.ok) return { ok: false, error: c.error };
+          [v.trackingNumber, warnings] = [c.value, c.warnings];
+        }
+      }
       if (o.shipments.length) {
         const set: Record<string, unknown> = {};
         if (v.carrier) set["shipments.0.carrier"] = v.carrier;
@@ -111,11 +150,12 @@ export async function postOrderUpdate(raw: unknown): Promise<OrderResult> {
       } else if (v.carrier) {
         await Order.updateOne({ _id: o._id }, { $push: { shipments: { carrier: v.carrier, trackingNumber: v.trackingNumber || undefined, trackingUrl: v.trackingUrl || undefined, status: "PENDING", estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined } } } as never);
       } else return { ok: false, error: "Enter the courier name first." };
+      if (v.carrier || v.trackingNumber) await syncEnrolment(o._id, before, await getConfig());
     }
     if (v.description) await Order.updateOne({ _id: o._id }, { $push: { statusHistory: { from: o.status, to: o.status, description: v.description, actorType: "ADMIN", actorUserId: admin.id } } } as never);
     await audit(admin, "order.update", "Order", v.orderNumber, { after: { description: v.description, carrier: v.carrier, trackingNumber: v.trackingNumber } });
     revalidatePath("/admin/orders");
-    return { ok: true, message: "Update saved. The customer will see it on their order." };
+    return { ok: true, message: ["Update saved. The customer will see it on their order.", ...warnings].join(" ") };
   } catch (e) { return failure(e); }
 }
 

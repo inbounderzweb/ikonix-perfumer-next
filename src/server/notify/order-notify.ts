@@ -7,6 +7,7 @@ import { getSmsProvider } from "@/server/auth/otp/sms-provider";
 import { buildInvoiceForNotification } from "@/server/customer/invoice";
 import { emailConfigured, sendEmail, validEmail } from "./email";
 import { esc, renderOrderEmail, type EmailOrder } from "./email-template";
+import { carrierLabel } from "../../lib/shipment-tracking";
 
 export const ORDER_EVENTS = ["CONFIRMED", "PROCESSING", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED", "DELIVERY_FAILED", "CANCELLED", "REFUNDED", "RETURN_REQUESTED", "RETURNED"] as const;
 export type OrderEvent = (typeof ORDER_EVENTS)[number];
@@ -54,7 +55,7 @@ async function deliverEmail(nid: unknown, o: O, event: OrderEvent, to: string) {
 
 async function deliverSms(nid: unknown, o: O, event: OrderEvent) {
   const sh = o.shipments[0];
-  const vars: Record<string, string> = { order: o.orderNumber, total: inr(o.grandTotal), carrier: sh?.carrier ?? "our courier", tracking: sh?.trackingNumber ?? "will follow" };
+  const vars: Record<string, string> = { order: o.orderNumber, total: inr(o.grandTotal), carrier: sh?.carrier ? carrierLabel(sh.carrier) : "our courier", tracking: sh?.trackingNumber ?? "will follow" };
   const tplId = process.env[`SMS_TEMPLATE_ID_${event}`]?.trim();
   const text = process.env[`SMS_TEXT_${event}`]?.trim() || SMS_DEFAULT[event]!;
   try {

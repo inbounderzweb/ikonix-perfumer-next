@@ -1,5 +1,6 @@
 import "server-only";
 import type { OrderEvent } from "./order-notify";
+import { carrierLabel } from "../../lib/shipment-tracking";
 
 export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 const inr = (paise: number) => `Rs. ${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -38,7 +39,7 @@ export function renderOrderEmail(o: EmailOrder, event: OrderEvent, note?: string
   const rows: [string, string][] = [
     ["Order ID", o.orderNumber], ["Order date", date], ["Status", label(event === "CONFIRMED" ? "CONFIRMED" : event)],
     ["Order total", inr(o.grandTotal)], ["Payment", label(o.paymentStatus)],
-    ...(["SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED", "DELIVERY_FAILED"].includes(event) && sh?.carrier ? ([["Courier", sh.carrier], ...(sh.trackingNumber ? [["Tracking number", sh.trackingNumber]] : []), ...(sh.estimatedDeliveryDate && event === "SHIPPED" ? [["Estimated delivery", new Date(sh.estimatedDeliveryDate).toLocaleDateString("en-IN", { dateStyle: "medium", timeZone: "Asia/Kolkata" })]] : [])] as [string, string][]) : []),
+    ...(["SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED", "DELIVERY_FAILED"].includes(event) && sh?.carrier ? ([["Courier", carrierLabel(sh.carrier)], ...(sh.trackingNumber ? [["Tracking number", sh.trackingNumber]] : []), ...(sh.estimatedDeliveryDate && event === "SHIPPED" ? [["Estimated delivery", new Date(sh.estimatedDeliveryDate).toLocaleDateString("en-IN", { dateStyle: "medium", timeZone: "Asia/Kolkata" })]] : [])] as [string, string][]) : []),
     ...(event === "CANCELLED" && o.cancelReason ? ([["Reason", o.cancelReason]] as [string, string][]) : []),
   ];
   const items = o.items.slice(0, 8).map((i) => `${i.productName} (${i.variantLabel}) × ${i.quantity}${i.freeQuantity ? ` + ${i.freeQuantity} free` : ""}`);

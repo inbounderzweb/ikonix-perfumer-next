@@ -12,6 +12,8 @@ const NAV: (NavItem & { perm: Permission })[] = [
   { href: "/admin/offers", label: "Offers", icon: "tag", perm: "promotions.write" },
   { href: "/admin/orders", label: "Orders", icon: "cart", perm: "orders.read" },
   { href: "/admin/delivery", label: "Delivery", icon: "truck", perm: "delivery.read" },
+  { href: "/admin/tracking", label: "Shipment tracking", icon: "truck", perm: "orders.read" },
+  { href: "/admin/settings/shipping/india-post", label: "India Post settings", icon: "shield", perm: "tracking.configure" },
   { href: "/admin/customers", label: "Customers", icon: "users", perm: "customers.read" },
   { href: "/admin/reports", label: "Reports", icon: "log", exact: true, perm: "dashboard.view" },
   { href: "/admin/reports/sales", label: "Sales report", icon: "cart", perm: "orders.read" },

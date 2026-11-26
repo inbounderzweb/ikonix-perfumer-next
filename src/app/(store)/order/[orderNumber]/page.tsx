@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { Order } from "@/server/models";
 import { safeEqual, sha256 } from "@/server/auth/crypto";
 import { AutoRefresh } from "./auto-refresh";
+import { carrierLabel } from "@/lib/shipment-tracking";
 
 export const metadata: Metadata = { title: "Your order", robots: { index: false, follow: false } };
 const inr = (p: number) => `₹${(p / 100).toLocaleString("en-IN", { minimumFractionDigits: p % 100 ? 2 : 0 })}`;
@@ -52,7 +53,7 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
         </dl>
         <div className="mt-6 grid gap-6 font-fancy text-sm text-[#53443D] sm:grid-cols-2">
           <div><h2 className="mb-1 font-bold">Delivering to</h2><p>{a.fullName}<br />{a.line1}{a.line2 ? `, ${a.line2}` : ""}<br />{a.city}, {a.state} {a.postalCode}<br />{a.phone}</p></div>
-          {order.shipments?.[0] && <div><h2 className="mb-1 font-bold">Tracking</h2><p>{order.shipments[0].carrier} {order.shipments[0].trackingNumber}</p></div>}
+          {order.shipments?.[0] && <div><h2 className="mb-1 font-bold">Tracking</h2><p>{carrierLabel(order.shipments[0].carrier)} {order.shipments[0].trackingNumber}</p></div>}
         </div>
       </div>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
