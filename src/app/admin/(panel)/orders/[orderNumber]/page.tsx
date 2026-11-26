@@ -57,7 +57,7 @@ export default async function OrderDetail({ params }: PageProps<"/admin/orders/[
           </Card>
         </div>
         <div className="space-y-5">
-          {legacy ? <p className="rounded-md border border-a-border bg-a-raised p-3 text-sm text-a-muted">Imported from the previous website. This order is read-only history: status changes, refunds and customer notifications are disabled.</p> : <OrderActions orderNumber={o.orderNumber} next={allowedNext(o.status)} canWrite={admin.permissions.has("orders.write")} />}
+          {legacy ? <p className="rounded-md border border-a-border bg-a-raised p-3 text-sm text-a-muted">Imported from the previous website. This order is read-only history: status changes, refunds and customer notifications are disabled.</p> : <OrderActions orderNumber={o.orderNumber} next={allowedNext(o.status)} canWrite={admin.permissions.has("orders.write")} carrier={o.shipments?.[0]?.carrier} />}
           <NotificationHistory rows={notes} canRetry={admin.permissions.has("orders.write")} />
           <Card title="Customer"><p className="text-sm">{o.contact.name}<br />{o.contact.phone}<br />{o.contact.email}</p></Card>
           <Card title="Ship to"><p className="text-sm">{a.fullName}<br />{a.line1}{a.line2 ? `, ${a.line2}` : ""}{a.landmark ? ` (${a.landmark})` : ""}<br />{a.city}, {a.state} {a.postalCode}<br />{a.phone}</p>{o.customerNote && <p className="mt-2 text-xs text-a-muted">Note: {o.customerNote}</p>}</Card>

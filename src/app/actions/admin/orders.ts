@@ -71,16 +71,18 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
     const now = new Date();
     let shipment: Record<string, unknown> | null = null;
     let warnings: string[] = [];
+    let dropLink = false;
     if (v.to === "SHIPPED") {
-      let { carrier, trackingNumber } = v;
+      let { carrier, trackingNumber, trackingUrl } = v;
       let tracking = {};
       if (isIndiaPost(carrier)) {
         const c = await consignment(trackingNumber ?? "", o._id);
         if (!c.ok) return { ok: false, error: c.error };
         [carrier, trackingNumber, warnings] = [INDIA_POST, c.value, c.warnings];
         tracking = enrolmentFields(await getConfig(), now); // joins the central tracking queue
+        [trackingUrl, dropLink] = [undefined, true]; // India Post has no per-parcel web link
       }
-      shipment = { carrier, trackingNumber: trackingNumber || undefined, trackingUrl: v.trackingUrl || undefined, status: "SHIPPED", shippedAt: now, estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined, ...tracking };
+      shipment = { carrier, trackingNumber: trackingNumber || undefined, trackingUrl: trackingUrl || undefined, status: "SHIPPED", shippedAt: now, estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined, ...tracking };
     }
     // Courier details posted before dispatch already made a shipment: complete that one instead of adding a second.
     const reuse = !!shipment && !!o.shipments?.length && !o.shipments[0].shippedAt;
@@ -88,6 +90,7 @@ export async function updateOrderStatus(raw: unknown): Promise<OrderResult> {
       { _id: o._id, status: o.status as never }, // guard against two staff acting at once
       {
         $set: { status: v.to, ...(v.to === "DELIVERED" ? { deliveredAt: now } : {}), ...(reuse ? Object.fromEntries(Object.entries(shipment!).filter(([, x]) => x !== undefined).map(([k, x]) => [`shipments.0.${k}`, x])) : {}) },
+        ...(reuse && dropLink ? { $unset: { "shipments.0.trackingUrl": 1 } } : {}),
         $push: {
           statusHistory: { from: o.status, to: v.to, note: v.note || undefined, description: v.description || undefined, actorType: "ADMIN", actorUserId: admin.id },
           ...(shipment && !reuse ? { shipments: shipment } : {}),
@@ -130,10 +133,12 @@ export async function postOrderUpdate(raw: unknown): Promise<OrderResult> {
     const hasShipmentInfo = v.carrier || v.trackingNumber || v.trackingUrl || v.estimatedDeliveryDate;
     let warnings: string[] = [];
     if (hasShipmentInfo) {
+      let dropLink = false;
       const before = o.shipments[0] ? { carrier: o.shipments[0].carrier, trackingNumber: o.shipments[0].trackingNumber } : undefined;
       if ((v.carrier || v.trackingNumber) && isIndiaPost(v.carrier || before?.carrier)) {
         const number = v.trackingNumber || before?.trackingNumber;
         v.carrier = INDIA_POST;
+        [v.trackingUrl, dropLink] = [undefined, true];
         if (number) {
           const c = await consignment(number, o._id);
           if (!c.ok) return { ok: false, error: c.error };
@@ -146,7 +151,7 @@ export async function postOrderUpdate(raw: unknown): Promise<OrderResult> {
         if (v.trackingNumber) set["shipments.0.trackingNumber"] = v.trackingNumber;
         if (v.trackingUrl) set["shipments.0.trackingUrl"] = v.trackingUrl;
         if (v.estimatedDeliveryDate) set["shipments.0.estimatedDeliveryDate"] = new Date(`${v.estimatedDeliveryDate}T00:00:00Z`);
-        await Order.updateOne({ _id: o._id }, { $set: set } as never);
+        await Order.updateOne({ _id: o._id }, { $set: set, ...(dropLink ? { $unset: { "shipments.0.trackingUrl": 1 } } : {}) } as never);
       } else if (v.carrier) {
         await Order.updateOne({ _id: o._id }, { $push: { shipments: { carrier: v.carrier, trackingNumber: v.trackingNumber || undefined, trackingUrl: v.trackingUrl || undefined, status: "PENDING", estimatedDeliveryDate: v.estimatedDeliveryDate ? new Date(`${v.estimatedDeliveryDate}T00:00:00Z`) : undefined } } } as never);
       } else return { ok: false, error: "Enter the courier name first." };
