@@ -84,7 +84,7 @@ Use **one** of these. Running both, or several copies, is safe.
 ## 5. Admin changes
 
 - Marking an order Shipped with courier "India Post" (also "Speed Post", "Registered Post") now **requires** a 13-character consignment number. A check-digit or duplicate-number problem only warns. Other couriers behave as before.
-- The tracking number is India Post's **article number** (`ArticleNumber` in their files). India Post shipments have no "Tracking link" field: we found no official per-parcel web link, so customers get the number and a link to the India Post website. Other couriers keep the field.
+- The tracking number is India Post's **article number** (`ArticleNumber` in their files). The order forms have no "Tracking link" field: we found no official per-parcel India Post link, so customers get the number and a link to the India Post website. Links saved earlier for other couriers still show.
 - Order page: shipment status, courier history, last check, error, "Check now".
 - New pages: "Shipment tracking" and "India Post settings" (also linked from Delivery).
 - Settings can only be switched on after a connection test passes for exactly those settings.
